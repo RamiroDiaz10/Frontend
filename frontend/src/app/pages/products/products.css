@@ -1,0 +1,5 @@
+:host{
+    border: 2px dotted rgb(67, 203, 99);
+    box-sizing: border-box;
+    display: flex;
+}
