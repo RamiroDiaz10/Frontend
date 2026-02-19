@@ -6,11 +6,20 @@ import { Cart } from './pages/cart/cart';
 import { Checkout } from './pages/checkout/checkout';
 import { Error } from './pages/error/error';
 import { Register } from './pages/register/register';
+import { Login } from './pages/login/login';
 
 export const routes: Routes = [
     { 
     path: 'home', 
     component: Home
+    },
+    { 
+    path: 'login', 
+    component:Login
+    },
+    { 
+    path: 'register', 
+    component:Register
     },
     { 
     path: 'products',
@@ -27,10 +36,6 @@ export const routes: Routes = [
     { 
     path: 'checkout',
     component:Checkout
-    },
-    { 
-    path: 'register', 
-    component:Register
     },
     { 
     path: '404', 

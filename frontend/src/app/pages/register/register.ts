@@ -10,8 +10,9 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from'@angular
 export class Register {
   formdata = new FormGroup({
     name: new FormControl('' ,[Validators.required, Validators.minLength(3)]),
+    username: new FormControl('' ,[Validators.required, Validators.minLength(3)]),
     email: new FormControl('',[Validators.required, Validators.email] ),
-    password: new FormControl('',[Validators.required, Validators.minLength(8)])
+    password: new FormControl('',[Validators.required, Validators.minLength(8)]),
 
   });
 

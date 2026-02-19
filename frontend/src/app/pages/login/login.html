@@ -1,0 +1,53 @@
+<div class="form form-login">
+
+    <form 
+    [formGroup]="formdata"
+    (ngSubmit)="onSubmit()"
+    class="form-new-login"
+    >
+
+        <div class="field">
+            <label for="login-email">Email</label>
+            <input type="email" formControlName="email" id="login-email" placeholder="Ej: correo12@gmail.com"/>
+            <div class="errors">
+
+                @if(formdata.get('email'); as emailLogin ){
+                    @if( emailLogin.invalid && (emailLogin.touched || emailLogin.dirty) ){
+                         @if(emailLogin.errors?.['required']){
+                                <small>Campo obligatorio</small>
+                            }
+                            @if(emailLogin.errors?.['email']){
+                                <small> Email invalido </small>
+                            }
+                    }
+                }
+            </div>
+
+        </div>
+        <div class="field">
+            <label for="login-password">Password</label>
+            <input type="password" formControlName="password" id="login-password" />
+            <div class="errors">
+                @if(formdata.get('password'); as passwordLogin ){
+                    @if( passwordLogin.invalid && (passwordLogin.touched || passwordLogin.dirty) ){
+                        @if(passwordLogin.errors?.['required']){
+                            <small>Campo obligatorio</small>
+                        }
+                        @if(passwordLogin.errors?.['minlength']){
+                            <small>  Mínimo {{ passwordLogin.errors?.['minlength'].requiredLength }} caracteres </small>
+                        }
+                    }
+                }
+
+            </div>
+
+        </div>
+
+        <div class="field">
+            <button type="submit" class="btn-submit" [disabled]="formdata.invalid">Login</button>
+        </div>
+
+
+    </form>
+</div>
+

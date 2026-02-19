@@ -25,6 +25,24 @@
         </div>
 
         <div class="field">
+            <label for="register-username">Username</label>
+            <input type="text" formControlName="username" id="register-username" placeholder="Ej: David"/>
+            <div class="errors">
+                @if(formdata.get('username'); as usernameRegistered ){
+                    @if( usernameRegistered.invalid && (usernameRegistered.touched || usernameRegistered.dirty) ){
+                        @if(usernameRegistered.errors?.['required']){
+                            <small>Campo obligatorio</small>
+                        }
+                        @if(usernameRegistered.errors?.['minlength']){
+                            <small> Mínimo {{  usernameRegistered.errors?.['minlength'].requiredLength }} caracteres</small>
+                        }
+                    }
+                }
+
+            </div>
+        </div>
+
+        <div class="field">
             <label for="register-email">Email</label>
             <input type="email" formControlName="email" id="register-email" placeholder="Ej: correo12@gmail.com"/>
             <div class="errors">
@@ -62,7 +80,7 @@
         </div>
 
         <div class="field">
-            <button type="submit" class="btn-submit">Register</button>
+            <button type="submit" class="btn-submit" [disabled]="formdata.invalid">Register</button>
         </div>
 
 
