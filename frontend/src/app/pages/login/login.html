@@ -6,6 +6,8 @@
     class="form-new-login"
     >
 
+    <!-- campo email-login -->
+
         <div class="field">
             <label for="login-email">Email</label>
             <input type="email" formControlName="email" id="login-email" placeholder="Ej: correo12@gmail.com"/>
@@ -24,9 +26,12 @@
             </div>
 
         </div>
+
+        <!-- campo password-login -->
+
         <div class="field">
             <label for="login-password">Password</label>
-            <input type="password" formControlName="password" id="login-password" />
+            <input type="password" formControlName="password" id="login-password" autocomplete="off" />
             <div class="errors">
                 @if(formdata.get('password'); as passwordLogin ){
                     @if( passwordLogin.invalid && (passwordLogin.touched || passwordLogin.dirty) ){
@@ -42,6 +47,12 @@
             </div>
 
         </div>
+
+        <div class="message">
+            <span>{{message}}</span>
+        </div>
+
+        <!-- campo login-botton -->
 
         <div class="field">
             <button type="submit" class="btn-submit" [disabled]="formdata.invalid">Login</button>

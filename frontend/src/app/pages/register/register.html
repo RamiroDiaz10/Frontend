@@ -6,6 +6,8 @@
     class="form-new-register"
     >
 
+    <!-- campo registered name -->
+
         <div class="field">
             <label for="register-name">Name</label>
             <input type="text" formControlName="name" id="register-name" placeholder="Ej: David"/>
@@ -23,6 +25,8 @@
 
             </div>
         </div>
+    
+        <!-- campo registered username -->
 
         <div class="field">
             <label for="register-username">Username</label>
@@ -42,6 +46,8 @@
             </div>
         </div>
 
+        <!-- campo registered email -->
+
         <div class="field">
             <label for="register-email">Email</label>
             <input type="email" formControlName="email" id="register-email" placeholder="Ej: correo12@gmail.com"/>
@@ -60,9 +66,13 @@
             </div>
 
         </div>
+
+        <!-- campo registered password -->
+
+
         <div class="field">
             <label for="register-password">Password</label>
-            <input type="password" formControlName="password" id="register-password" />
+            <input type="password" formControlName="password" id="register-password" autocomplete="off"/>
             <div class="errors">
                 @if(formdata.get('password'); as passwordRegistered ){
                     @if( passwordRegistered.invalid && (passwordRegistered.touched || passwordRegistered.dirty) ){
@@ -78,6 +88,41 @@
             </div>
 
         </div>
+
+        <!-- campo registered role -->
+
+
+         <div class="field">
+            <label for="register-role">Role</label>
+            <select formControlName="role" id="register-role">
+                <option value="">Select Role </option>
+                <option value="admin">Admin </option>
+                <option value="colaborator">Colaborator</option>
+                <option value="registered">Registered</option>
+
+            </select>
+
+            <div class="errors">
+                @if(formdata.get('role'); as roleRegistered ){
+                    @if( roleRegistered.invalid && (roleRegistered.touched || roleRegistered.dirty) ){
+                        @if(roleRegistered.errors?.['required']){
+                            <small>Campo obligatorio</small>
+                        }
+                    }
+                }
+
+            </div>
+
+        </div>
+
+        <!-- campo message -->
+
+        <div class="fiel-message">
+            <span>{{message}}</span>
+        </div>
+
+        <!-- campo registered booton -->
+
 
         <div class="field">
             <button type="submit" class="btn-submit" [disabled]="formdata.invalid">Register</button>
