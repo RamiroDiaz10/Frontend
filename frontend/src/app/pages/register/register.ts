@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from'@angular/forms';
-import { Auth } from '../../service/auth';
+import { Auth } from '../../core/service/auth';
 import { Subscription } from 'rxjs';
 
 @Component({

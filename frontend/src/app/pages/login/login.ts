@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Auth } from '../../service/auth';
+import { Auth } from '../../core/service/auth';
 import { Subscription } from 'rxjs';
+import {  Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,11 @@ export class Login {
 
   private subscription!: Subscription;
 
-  constructor(private auth: Auth){}
+  constructor(
+    private auth: Auth,
+    private router: Router
+
+  ){}
 
   ngOnInit(): void {
     console.info('loginComponent inicializado');
@@ -42,9 +47,11 @@ export class Login {
         console.log(data);
 
         this.message = data;
-
+        
         setTimeout(() => {
-          this.message = ''
+          this.message = '';
+          this.router.navigateByUrl('dashboard')
+
         }, 3000);
 
         this.formdata.reset();

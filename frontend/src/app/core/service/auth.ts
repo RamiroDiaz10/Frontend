@@ -1,11 +1,24 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, map, of,  } from 'rxjs';
+import { catchError, map, of, tap,  } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class Auth {
+  private authUserData = null;
+
+  get userData (): any {
+    
+    const storageData = localStorage.getItem('user');
+    console.log(storageData)
+    if(storageData){
+      this.authUserData = JSON.parse(storageData);
+    }
+
+    return this.authUserData;
+
+  }
 
   constructor(private http: HttpClient) {}
 
@@ -30,6 +43,19 @@ export class Auth {
   loginUser (credentials: any){
     return this.http.post<any>('http://localhost:3000/api/v1/auth/login', credentials)
     .pipe(
+
+      tap((data : any)=>{
+        console.log(data);
+        if(data.user){
+          localStorage.setItem( 'user', JSON.stringify( data.user));
+          this.authUserData = data.user;
+        }
+
+        localStorage.setItem('X-Token', data.token);
+
+        
+      }),
+
       map( (response: any) => {
         return response.msg;
       }),
@@ -42,5 +68,17 @@ export class Auth {
       })
 
     );
+  }
+
+  logout(){
+    if(this.authUserData){
+      this.authUserData = null;
+      localStorage.removeItem('user');
+      localStorage.removeItem('X-Token');
+      return of( true);
+    }
+    return of( false);
+
+
   }
 }

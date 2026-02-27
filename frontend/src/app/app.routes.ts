@@ -7,6 +7,7 @@ import { Checkout } from './pages/checkout/checkout';
 import { Error } from './pages/error/error';
 import { Register } from './pages/register/register';
 import { Login } from './pages/login/login';
+import { Dashboard } from './pages/dashboard/dashboard';
 
 export const routes: Routes = [
     { 
@@ -20,6 +21,10 @@ export const routes: Routes = [
     { 
     path: 'register', 
     component:Register
+    },
+     { 
+    path: 'dashboard', 
+    component:Dashboard
     },
     { 
     path: 'products',
