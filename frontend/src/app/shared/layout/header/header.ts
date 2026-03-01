@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from "@angular/router";
 import { Auth } from '../../../core/service/auth';
-import { AsyncPipe } from '@angular/common';
+import { DataAuthUser } from '../../../models/user-model';
 
 @Component({
   selector: 'app-header',
@@ -16,11 +16,11 @@ export class Header {
     private router: Router
   ){}
 
-  get userData(): any {
+  get userData(): DataAuthUser | null {
     return this.auth.userData;
   }
 
-  onLogout(){
+  onLogout(): void{
     this.auth.logout().subscribe( data => {
       console.log(data, 'Sesion finalizada');
       this.router.navigateByUrl('login')

@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from'@angular/forms';
 import { Auth } from '../../core/service/auth';
 import { Subscription } from 'rxjs';
+import { DataAuthUser } from '../../models/user-model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -10,7 +12,7 @@ import { Subscription } from 'rxjs';
   styleUrl: './register.css', 
 })
 export class Register {
-  message: any = '';
+  message: string = '';
 
   formdata = new FormGroup({
     name: new FormControl('' ,[Validators.required, Validators.minLength(3)]),      //Validators.pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/) permite ene espacio tildes letras 
@@ -23,13 +25,18 @@ export class Register {
   });
   private subscription!: Subscription;
 
-  constructor(private auth: Auth){}
+  constructor(
+    private auth: Auth,
+    private router: Router
 
-  ngOnInit(){
+
+  ){}
+
+  ngOnInit(): void{
       console.info(' Registercomponent inicializado');
   }
 
-  ngOnDestroy(){
+  ngOnDestroy(): void{
       console.info(' Registercomponent destruido');
     if(this.subscription){
       this.subscription.unsubscribe();
@@ -37,17 +44,27 @@ export class Register {
     
   }
 
-  handleSubmit(){
+  handleSubmit(): void {
     if(this.formdata.valid){
       console.log( this.formdata.value);
 
-      this.subscription = this.auth.registerNewUser(this.formdata.value).subscribe((data: any) => {
+      const inputData: DataAuthUser ={
+        name: this.formdata.value.name ?? '',
+        username: this.formdata.value.username ?? '',
+        email: this.formdata.value.email ?? '',
+        password: this.formdata.value.password ?? '',
+        role: this.formdata.value.role ?? '',
+      };
+
+
+      this.subscription = this.auth.registerNewUser(inputData).subscribe((data: any) => {
         console.log(data);
 
         this.message = data;
 
         setTimeout(()=> {
           this.message = '';
+          this.router.navigateByUrl('login');
         }, 3000)
         this.formdata.reset();
       });

@@ -3,6 +3,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Auth } from '../../core/service/auth';
 import { Subscription } from 'rxjs';
 import {  Router } from '@angular/router';
+import { DataAuthUser } from '../../models/user-model';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +12,7 @@ import {  Router } from '@angular/router';
   styleUrl: './login.css',
 })
 export class Login {
-  message: any = '';
+  message: string = '';
 
   formdata = new FormGroup ({
 
@@ -40,10 +41,16 @@ export class Login {
     }    
   }
 
-  onSubmit(){
+  onSubmit(): void {
     if(this.formdata.valid){
-      console.log(this.formdata.value);
-      this.auth.loginUser(this.formdata.value).subscribe( (data)=>{ 
+      console.info(this.formdata.value);
+
+      const inputData: DataAuthUser = {
+        email: this.formdata.value.email ?? '',
+        password: this.formdata.value.password ?? ''
+      } 
+
+      this.auth.loginUser(inputData).subscribe( (data)=>{ 
         console.log(data);
 
         this.message = data;

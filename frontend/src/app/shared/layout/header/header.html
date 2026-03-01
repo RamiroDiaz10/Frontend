@@ -1,7 +1,7 @@
 <nav class="nav-var">
     <ul>
         @if(userData){
-            <li class="menu-item"> <span>Hello {{userData.name}}</span> </li>
+            <li class="menu-item"> <span>Hello, {{userData.name}}</span> </li>
             <li><button class="btn-logout" (click)="onLogout()">Cerrar sesion</button></li>
         }
         @else {
