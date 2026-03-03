@@ -84,7 +84,7 @@ export class Auth {
 
   }
 
-  verifyUser(){
+  verifyUser(): Observable<boolean>{
     const token = localStorage.getItem('X-Token') ?? '';
     if(!token){
       return of(false);
@@ -108,5 +108,11 @@ export class Auth {
       })
     )
 
+  }
+
+  hasRole(expectRoles: string[]): boolean {
+    const userRoles = this.authUserData?.role ? this.authUserData.role : '';
+
+    return expectRoles.includes(userRoles);
   }
 }

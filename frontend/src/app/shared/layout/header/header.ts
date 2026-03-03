@@ -12,7 +12,7 @@ import { DataAuthUser } from '../../../models/user-model';
 export class Header {
   
   constructor(
-    private auth: Auth,
+    public auth: Auth,
     private router: Router
   ){}
 

@@ -52,15 +52,19 @@ export class Login {
 
       this.auth.loginUser(inputData).subscribe( (data)=>{ 
         console.log(data);
+        if(!data){
+          this.router.navigateByUrl('login')
+        }else{
 
-        this.message = data;
-
-        
-        setTimeout(() => {
-          this.message = '';
-          this.router.navigateByUrl('dashboard')
-
-        }, 3000);
+          this.message = data;
+  
+          
+          setTimeout(() => {
+            this.message = '';
+            this.router.navigateByUrl('dashboard')
+  
+          }, 3000);
+        }
 
         this.formdata.reset();
       });

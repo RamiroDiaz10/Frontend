@@ -1,22 +1,33 @@
 <nav class="nav-var">
     <ul>
         @if(userData){
-            <li class="menu-item"> <span>Hello, {{userData.name}}</span> </li>
-            <li><button class="btn-logout" (click)="onLogout()">Cerrar sesion</button></li>
+            <li class="menu-item">
+                <span>Hello, {{userData.name}}</span>
+                <small> {{userData.role}}</small>
+                </li>
+                <li><button class="btn-logout" (click)="onLogout()">Cerrar sesion</button></li>
+
+            @if (auth.hasRole(['admin', 'colaborator', 'registered'])) {
+                <li><a routerLink="/dashboard/products" routerLinkActive="active-link">Products</a></li>
+            }
+            @if (auth.hasRole(['admin', 'colaborator'])) {
+            <li><a routerLink="/dashboard/categories" routerLinkActive="active-link">Categories</a></li>
+            }
+            @if (auth.hasRole(['admin'])) {
+            <li><a routerLink="/dashboard/users" routerLinkActive="active-link">Users</a></li>
+            }
+
         }
         @else {
             <li><a routerLink="/home" routerLinkActive="active-link">Home</a></li>
             <li><a routerLink="/register" routerLinkActive="active-link">Register</a></li>
             <li><a routerLink="/login" routerLinkActive="active-link">Login</a></li>
         }
+        <li><a routerLink="/checkout" routerLinkActive="active-link">Checkout</a></li>
 
     </ul>    
     
         
-        <!-- <li><a routerLink="/products" routerLinkActive="active-link">Products</a></li>
-        <li><a routerLink="/product-detail" routerLinkActive="active-link">product-detail</a></li>
-        <li><a routerLink="/cart" routerLinkActive="active-link">cart</a></li>
-        <li><a routerLink="/checkout" routerLinkActive="active-link">checkout</a></li> -->
 
     
 </nav>
