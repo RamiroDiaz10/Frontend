@@ -1,13 +1,13 @@
 import { Routes } from '@angular/router';
-import { Home } from './pages/home/home';
-import { Products } from './pages/products/products';
-import { ProductDetail } from './pages/product-detail/product-detail';
-import { Cart } from './pages/cart/cart';
-import { Checkout } from './pages/checkout/checkout';
-import { Error } from './pages/error/error';
-import { Register } from './pages/register/register';
-import { Login } from './pages/login/login';
-import { Dashboard } from './pages/dashboard/dashboard';
+
+import { Home } from './pages/public/home/home';
+import { Register } from './pages/public/register/register';
+import { Login } from './pages/public/login/login';
+import { Dashboard } from './pages/private/dashboard/dashboard';
+import { Products } from './pages/private/products/products';
+import { Checkout } from './pages/public/checkout/checkout';
+import { PageNotFound } from './pages/public/page-not-found/page-not-found';
+import { authGuard } from './core/guards/auth-guard';
 
 export const routes: Routes = [
     { 
@@ -22,29 +22,28 @@ export const routes: Routes = [
     path: 'register', 
     component:Register
     },
-     { 
-    path: 'dashboard', 
-    component:Dashboard
-    },
-    { 
-    path: 'products',
-    component:Products
-    },
-    {
-    path: 'product-detail',
-    component:ProductDetail
-    },
-    { 
-    path: 'cart',
-    component:Cart
-    },
     { 
     path: 'checkout',
     component:Checkout
     },
+     { 
+    path: 'dashboard', 
+    component:Dashboard,
+    canActivate: [authGuard]
+    },
+    { 
+    path: 'dashboard/products',
+    component:Products,
+    canActivate: [authGuard]
+    },
+    { 
+    path: 'dashboard/categories',
+    component:Products,
+    canActivate: [authGuard]
+    },
     { 
     path: '404', 
-    component:Error
+    component:PageNotFound
     },
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: '**', redirectTo: '404', pathMatch: 'full' }

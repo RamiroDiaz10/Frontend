@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Auth } from '../../core/service/auth';
+import { Auth } from '../../../core/service/auth';
 import { Subscription } from 'rxjs';
 import {  Router } from '@angular/router';
-import { DataAuthUser } from '../../models/user-model';
+import { DataAuthUser } from '../../../models/user-model';
 
 @Component({
   selector: 'app-login',
@@ -54,6 +54,7 @@ export class Login {
         console.log(data);
 
         this.message = data;
+
         
         setTimeout(() => {
           this.message = '';

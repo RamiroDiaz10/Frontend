@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of, tap,  } from 'rxjs';
 import { DataAuthUser } from '../../models/user-model';
@@ -21,7 +21,7 @@ export class Auth {
     return this.authUserData;
 
   }
-
+  
   constructor(private http: HttpClient) {}
 
   registerNewUser(newUser: DataAuthUser ): Observable <string>{
@@ -81,6 +81,32 @@ export class Auth {
     }
     return of( false);
 
+
+  }
+
+  verifyUser(){
+    const token = localStorage.getItem('X-Token') ?? '';
+    if(!token){
+      return of(false);
+    }
+
+    const headers = new HttpHeaders().set( 'X-Token', token );
+
+    return this.http.get<ResponseApi>('http://localhost:3000/api/v1/auth/renew-token', {headers})
+    .pipe(
+      map(response => {
+        console.log(response);
+        localStorage.setItem('X-Token', response.token!);
+        localStorage.setItem('user', JSON.stringify(response.user!));
+        return true;
+      }),
+      catchError(error => {
+        console.log(error);
+        localStorage.removeItem( 'X-Token' );
+        localStorage.removeItem( 'user' );
+        return of(false);
+      })
+    )
 
   }
 }
