@@ -5,13 +5,15 @@ import { Register } from './pages/public/register/register';
 import { Login } from './pages/public/login/login';
 import { Dashboard } from './pages/private/dashboard/dashboard';
 import { Products } from './pages/private/products/products';
-import { Categories } from './pages/private/categories/categories';
+import { CategoryList } from './pages/private/categories/category-list/category-list';
+import { Users } from './pages/private/users/users';
 import { Checkout } from './pages/public/checkout/checkout';
 import { PageNotFound } from './pages/public/page-not-found/page-not-found';
-import { Users } from './pages/private/users/users';
 
 import { authGuard } from './core/guards/auth-guard';
 import { roleGuard } from './core/guards/role-guard';
+import { CategoryNewForm } from './pages/private/categories/category-new-form/category-new-form';
+import { CategoryEditForm } from './pages/private/categories/category-edit-form/category-edit-form';
 
 export const routes: Routes = [
     { 
@@ -45,10 +47,21 @@ export const routes: Routes = [
     },
     { 
     path: 'dashboard/categories',
-    component:Categories,
+    component:CategoryList,
     canActivate: [authGuard, roleGuard],
     data: { expectRoles: [ 'admin', 'colaborator' ] }
-
+    },
+    { 
+    path: 'dashboard/category/new',
+    component:CategoryNewForm,
+    canActivate: [authGuard, roleGuard],
+    data: { expectRoles: [ 'admin', 'colaborator' ] }
+    },
+     { 
+    path: 'dashboard/category/edit',
+    component:CategoryEditForm,
+    canActivate: [authGuard, roleGuard],
+    data: { expectRoles: [ 'admin', 'colaborator' ] }
     },
     { 
     path: 'dashboard/users',

@@ -13,21 +13,21 @@ import { DataAuthUser } from '../../../models/user-model';
 })
 export class Login {
   message: string = '';
+  formData!: FormGroup;
+  private subscription!: Subscription;
+  
+  constructor(
+    private httpAuth: Auth,
+    private router: Router
 
-  formdata = new FormGroup ({
-
+  ){
+    this.formData = new FormGroup ({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('',[Validators.required, Validators.minLength(8)])
 
   });
 
-  private subscription!: Subscription;
-
-  constructor(
-    private auth: Auth,
-    private router: Router
-
-  ){}
+  }
 
   ngOnInit(): void {
     console.info('loginComponent inicializado');
@@ -42,33 +42,43 @@ export class Login {
   }
 
   onSubmit(): void {
-    if(this.formdata.valid){
-      console.info(this.formdata.value);
+    if(this.formData.valid) {
+      console.log(this.formData.value);
 
       const inputData: DataAuthUser = {
-        email: this.formdata.value.email ?? '',
-        password: this.formdata.value.password ?? ''
+        email: this.formData.value.email ?? '',
+        password: this.formData.value.password ?? ''
       } 
 
-      this.auth.loginUser(inputData).subscribe( (data)=>{ 
-        console.log(data);
-        if(!data){
-          this.router.navigateByUrl('login')
-        }else{
-
+      this.httpAuth.loginUser(inputData).subscribe({
+        next: data => {
+          console.log('Login successful', data);
           this.message = data;
-  
           
-          setTimeout(() => {
+          setTimeout(()=> {
             this.message = '';
-            this.router.navigateByUrl('dashboard')
-  
-          }, 3000);
+            this.router.navigateByUrl('/dashboard');
+          }, 2000)  // Navigate to dashboard after login
+
+        },
+        error: error => {
+          console.error('There was an error during the login!', error);
+        },
+        complete: () => {
+          this.formData.reset();
+
         }
-
-        this.formdata.reset();
       });
-    }
 
+    } else {
+      console.log("Form is invalid");
+      this.formData.markAllAsTouched();
+    }
   }
+
+  onReset() {
+    this.formData.reset();
+    this.formData.markAsPristine();
+  }
+
 }

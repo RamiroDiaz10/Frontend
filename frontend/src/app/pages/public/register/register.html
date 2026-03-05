@@ -1,7 +1,7 @@
 <div class="form form-register">
 
     <form 
-    [formGroup]="formdata"
+    [formGroup]="formData"
     (ngSubmit)="handleSubmit()"
     class="form-new-register"
     >
@@ -12,7 +12,7 @@
             <label for="register-name">Name</label>
             <input type="text" formControlName="name" id="register-name" placeholder="Ej: David"/>
             <div class="errors">
-                @if(formdata.get('name'); as nameRegistered ){
+                @if(formData.get('name'); as nameRegistered ){
                     @if( nameRegistered.invalid && (nameRegistered.touched || nameRegistered.dirty) ){
                         @if(nameRegistered.errors?.['required']){
                             <small>Campo obligatorio</small>
@@ -32,7 +32,7 @@
             <label for="register-username">Username</label>
             <input type="text" formControlName="username" id="register-username" placeholder="Ej: David"/>
             <div class="errors">
-                @if(formdata.get('username'); as usernameRegistered ){
+                @if(formData.get('username'); as usernameRegistered ){
                     @if( usernameRegistered.invalid && (usernameRegistered.touched || usernameRegistered.dirty) ){
                         @if(usernameRegistered.errors?.['required']){
                             <small>Campo obligatorio</small>
@@ -53,7 +53,7 @@
             <input type="email" formControlName="email" id="register-email" placeholder="Ej: correo12@gmail.com"/>
             <div class="errors">
 
-                @if(formdata.get('email'); as emailRegistered ){
+                @if(formData.get('email'); as emailRegistered ){
                     @if( emailRegistered.invalid && (emailRegistered.touched || emailRegistered.dirty) ){
                          @if(emailRegistered.errors?.['required']){
                                 <small>Campo obligatorio</small>
@@ -74,7 +74,7 @@
             <label for="register-password">Password</label>
             <input type="password" formControlName="password" id="register-password" autocomplete="off"/>
             <div class="errors">
-                @if(formdata.get('password'); as passwordRegistered ){
+                @if(formData.get('password'); as passwordRegistered ){
                     @if( passwordRegistered.invalid && (passwordRegistered.touched || passwordRegistered.dirty) ){
                         @if(passwordRegistered.errors?.['required']){
                             <small>Campo obligatorio</small>
@@ -103,7 +103,7 @@
             </select>
 
             <div class="errors">
-                @if(formdata.get('role'); as roleRegistered ){
+                @if(formData.get('role'); as roleRegistered ){
                     @if( roleRegistered.invalid && (roleRegistered.touched || roleRegistered.dirty) ){
                         @if(roleRegistered.errors?.['required']){
                             <small>Campo obligatorio</small>
@@ -125,7 +125,7 @@
 
 
         <div class="field">
-            <button type="submit" class="btn-submit" [disabled]="formdata.invalid">Register</button>
+            <button type="submit" class="btn-submit" [disabled]="formData.invalid">Register</button>
         </div>
 
 

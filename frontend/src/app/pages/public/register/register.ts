@@ -4,6 +4,7 @@ import { Auth } from '../../../core/service/auth';
 import { Subscription } from 'rxjs';
 import { DataAuthUser } from '../../../models/user-model';
 import { Router } from '@angular/router';
+import { error } from 'console';
 
 @Component({
   selector: 'app-register',
@@ -13,24 +14,22 @@ import { Router } from '@angular/router';
 })
 export class Register {
   message: string = '';
-
-  formdata = new FormGroup({
-    name: new FormControl('' ,[Validators.required, Validators.minLength(3)]),      //Validators.pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/) permite ene espacio tildes letras 
-    username: new FormControl('' ,[Validators.required, Validators.minLength(3)]),   //Validators.pattern(/^[a-zA-Z0-9_]+$/)permite alfanumericos inplmentar luego
-    email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('',[Validators.required, Validators.minLength(8)]),   // Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.#_-])[A-Za-z\d@$!%*?&.#_-]+$/) debe tener almenos 1 mayus etc.
-    role: new FormControl('registered',[Validators.required]),
-
-
-  });
+  formData!: FormGroup
+  
   private subscription!: Subscription;
 
   constructor(
     private auth: Auth,
     private router: Router
-
-
-  ){}
+  ){
+      this.formData = new FormGroup({
+      name: new FormControl('' ,[Validators.required, Validators.minLength(3)]),      //Validators.pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/) permite ene espacio tildes letras 
+      username: new FormControl('' ,[Validators.required, Validators.minLength(3)]),   //Validators.pattern(/^[a-zA-Z0-9_]+$/)permite alfanumericos inplmentar luego
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('',[Validators.required, Validators.minLength(8)]),   // Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.#_-])[A-Za-z\d@$!%*?&.#_-]+$/) debe tener almenos 1 mayus etc.
+      role: new FormControl('registered',[Validators.required]),
+      });
+    }
 
   ngOnInit(): void{
       console.info(' Registercomponent inicializado');
@@ -45,32 +44,44 @@ export class Register {
   }
 
   handleSubmit(): void {
-    if(this.formdata.valid){
-      console.log( this.formdata.value);
+    if(this.formData.valid){
+      console.log( this.formData.value);
 
       const inputData: DataAuthUser ={
-        name: this.formdata.value.name ?? '',
-        username: this.formdata.value.username ?? '',
-        email: this.formdata.value.email ?? '',
-        password: this.formdata.value.password ?? '',
-        role: this.formdata.value.role ?? '',
+        name: this.formData.value.name ?? '',
+        username: this.formData.value.username ?? '',
+        email: this.formData.value.email ?? '',
+        password: this.formData.value.password ?? '',
+        role: this.formData.value.role ?? '',
       };
 
 
-      this.subscription = this.auth.registerNewUser(inputData).subscribe((data: any) => {
-        console.log(data);
-
-        this.message = data;
-
-        setTimeout(()=> {
-          this.message = '';
-          this.router.navigateByUrl('login');
-        }, 3000)
-        this.formdata.reset();
+      this.subscription = this.auth.registerNewUser(inputData).subscribe({
+        next:(data) => {
+          console.log(data);
+          this.message = data;
+  
+          setTimeout(()=> {
+            this.message = '';
+            this.router.navigateByUrl('/login');
+          }, 2000)
+        },
+        error: (error) => {
+          console.error("Registration failed", error);
+        },
+        complete: () =>{
+          this.formData.reset();
+        }
       });
+    }else{
+      console.log("Form is invalid");
+      this.formData.markAllAsTouched();
     }
 
   }
-
+  onReset() {
+    this.formData.reset();
+    this.formData.markAsPristine();
+  }
 
 }

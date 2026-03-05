@@ -1,7 +1,7 @@
-<div class="form form-login">
+<div class="page form-login">
 
     <form 
-    [formGroup]="formdata"
+    [formGroup]="formData"
     (ngSubmit)="onSubmit()"
     class="form-new-login"
     >
@@ -13,7 +13,7 @@
             <input type="email" formControlName="email" id="login-email" placeholder="Ej: correo12@gmail.com"/>
             <div class="errors">
 
-                @if(formdata.get('email'); as emailLogin ){
+                @if(formData.get('email'); as emailLogin ){
                     @if( emailLogin.invalid && (emailLogin.touched || emailLogin.dirty) ){
                          @if(emailLogin.errors?.['required']){
                                 <small>Campo obligatorio</small>
@@ -33,7 +33,7 @@
             <label for="login-password">Password</label>
             <input type="password" formControlName="password" id="login-password" autocomplete="off" />
             <div class="errors">
-                @if(formdata.get('password'); as passwordLogin ){
+                @if(formData.get('password'); as passwordLogin ){
                     @if( passwordLogin.invalid && (passwordLogin.touched || passwordLogin.dirty) ){
                         @if(passwordLogin.errors?.['required']){
                             <small>Campo obligatorio</small>
@@ -55,7 +55,7 @@
         <!-- campo login-botton -->
 
         <div class="field">
-            <button type="submit" class="btn-submit" [disabled]="formdata.invalid">Login</button>
+            <button type="submit" class="btn-submit" [disabled]="formData.invalid">Login</button>
         </div>
 
 

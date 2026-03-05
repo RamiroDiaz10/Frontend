@@ -1,0 +1,164 @@
+<div class="form container">
+
+    <form
+    class="form form-edit-category"
+    [formGroup]="formData"
+    (ngSubmit)="onSubmit()"
+    >
+        <h1>Edit Category</h1>
+
+    <!-- campo category edit name -->
+
+        <div class="field">
+            <label for="edit-name" class="label">Edit Name</label>
+            <input
+                class="input input-edit-name" 
+                type="text"
+                formControlName="name" 
+                id="edit-name" 
+                placeholder="Ej: Muñecas de trapo"/>
+
+            <div class="errors">
+                @if (formData.get('name'); as editCategoryName) {
+                    @if(editCategoryName.invalid && (editCategoryName.touched || editCategoryName.dirty)){
+                        @if (editCategoryName.errors?.['required']) {
+                            <small>Campo obligatorio</small>
+                        }
+                        @if (editCategoryName.errors?.['minlength']) {
+                        <small> Mínimo {{  editCategoryName.errors?.['minlength'].requiredLength }} caracteres</small>
+
+                        }
+                    }
+                }
+            </div>
+        </div>
+    
+        <!-- campo category edit description -->
+
+        <div class="field">
+            <label for="edit-description" class="label">Description</label>
+            <textarea 
+                class="input input-edit-description" 
+                type="text" 
+                formControlName="description" 
+                id="edit-description" 
+                placeholder="Ej: Muñeca tradicional, color verde">
+            </textarea> 
+          <div class="errors">
+                @if (formData.get('description'); as editCategoryDescription) {
+                    @if(editCategoryDescription.invalid && (editCategoryDescription.touched || editCategoryDescription.dirty)){
+                        @if (editCategoryDescription.errors?.['required']) {
+                            <small>Campo obligatorio</small>
+                        }
+                        @if (editCategoryDescription.errors?.['maxlength']) {
+                        <small> Mínimo {{  editCategoryDescription.errors?.['maxlength'].requiredLength }} caracteres</small>
+
+                        }
+                    }
+                }
+            </div>
+        </div>
+
+        <!-- campo category edit image -->
+
+        <div class="field">
+            <label for="edit-image" class="label">Image</label>
+            <input
+                type="text"
+                class="input input-edit-image"
+                id="edit-image"
+                formControlName="image_url"
+                placeholder="Ej: https://www.example.com/image.jpg"
+            />  
+            <div class="errors">
+                @if (formData.get('image'); as editCategoryImage) {
+                    @if(editCategoryImage.invalid && (editCategoryImage.touched || editCategoryImage.dirty)){
+                        @if (editCategoryImage.errors?.['required']) {
+                            <small>Campo obligatorio</small>
+                        }
+                        @if (editCategoryImage.errors?.['maxlength']) {
+                        <small> Mínimo {{  editCategoryImage.errors?.['maxlength'].requiredLength }} caracteres</small>
+
+                        }
+                    }
+                }
+            </div>>
+
+        </div>
+
+        
+        <!-- campo category edit stock -->
+        
+        
+        <div class="field">
+            <label for="edit-stock" class="label" >Stock</label>
+            <input 
+            class="input input-edit-stock"
+            type="number" 
+            formControlName="stock" 
+            id="edit-stock" 
+            placeholder="ej: 10"/>
+            <div class="errors">
+                @if (formData.get('stock'); as editCategoryStock) {
+                    @if(editCategoryStock.invalid && (editCategoryStock.touched || editCategoryStock.dirty)){
+                        @if (editCategoryStock.errors?.['required']) {
+                            <small>Campo obligatorio</small>
+                        }
+                        @if (editCategoryStock.errors?.['min']) {
+                            <small> Mínimo {{  editCategoryStock.errors?.['min'].requiredLength }} caracteres</small>
+                            
+                        }
+                    }
+                }
+            </div>
+            
+        </div>
+        
+        <!-- campo category edit isActive -->
+
+        <div class="field">
+
+            <label for="category-status" class="label">Status</label>
+            <div class="status-option">
+                <input 
+                type="radio"
+                class="input-product-status input-product-status--active"
+                formControlName="isActive"
+                id="product-status-active"
+                [value]="true"
+                >
+                <label for="product-status-active" class="product-state-active">Active</label>
+
+                <input 
+                type="radio"
+                class="input-product-status input-product-status--notactive"
+                formControlName="isActive"
+                id="product-status-notactive"
+                [value]="false"
+                >
+                <label for="product-status-notactive" class="product-status-active">Not Active</label>
+            </div>
+            
+
+        </div>
+        
+        <!-- campo message -->
+
+        <div class="fiel-message">
+            <span>Mensaje</span>
+        </div>
+
+        <!-- campo edit booton -->
+
+
+        <div class="form form-buttons">
+            <button type="submit" class="btn-submit" [disabled]="formData.invalid">Update</button> 
+            <button  type="reset"  class="btn-reset" >Cancel</button>
+
+        </div>
+
+
+    </form>
+</div>
+
+

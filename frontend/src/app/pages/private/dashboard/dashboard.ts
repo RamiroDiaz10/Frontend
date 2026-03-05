@@ -7,5 +7,7 @@ import { Component } from '@angular/core';
   styleUrl: './dashboard.css',
 })
 export class Dashboard {
-
+  constructor(){
+    
+  }
 }

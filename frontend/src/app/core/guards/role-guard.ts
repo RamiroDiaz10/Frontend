@@ -13,7 +13,7 @@ export const roleGuard: CanActivateFn = (route, state) => {
   const isAutorized = authUser.hasRole(roles);
 
   if(!isAutorized){
-    router.navigateByUrl('dashboard');
+    router.navigateByUrl('/login');
 
   }
   

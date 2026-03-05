@@ -3,12 +3,14 @@ import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of, tap,  } from 'rxjs';
 import { DataAuthUser } from '../../models/user-model';
 import { ResponseApi } from '../../models/response.model';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class Auth {
   private authUserData: null | DataAuthUser = null;
+  private router!: Router
 
   get userData (): null | DataAuthUser {
     
