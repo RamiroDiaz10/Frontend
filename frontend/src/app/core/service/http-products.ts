@@ -1,18 +1,20 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { catchError, map, of, Observable } from 'rxjs';
+
+import { catchError, map, Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export class HttpCategories {
-  private http = inject(HttpClient);
+export class HttpProducts {
+    private http = inject(HttpClient);
    
-  createCategory(categoryData: any):Observable<string> {
-    return this.http.post('http://localhost:3000/api/v1/category', categoryData)
+  createProduct(productData: any):Observable<string> {
+    return this.http.post('http://localhost:3000/api/v1/products', productData)
     .pipe(
       map((response: any) => {
-        return response.msg || 'Category created successfully';
+        console.info(response);
+        return response.msg || 'Product created successfully';
       }),
       catchError((error) => {
         if (error.error?.msg) {

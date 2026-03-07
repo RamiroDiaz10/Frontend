@@ -51,7 +51,7 @@
                             <small>Campo obligatorio</small>
                         }
                         @if (editCategoryDescription.errors?.['maxlength']) {
-                        <small> Mínimo {{  editCategoryDescription.errors?.['maxlength'].requiredLength }} caracteres</small>
+                        <small> Máximo {{  editCategoryDescription.errors?.['maxlength'].requiredLength }} caracteres</small>
 
                         }
                     }
@@ -67,7 +67,7 @@
                 type="text"
                 class="input input-edit-image"
                 id="edit-image"
-                formControlName="image_url"
+                formControlName="image"
                 placeholder="Ej: https://www.example.com/image.jpg"
             />  
             <div class="errors">
@@ -77,12 +77,12 @@
                             <small>Campo obligatorio</small>
                         }
                         @if (editCategoryImage.errors?.['maxlength']) {
-                        <small> Mínimo {{  editCategoryImage.errors?.['maxlength'].requiredLength }} caracteres</small>
+                        <small> Máximo {{  editCategoryImage.errors?.['maxlength'].requiredLength }} caracteres</small>
 
                         }
                     }
                 }
-            </div>>
+            </div>
 
         </div>
 
@@ -105,7 +105,7 @@
                             <small>Campo obligatorio</small>
                         }
                         @if (editCategoryStock.errors?.['min']) {
-                            <small> Mínimo {{  editCategoryStock.errors?.['min'].requiredLength }} caracteres</small>
+                            <small> Mínimo {{  editCategoryStock.errors?.['min'].requiredLength }} producto para stock </small>
                             
                         }
                     }
@@ -153,7 +153,7 @@
 
         <div class="form form-buttons">
             <button type="submit" class="btn-submit" [disabled]="formData.invalid">Update</button> 
-            <button  type="reset"  class="btn-reset" >Cancel</button>
+            <button  type="button"  class="btn-reset" (click)="onReset()">Cancel</button>
 
         </div>
 

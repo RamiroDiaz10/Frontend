@@ -18,7 +18,7 @@ export class Header {
   ){}
 
   get userData(): DataAuthUser | null {
-    return this.auth.userData;
+    return this.auth.getUser();
   }
 
   onLogout(): void{

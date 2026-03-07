@@ -10,6 +10,12 @@
             @if (auth.hasRole(['admin', 'colaborator', 'registered'])) {
                 <li><a routerLink="/dashboard/products" routerLinkActive="active-link">Products</a></li>
             }
+            @if (auth.hasRole(['admin', 'colaborator', 'registered'])) {
+                <li><a routerLink="/dashboard/product/new" routerLinkActive="active-link">New Product</a></li>
+            }
+            @if (auth.hasRole(['admin', 'colaborator', 'registered'])) {
+                <li><a routerLink="/dashboard/product/edit" routerLinkActive="active-link">Edit Product</a></li>
+            }
             @if (auth.hasRole(['admin', 'colaborator'])) {
             <li><a routerLink="/dashboard/categories" routerLinkActive="active-link">Categories</a></li>
             }
@@ -21,6 +27,12 @@
             }
             @if (auth.hasRole(['admin'])) {
             <li><a routerLink="/dashboard/users" routerLinkActive="active-link">Users</a></li>
+            }
+            @if (auth.hasRole(['admin'])) {
+            <li><a routerLink="/dashboard/user/new" routerLinkActive="active-link">New User</a></li>
+            }
+            @if (auth.hasRole(['admin'])) {
+            <li><a routerLink="/dashboard/user/edit" routerLinkActive="active-link">Edit User</a></li>
             }
 
         }

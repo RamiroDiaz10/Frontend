@@ -1,8 +1,9 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 import { HttpCategories } from '../../../../core/service/http-categories';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-category-new-form',
@@ -11,10 +12,14 @@ import { Subscription } from 'rxjs';
   styleUrl: './category-new-form.css',
 })
 export class CategoryNewForm {
+  message: string = '';
   formData!: FormGroup;
   private subscription!: Subscription;
 
-  constructor(private httpCategories: HttpCategories){
+  constructor(
+    private httpCategories: HttpCategories,
+    private router: Router
+  ){
     this.formData = new FormGroup ({
       name: new FormControl('',[Validators.required, Validators.minLength(3)]),
       description: new FormControl('',[Validators.required, Validators.maxLength(100)]),
@@ -30,8 +35,30 @@ export class CategoryNewForm {
   }
 
   
-  onSubmit(){
-    
+  onSubmit(): void {
+    if(this.formData.valid){
+      console.log(this.formData.value);
+      this.httpCategories.createCategory(this.formData.value).subscribe({
+        next: data => {
+          console.log(data);
+          this.message = data;
+          setTimeout(() => {
+            this.message = '';
+            this.router.navigateByUrl('/dashboard/categories');
+          }, 2000);
+        },
+        error: error => {
+          console.error('Error creating category', error);
+        },
+        complete: () => {
+          console.info('process finished');
+          this.formData.reset();
+        }
+      });
+    }else {
+      console.warn('Form is invalid');
+      this.formData.markAllAsTouched();
+    }
   }
 
 
@@ -40,5 +67,14 @@ export class CategoryNewForm {
       this.subscription.unsubscribe();
     }
     
+  }
+  onReset(): void {
+    this.formData.setValue({
+      name: '',
+      description: '',
+      image: '',
+      stock: 1,
+      isActive: true
+    });
   }
 }

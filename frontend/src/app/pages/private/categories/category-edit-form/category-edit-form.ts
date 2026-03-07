@@ -21,7 +21,7 @@ export class CategoryEditForm {
       description: new FormControl('',[Validators.required, Validators.maxLength(100)]),
       image: new FormControl('',[Validators.required, Validators.maxLength(20)]),
       stock: new FormControl('1',[Validators.required, Validators.min(1)]),
-      isActive: new FormControl(true)
+      isActive: new FormControl(false)
 
     });
   }
@@ -41,5 +41,15 @@ export class CategoryEditForm {
       this.subscription.unsubscribe();
     }
     
+  }
+
+  onReset(): void {
+    this.formData.reset({
+      name: '',
+      description: '',
+      image: '',
+      stock: 1,
+      isActive: false
+    });
   }
 }
