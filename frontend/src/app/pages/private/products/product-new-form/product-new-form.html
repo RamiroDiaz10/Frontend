@@ -134,7 +134,7 @@
                             <small>Campo obligatorio</small>
                         }
                         @if (productMaterial.errors?.['maxlength']) {
-                            <small> Mínimo {{  productMaterial.errors?.['maxlength'].requiredLength }} caracteres</small>
+                            <small> Maximo {{  productMaterial.errors?.['maxlength'].requiredLength }} caracteres</small>
                             
                         }
                     }
@@ -188,7 +188,7 @@
                             <small>Campo obligatorio</small>
                         }
                         @if (productPrice.errors?.['min']) {
-                            <small> El precio minimo es: {{  productPrice.errors?.['min'].requiredLength }} </small>
+                            <small> El precio minimo es: {{  productPrice.errors?.['min'].requiredLength }} $</small>
                             
                         }
                     }
@@ -216,7 +216,7 @@
                             <small>Campo obligatorio</small>
                         }
                         @if (productStock.errors?.['min']) {
-                            <small> el stock minimo es: {{  productStock.errors?.['min'].requiredLength }}</small>
+                            <small> El stock minimo es: {{  productStock.errors?.['min'].requiredLength }}</small>
                             
                         }
                     }
