@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { HttpCategories } from '../../../../core/service/http-categories';
+import { DataCategory } from '../../../../models/category-model';
 
 @Component({
   selector: 'app-category-new-form',
@@ -38,7 +39,17 @@ export class CategoryNewForm {
   onSubmit(): void {
     if(this.formData.valid){
       console.log(this.formData.value);
-      this.httpCategories.createCategory(this.formData.value).subscribe({
+
+      const inputData: DataCategory = {
+        name: this.formData.value.name ?? '',
+        description: this.formData.value.description ?? '',
+        image: this.formData.value.image ?? '',
+        stock: this.formData.value.stock ?? 1,
+        isActive: this.formData.value.isActive ?? true
+      }
+
+
+      this.httpCategories.createCategory(inputData).subscribe({
         next: data => {
           console.log(data);
           this.message = data;

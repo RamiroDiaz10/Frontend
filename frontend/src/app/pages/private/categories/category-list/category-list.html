@@ -1,1 +1,45 @@
-<p>category-list works!</p>
+
+
+<div class="container">
+  <div class="header-section">
+    <h2>Gestión de Categorías</h2>
+    <button class="btn-add"> Nueva Categoría</button>
+  </div>
+
+  <div class="table-responsive">
+    <table class="custom-table">
+      <thead>
+        <tr>
+          <th>Name Category</th>
+          <th>Descripción</th>
+          <th>Image</th>
+          <th>Stock</th>
+          <th>IsActive</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (category of (categories | async); track $index) {
+            <tr>
+              <td>{{category.name}}</td>
+              <td>{{category.description}}</td>
+              <td>
+                <img [src]="category.image" [alt]="category.name" width="50">
+              </td>
+              <td>{{category.stock}}</td>
+              <td>{{category.isActive ? 'Sí' : 'No'}}</td>
+              <td class="actions">
+                <button class="btn-edit" title="Edit" (click)="onEdit(category._id)">
+                  <i class="icon-edit"></i> Edit
+                </button>
+                <button class="btn-delete" title="Delete" (click)="deleteCategory(category._id)">
+                  <i class="icon-trash"></i> Delete
+                </button>
+              </td>
+            </tr>
+
+        }
+        </tbody>
+    </table>
+  </div>
+</div>

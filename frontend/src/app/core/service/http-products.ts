@@ -1,18 +1,23 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-
 import { catchError, map, Observable, of } from 'rxjs';
+
+import { DataProduct } from '../../models/products.models';
+import { ResponseApi } from '../../models/response.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HttpProducts {
-    private http = inject(HttpClient);
+
+    constructor(
+      private http: HttpClient
+    ) {}
    
-  createProduct(productData: any):Observable<string> {
-    return this.http.post('http://localhost:3000/api/v1/products', productData)
+  createProduct(productData: DataProduct):Observable<string> {
+    return this.http.post<ResponseApi<DataProduct>>('http://localhost:3000/api/v1/products', productData)
     .pipe(
-      map((response: any) => {
+      map((response: ResponseApi<DataProduct>) => {
         console.info(response);
         return response.msg || 'Product created successfully';
       }),
@@ -24,5 +29,37 @@ export class HttpProducts {
       })
     );
 
+  }
+
+  getProducts(): Observable<DataProduct[]> {
+    return this.http.get<{ products: DataProduct[] }>('http://localhost:3000/api/v1/products')
+      .pipe(
+        map((response: { products: DataProduct[] }) => {
+          console.log(response);
+          return response.products || [];
+        }),
+        catchError((error) => {
+          console.error('Error fetching products:', error);
+          return of([]);
+        })
+      );
+  }
+
+  deleteProduct(_id: string): Observable<string> {
+    return this.http.delete<ResponseApi<DataProduct>>(`http://localhost:3000/api/v1/products/${_id}`)
+      .pipe(
+        map((response: ResponseApi<DataProduct>) => {
+          console.log(response);
+          return response.msg || 'Product deleted successfully';
+        }),
+        catchError((error) => {
+          console.error('Error deleting product:', error);
+          return of(error.error?.msg || 'Error: servidor fallando');
+        })
+      );  
+  }
+
+  updateProduct(_id: string, productData: DataProduct[]): Observable<ResponseApi<DataProduct[]>> {
+    return this.http.patch<ResponseApi<DataProduct[]>>(`http://localhost:3000/api/v1/products/${_id}`, productData);
   }
 }

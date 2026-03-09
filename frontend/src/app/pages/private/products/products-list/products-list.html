@@ -1,1 +1,58 @@
-<p>products-list works!</p>
+<div class="container">
+  <div class="header-section">
+    <h2>Product Management</h2>
+    <button class="btn-add" routerLink="/dashboard/product/new"> + New Product</button>
+  </div>
+
+  <div class="table-responsive">
+    <table class="custom-table">
+      <thead>
+        <tr>
+          <th>Name Product</th>
+          <th>Description</th>
+          <th>Image</th>
+          <th>Size</th>
+          <th>Material</th>
+          <th>Color</th>
+          <th>Price</th>
+          <th>Stock</th>
+          <th>category</th>
+          <th>IsActive</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (product of (products | async); track $index) {
+            <tr>
+              <td>{{product.name}}</td>
+              <td>{{product.description}}</td>
+              <td>
+                <img [src]="product.image" [alt]="product.name" width="50">
+              </td>
+              <td>{{product.size}} cm</td>
+              <td>{{product.material}}</td>
+              <td>
+              <div class="color-indicator">
+                <span class="color-dot" [style.background-color]="product.color"></span>
+                <span class="color-label">{{ product.colorName || product.color }}</span>
+              </div>
+              </td>
+              <td>{{product.price | currency:'COP':'symbol-narrow':'1.0-0'}}</td>
+              <td>{{product.stock}}</td>
+              <td>{{product.category?.name}}</td>
+              <td>{{product.isActive ? 'Sí' : 'No'}}</td>
+              <td class="actions">
+                <button class="btn-edit" title="Edit" (click)="onEdit(product._id)">
+                  <i class="icon-edit"></i> Edit
+                </button>
+                <button class="btn-delete" title="Delete" (click)="deleteProduct(product._id)">
+                  <i class="icon-trash"></i> Delete
+                </button>
+              </td>
+            </tr>
+
+        }
+        </tbody>
+    </table>
+  </div>
+</div>

@@ -1,51 +1,197 @@
-<nav class="nav-var">
-    <ul>
+<header class="header">
+  <div class="top-bar">
+    <div class="marquee-container">
+      <div class="marquee-content">
+        <p>Tus amigas de trapo de toda la vida 🧸</p>
+        <p>Envíos a todo el país 🚚</p>
+        <p>10% de descuento en tu primera compra ✨</p>
+        <p>Nuevas muñecas personalizadas disponibles 🌸</p>
+        <p>Tus amigas de trapo de toda la vida 🧸</p>
+        <p>Envíos a todo el país 🚚</p>
+        <p>10% de descuento en tu primera compra ✨</p>
+        <p>Nuevas muñecas personalizadas disponibles 🌸</p>
+      </div>
+    </div>
+  </div>
+  
+  <div class="container nav-bar">
+    <div class="logo">
+      <a routerLink="/home" class="logo-image">
+        <!-- Notar que las imágenes ahora se leen desde assets/images/ en Angular -->
+        <img src="/assets/images/png. icon.png" alt="Creaciones KMG Logo" class="brand-logo" />
+      </a>
+    </div>
+    
+    <div class="search-box" id="main-search-box">
+      <input type="text" placeholder="Buscar tu compañera ideal..." />
+      <button type="button" aria-label="Buscar"><i class="fa-solid fa-magnifying-glass"></i></button>
+    </div>
+    
+    <div class="right-section">
+      <button id="mobile-search-toggle" class="mobile-only-btn" aria-label="Buscar">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </button>
+
+      <!-- Botones de Autenticación / Información del Usuario (Escritorio) -->
+      <div class="auth-buttons">
         @if(userData){
-            <li class="menu-item">
-                <span>Hello, {{userData.name}}</span>
-                <small> {{userData.role}}</small>
-                </li>
-                <li><button class="btn-logout" (click)="onLogout()">Cerrar sesion</button></li>
-
-            @if (auth.hasRole(['admin', 'colaborator', 'registered'])) {
-                <li><a routerLink="/dashboard/products" routerLinkActive="active-link">Products</a></li>
-            }
-            @if (auth.hasRole(['admin', 'colaborator', 'registered'])) {
-                <li><a routerLink="/dashboard/product/new" routerLinkActive="active-link">New Product</a></li>
-            }
-            @if (auth.hasRole(['admin', 'colaborator', 'registered'])) {
-                <li><a routerLink="/dashboard/product/edit" routerLinkActive="active-link">Edit Product</a></li>
-            }
-            @if (auth.hasRole(['admin', 'colaborator'])) {
-            <li><a routerLink="/dashboard/categories" routerLinkActive="active-link">Categories</a></li>
-            }
-            @if (auth.hasRole(['admin', 'colaborator'])) {
-            <li><a routerLink="/dashboard/category/new" routerLinkActive="active-link">New Category</a></li>
-            }
-            @if (auth.hasRole(['admin', 'colaborator'])) {
-            <li><a routerLink="/dashboard/category/edit" routerLinkActive="active-link">Edit Category</a></li>
-            }
-            @if (auth.hasRole(['admin'])) {
-            <li><a routerLink="/dashboard/users" routerLinkActive="active-link">Users</a></li>
-            }
-            @if (auth.hasRole(['admin'])) {
-            <li><a routerLink="/dashboard/user/new" routerLinkActive="active-link">New User</a></li>
-            }
-            @if (auth.hasRole(['admin'])) {
-            <li><a routerLink="/dashboard/user/edit" routerLinkActive="active-link">Edit User</a></li>
-            }
-
+          <span style="font-family: var(--fuente-principal); font-weight: 700; color: var(--Marron-calido); margin-right: 15px;">
+            Hola, {{userData.name}} <small style="font-weight: 400; font-size: 1.2rem;">({{userData.role}})</small>
+          </span>
+          <button class="btn-outline logout-desktop" (click)="onLogout()" style="cursor: pointer;">Cerrar sesión</button>
+        } @else {
+          <a routerLink="/login" class="btn-outline">Iniciar Sesión</a>
+          <a routerLink="/register" class="btn-glass">Registro</a>
         }
-        @else {
-            <li><a routerLink="/home" routerLinkActive="active-link">Home</a></li>
-            <li><a routerLink="/register" routerLinkActive="active-link">Register</a></li>
-            <li><a routerLink="/login" routerLinkActive="active-link">Login</a></li>
-        }
-        <li><a routerLink="/checkout" routerLinkActive="active-link">Checkout</a></li>
+      </div>
 
-    </ul>    
-    
+      <!-- Botón de Logout SOLO PARA MÓVIL (visible cuando hay userData) -->
+      @if(userData) {
+        <button class="mobile-only-btn mobile-logout-btn" (click)="onLogout()" aria-label="Cerrar sesión" title="Cerrar sesión" style="color: var(--Action-btn);">
+          <i class="fa-solid fa-right-from-bracket"></i>
+        </button>
+      }
+
+      <a routerLink="/checkout" style="text-decoration: none;">
+        <div class="info-box" style="border-color: var(--Acentos-rosados); background: var(--fondopagina); cursor: pointer;">
+          <i class="fa-solid fa-bag-shopping" style="color: var(--Verde-vintage);"></i>
+          <span>Carrito</span>
+        </div>
+      </a>
+
+      <!-- Botón Menú Móvil — usa (click) de Angular directamente -->
+      <button
+        class="mobile-menu-btn"
+        aria-label="Abrir menú"
+        (click)="toggleMenu()"
+        style="background: none; border: none; font-size: 2.4rem; color: var(--Marron-calido); cursor: pointer;">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Navbar principal (Categorías) - Escritorio -->
+  <nav class="main-navbar desktop-only" style="justify-content: center; border-top: 1px solid var(--Pink-Pearl);">
+    <div class="container" style="display: flex; justify-content: center;">
+      <ul class="navbar-links" style="gap: 2rem;">
+        <li><a routerLink="/home" routerLinkActive="active-link" style="color: var(--Marron-calido);">Inicio</a></li>
         
+        <!-- Opciones lógicas del Dashboard basadas en roles -->
+        @if (auth.hasRole(['admin', 'colaborator', 'registered'])) {
+            <li><a routerLink="/dashboard/products" routerLinkActive="active-link" style="color: var(--Marron-calido);">Productos</a></li>
+            <li><a routerLink="/dashboard/product/new" routerLinkActive="active-link" style="color: var(--Marron-calido);">+ Producto</a></li>
+            <li><a routerLink="/dashboard/product/edit" routerLinkActive="active-link" style="color: var(--Marron-calido);">Editar Prod.</a></li>
+        }
+        @if (auth.hasRole(['admin', 'colaborator'])) {
+            <li><a routerLink="/dashboard/categories" routerLinkActive="active-link" style="color: var(--Marron-calido);">Categorías</a></li>
+            <li><a routerLink="/dashboard/category/new" routerLinkActive="active-link" style="color: var(--Marron-calido);">+ Categoría</a></li>
+            <li><a routerLink="/dashboard/category/edit" routerLinkActive="active-link" style="color: var(--Marron-calido);">Editar Cat.</a></li>
+        }
+        @if (auth.hasRole(['admin'])) {
+            <li><a routerLink="/dashboard/users" routerLinkActive="active-link" style="color: var(--Marron-calido);">Usuarios</a></li>
+            <li><a routerLink="/dashboard/user/new" routerLinkActive="active-link" style="color: var(--Marron-calido);">+ Usuario</a></li>
+            <li><a routerLink="/dashboard/user/edit" routerLinkActive="active-link" style="color: var(--Marron-calido);">Editar Usu.</a></li>
+        }
+      </ul>
+    </div>
+  </nav>
 
-    
-</nav>
+  <!-- Backdrop: se cierra el menú al hacer clic fuera -->
+  <div
+    class="mobile-navbar-close"
+    [class.ocultar]="isMenuOpen"
+    (click)="closeMenu()">
+  </div>
+
+  <!-- Drawer Móvil Off-Canvas: controlado por isMenuOpen de Angular -->
+  <div class="mobile-navbar" [class.mostrar]="isMenuOpen">
+    <div style="padding: 2rem;">
+
+      <!-- Botón cerrar (X) -->
+      <button
+        (click)="closeMenu()"
+        style="background:none; border:none; font-size: 2.8rem; color: var(--Marron-calido); cursor:pointer; margin-bottom: 2rem; display: block;">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      
+      <!-- Lista de navegación con links permitidos por rol -->
+      <ul style="display: flex; flex-direction: column; gap: 0; list-style: none; padding: 0; margin: 0;">
+
+        <li>
+          <a routerLink="/home" (click)="closeMenu()"
+             style="display: block; padding: 1.4rem 0; font-size: 1.9rem; color: var(--Marron-calido); font-weight: 600; border-bottom: 1px solid rgba(232,165,152,0.3); text-decoration: none;">
+            🏠 Inicio
+          </a>
+        </li>
+
+        <!-- Links del Dashboard según rol -->
+        @if (auth.hasRole(['admin', 'colaborator', 'registered'])) {
+          <li>
+            <a routerLink="/dashboard/products" (click)="closeMenu()"
+               style="display: block; padding: 1.4rem 0; font-size: 1.8rem; color: var(--Marron-calido); font-weight: 500; border-bottom: 1px solid rgba(232,165,152,0.3); text-decoration: none;">
+              📦 Productos
+            </a>
+          </li>
+          <li>
+            <a routerLink="/dashboard/product/new" (click)="closeMenu()"
+               style="display: block; padding: 1.4rem 0; font-size: 1.8rem; color: var(--Marron-calido); font-weight: 500; border-bottom: 1px solid rgba(232,165,152,0.3); text-decoration: none;">
+              ➕ Nuevo Producto
+            </a>
+          </li>
+        }
+        @if (auth.hasRole(['admin', 'colaborator'])) {
+          <li>
+            <a routerLink="/dashboard/categories" (click)="closeMenu()"
+               style="display: block; padding: 1.4rem 0; font-size: 1.8rem; color: var(--Marron-calido); font-weight: 500; border-bottom: 1px solid rgba(232,165,152,0.3); text-decoration: none;">
+              🏷️ Categorías
+            </a>
+          </li>
+          <li>
+            <a routerLink="/dashboard/category/new" (click)="closeMenu()"
+               style="display: block; padding: 1.4rem 0; font-size: 1.8rem; color: var(--Marron-calido); font-weight: 500; border-bottom: 1px solid rgba(232,165,152,0.3); text-decoration: none;">
+              ➕ Nueva Categoría
+            </a>
+          </li>
+        }
+        @if (auth.hasRole(['admin'])) {
+          <li>
+            <a routerLink="/dashboard/users" (click)="closeMenu()"
+               style="display: block; padding: 1.4rem 0; font-size: 1.8rem; color: var(--Marron-calido); font-weight: 500; border-bottom: 1px solid rgba(232,165,152,0.3); text-decoration: none;">
+              👥 Usuarios
+            </a>
+          </li>
+          <li>
+            <a routerLink="/dashboard/user/new" (click)="closeMenu()"
+               style="display: block; padding: 1.4rem 0; font-size: 1.8rem; color: var(--Marron-calido); font-weight: 500; border-bottom: 1px solid rgba(232,165,152,0.3); text-decoration: none;">
+              ➕ Nuevo Usuario
+            </a>
+          </li>
+        }
+
+      </ul>
+
+      <!-- Sección de autenticación dentro del drawer -->
+      <div style="margin-top: 3rem; display: flex; flex-direction: column; gap: 1.2rem;">
+        @if(userData){
+          <p style="font-size: 1.8rem; color: var(--Marron-calido); font-weight: 700; margin: 0 0 1rem 0;">
+            Hola, {{userData.name}} 👋
+          </p>
+          <button class="btn-outline" (click)="onLogout()" style="width: 100%; cursor: pointer;">
+            Cerrar sesión
+          </button>
+        } @else {
+          <a routerLink="/login" (click)="closeMenu()" class="btn-outline"
+             style="text-align: center; border-color: var(--Action-btn); color: var(--Action-btn); text-decoration: none;">
+            Iniciar Sesión
+          </a>
+          <a routerLink="/register" (click)="closeMenu()" class="btn-glass"
+             style="text-align: center; background: var(--Acentos-rosados); color: #fff; border: none; text-decoration: none;">
+            Registro
+          </a>
+        }
+      </div>
+
+    </div>
+  </div>
+
+</header>

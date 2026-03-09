@@ -1,9 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of, tap } from 'rxjs';
-import { DataAuthUser } from '../../models/user-model';
-import { ResponseApi } from '../../models/response.model';
 import { Router } from '@angular/router';
+
+import { ResponseApi } from '../../models/response.model';
+import { DataAuthUser } from '../../models/user-model';
 
 @Injectable({
   providedIn: 'root'
@@ -83,13 +84,11 @@ export class Auth {
 
   registerNewUser(newUser: DataAuthUser): Observable<string> {
 
-    return this.http
-      .post<ResponseApi>('http://localhost:3000/api/v1/auth/register', newUser)
-
+    return this.http.post<ResponseApi<DataAuthUser>>('http://localhost:3000/api/v1/auth/register', newUser)
       .pipe(
 
         // transformamos la respuesta
-        map((response: ResponseApi) => {
+        map((response: ResponseApi<DataAuthUser>) => {
           return response.msg!;
         }),
 
@@ -112,13 +111,12 @@ export class Auth {
 
   loginUser(credentials: DataAuthUser): Observable<string> {
 
-    return this.http
-      .post<ResponseApi>('http://localhost:3000/api/v1/auth/login', credentials)
+    return this.http.post<ResponseApi<DataAuthUser>>('http://localhost:3000/api/v1/auth/login', credentials)
 
       .pipe(
 
         // tap sirve para ejecutar lógica sin modificar el observable
-        tap((data: ResponseApi) => {
+        tap((data: ResponseApi<DataAuthUser>) => {
 
           // guardamos usuario si existe
           if (data.user) {
@@ -178,8 +176,7 @@ export class Auth {
 
     const headers = new HttpHeaders().set('X-Token', token);
 
-    return this.http
-      .get<ResponseApi>('http://localhost:3000/api/v1/auth/renew-token', { headers })
+    return this.http.get<ResponseApi<DataAuthUser>>('http://localhost:3000/api/v1/auth/renew-token', { headers })
 
       .pipe(
 

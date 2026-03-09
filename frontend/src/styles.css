@@ -1,1 +1,2757 @@
 /* You can add global styles to this file, and also import other style files */
+@import 'normalize.css';
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300..800;1,300..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Quicksand:wght@300..700&display=swap');
+
+
+:root {
+  /** Base typography scaling */
+  --over-font-size: 62.5%;
+
+  /* Nueva Paleta "Vibrante y Femenina" */
+  --Fondo-body: #FFF9F5;       /* Crema rosado suave */
+  --Acentos-rosados: #E8A598;  /* Rosa viejo / Dusty Rose */
+  --Marron-calido: #5D4037;    /* Marrón café profundo para textos/iconos */
+  --Verde-vintage: #A3B19B;    /* Mantenemos un verde sutil para contrastes fríos si se necesita */
+  --Detalles-dorados: #D4B886; /* Dorado envejecido */
+  --fondopagina: #FFF9F5;      /* Reemplazado blanco puro por crema rosado */
+  --fondo-section: #FFF2EA;    /* Arena rosada más clara */
+  --Pink-Pearl: #FCEBE8;       /* Rosa ultra pálido */
+  
+  /* Color de Acción */
+  --Action-btn: #D48171;       /* Terracota rosado */
+
+  /* Nuevos acentos previos (opcionales) */
+  --Verde-bosque: #2E472D;
+  --Oro-viejo: #C5A059;
+  --Teja-profundo: #8B3A36;
+
+  /* Fuentes Literarias */
+  --fuente-principal: "Playfair Display", serif;
+  --fuente-secundaria: "Montserrat", sans-serif; /* Limpia y profesional */
+  --fuente-terciaria: "Quicksand", sans-serif; /* Para etiquetas pequeñas muy redondas */
+  
+  /* Tipografía Serif Clásica / Handwriting (Para Testimonios) */
+  --fuente-testimonios: "Lora", serif; 
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: var(--over-font-size);
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  min-height: 100vh;
+}
+
+body {
+  font-size: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--fuente-secundaria);
+  font-weight: 400;
+  font-style: normal;
+  background-color: var(--Fondo-body);
+  color: var(--Marron-calido);
+  line-height: 1.7;
+  overflow-x: hidden; /* Evita scroll horizontal por box-shadows u overflow */
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+}
+
+h2 {
+  font-family: var(--fuente-principal);
+  font-size: 3rem;
+  color: var(--Marron-calido);
+  
+}
+
+h3 {
+  font-family: var(--fuente-principal);
+  color: var(--Teja-profundo);
+  margin-top: 2rem;
+}
+
+ul, 
+li {
+  display: contents;
+  text-decoration: none;
+  list-style: none;
+}
+
+a {
+  color: var(--Marron-calido);
+  font-family: var(--fuente-principal);
+  text-decoration: none;
+  flex-direction: column;
+  display: flex;
+  list-style: none;
+
+}
+
+p {
+  font-family: var(--fuente-principal);
+
+}
+
+img {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 20px;
+  /* Efecto vintage en todas las imagenes */
+  filter: sepia(0.15) contrast(0.95);
+  transition: filter 0.3s ease;
+}
+
+img:hover {
+  filter: sepia(0) contrast(1);
+}
+
+
+p.error-style {
+  color: rgb(203, 41, 68);
+  font-family: cursive;
+}
+
+
+/* Background Sección Favoritas */
+.nuestras-favoritas {
+  background-color: var(--fondo-section); /* Color de jerarquía suave */
+  padding: 6rem 0;
+  margin: 4rem 0;
+  width: 100%;
+}
+
+.container-nuestras-favoritas {
+  margin: 0 auto;
+  max-width: 96vw;
+  padding: 0 1.5rem;
+}
+
+/** Header - Glassmorphism & Sticky */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(249, 246, 240, 0.75); /* var(--Fondo-body) opacity */
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 20px rgba(92, 78, 70, 0.05);
+  border-bottom: 1px solid rgba(221, 167, 165, 0.3); /* Rosa viejo sutil */
+}
+
+.top-bar {
+  background-color: var(--Action-btn); /* Color más vibrante y llamado a la acción */
+  color: #FFF9F5;
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
+  font-size: 1.4rem;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.marquee-container {
+  overflow: hidden;
+  width: 100%;
+}
+
+.marquee-content {
+  display: inline-flex;
+  gap: 4rem;
+  animation: marquee 25s linear infinite;
+}
+
+.marquee-content p {
+  font-family: var(--fuente-terciaria);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: var(--Fondo-body);
+  margin: 0;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(calc(-50% - 2rem)); } /* -50% mueve la mitad del contenido (los originales), -2rem compensa el gap */
+}
+
+/* Botones de Header */
+.auth-buttons {
+  display: none; /* Oculto en móvil por defecto */
+  gap: 1rem;
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem 2rem;
+  border: 2px solid var(--Marron-calido);
+  border-radius: 40px; /* Mas redondeado, tipo píldora */
+  color: var(--Marron-calido);
+  font-family: var(--fuente-terciaria);
+  font-weight: 700;
+  font-size: 1.45rem;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  box-shadow: 0 4px 10px rgba(93, 64, 55, 0.05); /* Sombra estetica ligera */
+  background: transparent;
+  text-decoration: none;
+  white-space: nowrap; /* Evitar que el texto se rompa en varias líneas */
+}
+
+.btn-outline:hover {
+  background-color: var(--Marron-calido);
+  color: var(--Fondo-body);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(93, 64, 55, 0.25);
+}
+
+.btn-glass {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem 2rem;
+  background: linear-gradient(135deg, rgba(232, 165, 152, 0.6), rgba(232, 165, 152, 0.3));
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(8px);
+  border-radius: 40px; /* Píldora redondeada */
+  color: var(--Teja-profundo);
+  font-family: var(--fuente-terciaria);
+  font-weight: 700;
+  font-size: 1.45rem;
+  box-shadow: 0 4px 12px rgba(212, 129, 113, 0.15);
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  text-decoration: none;
+  white-space: nowrap; /* Evitar saltos de línea indeseados */
+}
+
+.btn-glass:hover {
+  background: linear-gradient(135deg, rgba(232, 165, 152, 0.85), rgba(232, 165, 152, 0.5));
+  color: var(--Teja-profundo);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(212, 129, 113, 0.35);
+  border-color: rgba(255, 255, 255, 0.9);
+}
+
+/* Contenedor principal */
+.nav-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 3rem;
+  background-color: transparent;
+}
+
+/* Logo */
+.logo {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+.logo-image {
+  display: block;
+  text-decoration: none;
+}
+
+.brand-logo {
+  max-height: 85px; /* Tamaño más grande y visible a petición del usuario */
+  width: auto;
+  object-fit: contain;
+  filter: none; /* Asegura que no le afecte el filtro vintage global */
+  transition: transform 0.3s ease;
+}
+
+.brand-logo:hover {
+  transform: scale(1.05); /* Lujoso efecto hover sutil */
+}
+
+/* En móviles lo podemos achicar un poquito */
+@media (max-width: 768px) {
+  .brand-logo {
+    max-height: 65px; 
+  }
+}
+
+.card-munecos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 3rem;
+  padding: 2rem 0;
+  justify-items: center;
+}
+
+.card-muneco {
+  width: 100%;
+  max-width: 32rem;
+  background-color: var(--fondopagina);
+  border-radius: 16px;
+  /* Sombra más elegante */
+  box-shadow: 0 8px 15px rgba(93, 64, 55, 0.05);
+  border: 1px solid var(--Pink-Pearl); /* Borde claro sutil inicialmente */
+  padding: 1.5rem;
+  transition: transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out, border-color 0.4s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.card-muneco:hover {
+  transform: translateY(-8px);
+  /* Brillo e iluminación cálida nostálgica */
+  box-shadow: 0 15px 35px rgba(232, 165, 152, 0.35); /* Glow rosa viejo */
+  border-color: var(--Acentos-rosados); /* Borde rosa empolvado */
+}
+
+.card-image-box {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.btn-favorite {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background-color: rgba(255, 249, 245, 0.9);
+  border: none;
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--Action-btn);
+  font-size: 1.8rem;
+  cursor: pointer;
+  z-index: 10;
+  box-shadow: 0 4px 6px rgba(93, 64, 55, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.btn-favorite:hover,
+.card-muneco:hover .btn-favorite {
+  animation: heartbeat 1.5s infinite;
+  color: #D32F2F; /* Rojo vibrante al latir */
+}
+
+@keyframes heartbeat {
+  0% { transform: scale(1); }
+  14% { transform: scale(1.2); }
+  28% { transform: scale(1); }
+  42% { transform: scale(1.2); }
+  70% { transform: scale(1); }
+  100% { transform: scale(1); }
+}
+
+.card-image-box img {
+  width: 100%;
+  height: auto;
+  transition: transform 0.5s ease;
+  display: block;
+}
+
+.card-muneco:hover .card-image-box img {
+  transform: scale(1.08);
+}
+
+.name-category {
+  background-color: var(--Acentos-rosados); /* Etiqueta de tela */
+  color: var(--Fondo-body); /* Color claro para contrate */
+  font-family: var(--fuente-principal); /* Tipografía Serif elegante */
+  font-size: 2.2rem; /* Tamaño más fino */
+  padding: 1rem 2.5rem; /* Forma de etiqueta */
+  border-radius: 8px; /* Bordes redondeados */
+  box-shadow: 0 6px 15px rgba(93, 64, 55, 0.15), inset 0 0 0 1px rgba(255, 255, 255, 0.4); /* Costura sutil y sombra */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  text-align: center;
+  transition: transform 0.4s ease-in-out, background-color 0.4s ease-in-out;
+  cursor: pointer;
+}
+
+.card:hover .name-category {
+  transform: translate(-50%, -50%) scale(1.05); /* Efecto en la etiqueta */
+  background-color: var(--Action-btn); /* Destaca al hover */
+}
+.add-to-cart-slide {
+  position: absolute;
+  bottom: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--Acentos-rosados);
+  color: var(--Fondo-body);
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 30px;
+  font-family: var(--fuente-terciaria);
+  font-weight: 700;
+  font-size: 1.4rem;
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  cursor: pointer;
+  transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.3s;
+  width: 85%;
+  justify-content: center;
+}
+
+.add-to-cart-slide:hover {
+  background-color: var(--Verde-vintage);
+}
+
+.card-muneco:hover .add-to-cart-slide {
+  bottom: 15px;
+}
+
+.card-muneco p {
+  margin-top: 1rem;
+  font-family: var(--fuente-secundaria);
+  color: var(--Marron-calido);
+}
+
+.card-muneco .current-price {
+  font-weight: bold;
+  font-size: 1.8rem;
+  color: #D47A8A;
+}
+
+.card-muneco .previous-price {
+  text-decoration: line-through;
+  color: #a0a0a0;
+  font-size: 1.4rem;
+  margin-left: 1rem;
+}
+
+/* Buscador */
+/* En móvil lo ocultamos por defecto, o lo movemos con toggle */
+.search-box {
+  display: none; /* Oculto inicialmente en móvil, visible al dar toggle o en desktop */
+  position: absolute;
+  top: 100%; /* Debajo del header nav-bar */
+  left: 0;
+  width: 100%;
+  padding: 1rem 2rem;
+  background-color: var(--Fondo-body);
+  border-bottom: 2px solid var(--Pink-Pearl);
+  box-shadow: 0 10px 15px rgba(93, 64, 55, 0.05);
+  z-index: 10;
+  animation: slideDownSearch 0.3s ease-out;
+}
+
+.search-box.show-mobile {
+  display: flex;
+}
+
+@keyframes slideDownSearch {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.search-box input {
+  flex: 1;
+  border: 1px solid var(--Pink-Pearl);
+  border-radius: 30px 0 0 30px;
+  padding: 1.2rem 1.6rem;
+  font-size: 1.4rem;
+  outline: none;
+  font-family: var(--fuente-secundaria);
+}
+
+.search-box button {
+  background-color: var(--Action-btn);
+  color: white;
+  border: none;
+  border-radius: 0 30px 30px 0;
+  padding: 0 2rem;
+  font-size: 1.6rem;
+  cursor: pointer;
+  transition: background-color 0.4s ease-in-out;
+}
+
+.search-box button:hover {
+  background-color: var(--Acentos-rosados);
+}
+
+.mobile-only-btn {
+  background: none;
+  border: none;
+  font-size: 2.2rem;
+  color: var(--Marron-calido);
+  cursor: pointer;
+  padding: 0.5rem;
+  display: flex; /* Visible en móvil */
+}
+
+/* Elementos a la derecha */
+.right-section {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  text-align: center;
+}
+
+.info-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  border-radius: 30px; /* Lo hacemos también tipo píldora */
+  padding: 0.6rem 1.8rem;
+  border: 2px solid rgba(235, 188, 160, 0.5); /* Borde más sutil */
+  white-space: nowrap; /* Evita que el texto de carrito salte de línea */
+  font-family: var(--fuente-terciaria);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.info-box:hover {
+  background-color: rgba(232, 165, 152, 0.15) !important;
+  border-color: rgba(235, 188, 160, 1);
+}
+
+.info-box span {
+  font-weight: 700;
+  font-size: 1.4rem;
+}
+
+/*menu*/
+.main-navbar {
+  align-items: center;
+  background-color: transparent;
+  display: none; /* Oculto en móvil */
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  padding: 10px 20px;
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+  /*border: 2px solid rgb(235, 243, 6);*/
+}
+
+
+.mobile-navbar {
+  position: fixed;
+  top: 0;
+  left: -100%;            /* Off-canvas a la izquierda — porcentaje del propio ancho */
+  width: min(85vw, 380px); /* Ocupa el 85% de pantalla en móvil, máx 380px en tablet */
+  height: 100vh;
+  background-color: var(--Fondo-body, #fff9f5);
+  box-shadow: 4px 0 30px rgba(93, 64, 55, 0.2);
+  border-right: 1px solid rgba(232, 165, 152, 0.3);
+  transition: left 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+  z-index: 9999;
+  overflow-y: auto;
+}
+
+.mobile-navbar.mostrar {
+  left: 0;                /* Panel desliza hacia adentro desde la izquierda */
+}
+
+/* Backdrop (fondo oscuro) detrás del drawer cuando está abierto */
+.mobile-navbar-close {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: none;
+  z-index: 9998;
+  background-color: rgba(93, 64, 55, 0.35);
+  backdrop-filter: blur(2px);
+  cursor: pointer;
+}
+
+.mobile-navbar-close.ocultar {
+  display: block;
+}
+
+/* Animaciones Escalonadas (Staggered) para el menú móvil */
+/* NOTA: opacity empieza en 1 para garantizar que links sean siempre visibles.
+   Los @if de Angular crean nodos dinámicos que rompían el contador :nth-child */
+.stagger-item {
+  opacity: 1;             /* Siempre visible — el drawer en sí ya tiene animación de deslizamiento */
+  transform: none;
+  transition: color 0.2s ease, padding-left 0.2s ease;
+}
+
+/* El div de botones de login/logout en el drawer */
+.auth-buttons-mobile {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: flex !important;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 4rem;
+}
+
+.center-navigation{
+display: none;
+}
+
+.category-dropdown .text{
+    display: none;
+  }
+
+
+
+/** Main */
+.main {
+  flex: 1;
+  background-color: var(--Fondo-body);
+}
+
+/* ==================================
+   Categorías Nostálgicas (Colecciones)
+   ================================== */
+.section-popular {
+  padding: 6rem 0;
+  background-color: var(--Fondo-body);
+}
+
+.section-popular h2 {
+  text-align: center;
+  font-family: var(--fuente-principal);
+  font-size: clamp(2.8rem, 4vw, 3.6rem);
+  color: var(--Marron-calido);
+  margin-bottom: 4rem;
+}
+
+.container-popular {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 3rem;
+  padding: 0 2rem;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.content-brands {
+  background-color: var(--fondo-section);
+  border: 1px solid rgba(232, 165, 152, 0.25); /* Borde sutil sólido — sin punteado */
+  border-radius: 12px;
+  padding: 2.5rem 2rem;
+  text-align: center;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(93, 64, 55, 0.06);
+}
+
+.content-brands a {
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.content-brands img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--Fondo-body);
+  box-shadow: 0 4px 8px rgba(93, 64, 55, 0.1);
+  transition: transform 0.4s ease;
+}
+
+.content-brands h3 {
+  font-family: var(--fuente-principal); /* Serif elegante */
+  font-size: 2.2rem;
+  color: var(--Marron-calido);
+  margin: 0;
+  background-color: var(--Acentos-rosados); /* Fondo estilo botón */
+  color: var(--Fondo-body);
+  padding: 0.6rem 2rem;
+  border-radius: 20px; /* Forma de píldora/etiqueta */
+  box-shadow: 0 4px 6px rgba(93, 64, 55, 0.1);
+  transition: all 0.4s ease;
+}
+
+.content-brands p {
+  font-family: var(--fuente-secundaria);
+  font-size: 1.4rem;
+  color: var(--Marron-calido);
+  opacity: 0.8;
+  margin: 0;
+}
+
+.content-brands:hover {
+  transform: translateY(-8px) scale(1.02);
+  border-color: var(--Action-btn); /* Hilo más vibrante al hover */
+  box-shadow: 0 12px 25px rgba(232, 165, 152, 0.25), inset 0 0 0 6px var(--Fondo-body);
+}
+
+.content-brands:hover img {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.content-brands:hover h3 {
+  background-color: var(--Action-btn);
+  transform: scale(1.05);
+}
+
+.category-dropdown {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+  /* color: rgb(213, 22, 146); */
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.category-dropdown .icon {
+  font-size: 18px;
+  margin-right: 5px;
+  color: white;
+}
+
+.category-dropdown .arrow {
+  margin-left: 8px;
+  font-size: 16px;
+  color: red;
+}
+
+.navbar-links {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-links li {
+  margin: 0 15px;
+  margin: 0 10px;
+}
+
+
+.navbar-links a {
+  text-decoration: none;
+  color: var(--Marron-calido);
+  padding: 10px 0;
+  display: block;
+  position: relative;
+  transition: color 0.3s;
+  font-size: 1.6rem;
+}
+
+/* Efecto hover animado: Subrayado elegante "Costura/Hilo" */
+.navbar-links a::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: var(--Action-btn);
+  transform-origin: bottom right;
+  transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.navbar-links a:hover {
+  color: var(--Action-btn);
+}
+
+.navbar-links a:hover::after,
+.navbar-links a.active-link::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.navbar-links a.active-link {
+  color: var(--Action-btn);
+  font-weight: 700;
+}
+
+
+.navbar-links .arrow {
+  font-size: 14px;
+  margin-left: 3px;
+  color: darkcyan;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  font-family: cursive;
+}
+
+.discount-promo .icon {
+  font-size: 18px;
+  margin-right: 5px;
+  color: royalblue;
+}
+
+.navbar-links a:hover {
+  color: var(--Acentos-rosados);
+}
+
+/** Hero Section */
+.hero-section {
+  position: relative;
+  min-height: 85vh;
+  display: flex;
+  align-items: center;
+  background-color: var(--fondo-section);
+  padding: 8rem 2rem;
+  /* border-bottom: eliminado — causaba una línea naranja punteada no profesional */
+  overflow: hidden;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.hero-image-wrapper {
+  position: relative;
+  /* Forma redondeada orgánica para "tela suave" */
+  border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+  overflow: hidden;
+  box-shadow: 0 15px 35px rgba(92, 78, 70, 0.15);
+  animation: floatImage 6s ease-in-out infinite alternate;
+  border: 4px solid var(--Fondo-body);
+}
+
+.hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: sepia(0.1) contrast(1.05); /* Ligeramente más vivo pero vintage */
+}
+
+@keyframes floatImage {
+  0% { transform: translateY(0) scale(1); border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+  100% { transform: translateY(-15px) scale(1.02); border-radius: 50% 50% 30% 70% / 50% 50% 70% 30%; }
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  text-align: center;
+}
+
+.hero-content h1 {
+  font-family: var(--fuente-principal);
+  font-size: clamp(4rem, 6vw, 7rem);
+  color: var(--Marron-calido);
+  margin-bottom: 2rem;
+  line-height: 1.1;
+  animation: fadeInUp 1s ease-out;
+}
+
+.hero-content p {
+  font-size: clamp(1.8rem, 2.5vw, 2.4rem);
+  color: var(--Marron-calido);
+  margin-bottom: 5rem;
+  animation: fadeInUp 1.2s ease-out forwards;
+  opacity: 0;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Botón Lujoso con Tacto "Cojín" */
+.btn-primary {
+  display: inline-block;
+  background-color: var(--Verde-vintage);
+  color: var(--Fondo-body);
+  padding: 1.8rem 5rem;
+  font-size: 2rem;
+  border-radius: 40px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-family: var(--fuente-terciaria);
+  /* Sombra interna para efecto táctil "Puffed" y elevación base */
+  box-shadow: inset 0 -4px 0 rgba(0,0,0,0.15), 0 8px 15px rgba(93, 64, 55, 0.15);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  animation: fadeInUp 1.4s ease-out forwards;
+  opacity: 0;
+}
+
+.btn-primary:hover {
+  transform: translateY(-4px);
+  box-shadow: inset 0 -2px 0 rgba(0,0,0,0.15), 0 15px 30px rgba(212, 129, 113, 0.25);
+  background-color: var(--Action-btn); /* Color de Acción Terracota Rosado */
+  color: var(--Fondo-body);
+  filter: brightness(1.05) saturate(1.1); /* Efecto acción vibrante */
+}
+
+.btn-primary:active {
+  transform: translateY(2px);
+  box-shadow: inset 0 4px 6px rgba(0,0,0,0.2), 0 4px 8px rgba(93, 64, 55, 0.1);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/*Carousel muñecas - Estilo Nostálgico Infinito*/
+.section-carousel {
+  padding: 3rem 0;
+  background-color: var(--fondo-section);
+}
+
+/* ================================
+   Swiper Carousel Componentes
+   ================================ */
+
+.main-swiper {
+  width: 100%;
+  max-width: 1400px; /* Más gran formato */
+  border-radius: 20px; /* Bordes suaves femeninos */
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(93, 64, 55, 0.1);
+  margin-bottom: 3rem;
+  margin: 0 auto;
+}
+
+.swiper-img {
+  width: 100%;
+  height: 400px; /* Altura móvil fija */
+  object-fit: cover;
+  filter: sepia(0.05) contrast(1.1) brightness(0.85); /* Oscurecido sutilmente para el overlay */
+  transition: transform 0.8s ease-out; /* Animación hover suave */
+}
+
+@media (min-width: 768px) {
+  .swiper-img {
+    height: 600px; /* Altura desktop fija */
+  }
+}
+
+.main-swiper:hover .swiper-slide-active .swiper-img {
+  transform: scale(1.05); /* Efecto zoom a la imagen activa al pausarse en hover */
+}
+
+/* Overlays del Hero */
+.hero-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: rgba(93, 64, 55, 0.35); /* Capa de contraste femenino/marrón */
+  padding: 2rem;
+  z-index: 10;
+}
+
+.hero-overlay h2 {
+  font-family: var(--fuente-principal);
+  font-size: clamp(3rem, 5vw, 6rem);
+  color: var(--Fondo-body); /* Crema Rosado */
+  margin-bottom: 3rem;
+  text-shadow: 0 4px 15px rgba(0,0,0,0.4);
+}
+
+.hero-overlay .badget {
+  background-color: var(--Acentos-rosados);
+  color: var(--Fondo-body);
+  padding: 0.5rem 2rem;
+  border-radius: 20px;
+  font-family: var(--fuente-secundaria);
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.testimonials-swiper {
+  width: 100%;
+  padding-bottom: 50px !important; /* Space for pagination */
+  margin: 0 -1rem; /* Pequeño sangrado para acomodar sombras de bubbles */
+  padding: 1rem;
+}
+
+.review-bubble {
+  background-color: var(--fondopagina); /* #FFF9F5 constante y crema */
+  border-radius: 20px;
+  padding: 3rem;
+  box-shadow: 0 4px 15px rgba(93, 64, 55, 0.05);
+  border: 1px solid var(--Pink-Pearl);
+  display: flex !important;
+  flex-direction: column;
+  gap: 1.5rem;
+  transition: transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out, border-color 0.4s ease-in-out;
+  cursor: pointer;
+}
+
+.review-bubble:hover {
+  transform: translateY(-5px); /* Elevación solicitada */
+  box-shadow: 0 12px 30px rgba(93, 64, 55, 0.1);
+  border-color: var(--Acentos-rosados); /* Borde rosa viejo */
+}
+
+.review-text {
+  font-family: var(--fuente-testimonios), serif;
+  font-size: 1.8rem;
+  color: var(--Marron-calido);
+  font-style: italic;
+  flex-grow: 1;
+  line-height: 1.6;
+}
+
+.review-author {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.review-author img {
+  width: 50px !important;
+  height: 50px !important;
+  border-radius: 50% !important;
+  filter: none !important; /* No sepia for UI avatars */
+  object-fit: cover;
+}
+
+.review-author span {
+  font-family: var(--fuente-secundaria);
+  font-weight: 600;
+  font-size: 1.6rem;
+  color: var(--Action-btn);
+}
+
+.review-stars {
+  color: var(--Detalles-dorados);
+  font-size: 1.4rem;
+}
+
+/* Swiper Pagination y Navegación Global */
+.swiper-pagination-bullet {
+  background-color: var(--Acentos-rosados) !important;
+  opacity: 0.6 !important;
+  width: 10px !important;
+  height: 10px !important;
+}
+.swiper-pagination-bullet-active {
+  background-color: var(--Action-btn) !important;
+  opacity: 1 !important;
+  transform: scale(1.2);
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+  color: var(--Fondo-body) !important;
+  background-color: rgba(93, 64, 55, 0.4);
+  width: 50px !important;
+  height: 50px !important;
+  border-radius: 50%;
+  transition: background-color 0.4s ease, transform 0.3s ease;
+  backdrop-filter: blur(4px);
+}
+
+.swiper-button-prev:after,
+.swiper-button-next:after {
+  font-size: 2.2rem !important;
+  font-weight: bold;
+}
+
+.swiper-button-prev:hover,
+.swiper-button-next:hover {
+  background-color: var(--Action-btn);
+  transform: scale(1.1);
+}
+
+/* Cleanup de carrusel viejo */
+
+.carousel-btn {
+  background-color: transparent;
+  color: var(--Marron-calido);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 10;
+  position: absolute;
+}
+
+.carousel-btn:hover {
+  background-color: var(--Pink-Pearl);
+  transform: scale(1.1);
+}
+
+.carousel-btn.prev {
+  left: 5px;
+}
+
+.carousel-btn.next {
+  right: 5px;
+}
+
+/*Groups*/
+.group-munecas {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 1rem;
+  margin: 2rem;
+  flex-wrap: wrap;
+  line-height: 24px;
+  /* margin: 1px 2px 60px; */
+  font-weight: bold;
+
+  a {
+    color: white;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    
+  }
+}
+
+.container-groups {
+  display: block;
+  padding: 3rem 0;
+  /* Sin bordes ni box-shadow — es solo un contenedor de layout */
+}
+
+
+
+
+
+/*section Popular Brands -> ahora Categorias/Nostalgia*/
+.section-popular {
+  background-color: var(--Pink-Pearl);
+  padding: 5rem 0;
+}
+
+.section-popular h2 {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.container-popular {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 3rem;
+  justify-items: center;
+  padding: 0 2rem;
+}
+
+.content-brands {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background-color: var(--fondopagina);
+  border-radius: 12px;
+  padding: 3rem 2rem;
+  box-shadow: 0 4px 16px rgba(92, 78, 70, 0.07);
+  border: 1px solid rgba(232, 165, 152, 0.2); /* Borde sutil sólido */
+  width: 100%;
+  transition: transform 0.3s ease;
+}
+
+.content-brands:hover {
+  transform: translateY(-8px);
+}
+
+.content-brands h3 {
+  margin-bottom: 1rem;
+  font-size: 2rem;
+  color: var(--Marron-calido);
+}
+
+.content-brands img {
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  margin: 0 auto 1.5rem auto;
+  border: 4px solid var(--Acentos-rosados);
+}
+
+.content-brands p {
+  font-family: var(--fuente-secundaria);
+  color: var(--Marron-calido);
+  font-size: 1.4rem;
+}
+
+/**carousel comentarios - Nostálgico*/
+.carousel-down-section {
+  background-color: var(--Pink-Pearl);
+  padding: 4rem 0;
+}
+
+.carousel-wrapper.testimonios {
+  width: 85%;
+}
+
+.container-carousel-down {
+  display: flex;
+  overflow-x: hidden;
+  gap: 2rem;
+  width: 100%;
+  padding: 1rem 0;
+}
+
+.card {
+  flex: 0 0 350px;
+  background-color: var(--fondopagina);
+  padding: 2.5em 1.5em;
+  border-radius: 12px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Sombra táctil */
+  box-shadow: 0 6px 0px rgba(92, 78, 70, 0.15);
+  border: 2px solid var(--fondo-section);
+}
+
+.card-stars .stars {
+  font-size: 2rem;
+  letter-spacing: 2px;
+}
+
+.card p {
+  font-size: 1.6rem;
+  margin-top: 2rem;
+  color: var(--Marron-calido);
+  font-style: italic;
+  flex-grow: 1;
+}
+
+.profile {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.profile-image {
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border: 3px solid var(--Verde-vintage);
+}
+
+.name {
+  font-size: 1.8rem;
+  font-family: var(--fuente-principal);
+  font-weight: bold;
+  color: var(--Marron-calido);
+  margin-top: 1rem;
+}
+
+.city {
+  font-size: 1.4rem;
+  color: var(--Verde-vintage);
+  font-family: var(--fuente-secundaria);
+}
+
+/**register*/
+.section.register {
+    padding: 0;
+}
+
+.container-register {
+  background-color: var(--Marron-calido);
+  background-image: linear-gradient(rgba(138, 110, 99, 0.85), rgba(138, 110, 99, 0.85)), url(assets/images/fondo-register.jpg);
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  padding: 7rem 2rem;
+  color: var(--fondopagina);
+  text-align: center;
+  width: 100%; /* Ancho completo igual que carousel y hero */
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.content-register {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 6rem;
+  gap: 0.5rem;
+  align-items: center;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.content-register h2 {
+  color: white;
+}
+
+.content-register p {
+    color: white;
+    font-size: x-large;
+}
+
+.content-form {
+  display: flex;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+
+  .formulario {
+    display: grid;
+    grid-template-columns: 1fr max-content;
+    width: 100%;
+    margin: 2rem 0;
+    gap: 0;
+
+    .search-leter {
+      border-radius: 30px 0 0 30px;
+      border: none;
+      padding: 1.5rem 2rem;
+      font-size: 1.6rem;
+      outline: none;
+      font-family: var(--fuente-secundaria);
+      height: 100%;
+      min-height: 56px;
+    }
+
+    .content-botton {
+      display: flex;
+      margin: 0;
+      
+      .botton {
+        background-color: var(--Acentos-rosados);
+        color: var(--Fondo-body);
+        border: none;
+        border-radius: 0 30px 30px 0;
+        padding: 0 3rem;
+        font-size: 1.6rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        height: 100%;
+      }
+      .botton:hover {
+        background-color: var(--Verde-vintage);
+        color: var(--Marron-calido);
+      }
+    }
+  }
+}
+
+
+
+/**Footer*/
+
+/**Footer Senior 4 Columnas*/
+.footer {
+  background-color: var(--Pink-Pearl);
+}
+
+.footer .container {
+  padding: 6rem 2rem 4rem;
+}
+
+.footer-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 4rem;
+  margin-bottom: 3rem;
+  border-bottom: 1px solid rgba(92, 78, 70, 0.1);
+  padding-bottom: 4rem;
+}
+
+.widget {
+  padding: 0;
+}
+
+.widget h2 {
+  font-size: 2.2rem;
+  margin-bottom: 2.5rem;
+  color: var(--Marron-calido);
+}
+
+.widget p {
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+  color: var(--Marron-calido);
+  font-family: var(--fuente-secundaria);
+}
+
+.widget.widget-about .footer-logo {
+  font-family: var(--fuente-principal);
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: var(--Marron-calido);
+  display: block;
+  margin-bottom: 1.5rem;
+}
+
+.widget .submenu {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.widget a {
+  color: var(--Marron-calido);
+  font-family: var(--fuente-secundaria);
+  display: flex;
+  align-items: center;
+  font-size: 1.6rem;
+  transition: color 0.3s;
+}
+
+.widget a:hover {
+  color: var(--Acentos-rosados);
+}
+
+/* Iconos de Redes & Medios de Pago en Footer */
+.social-icons {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.social-icons a {
+  background-color: rgba(92, 78, 70, 0.05);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.social-icons a:hover {
+  background-color: var(--Acentos-rosados);
+  color: var(--Fondo-body);
+}
+
+.payment-methods {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.payment-methods i {
+  font-size: 3.5rem;
+  color: var(--Marron-calido); /* Monocromo clásico */
+  opacity: 0.8;
+}
+
+
+
+.icon-container {
+  display: flex;
+  width: 4%;
+  gap: 2rem;
+  flex-direction: column;
+  order: -1;
+  justify-content: center;
+}
+
+.icon-end {
+  display: flex;
+  margin: 0 auto;
+  justify-content: space-between;
+  border-top: 1px solid black;
+  padding-top: 0.5rem;
+
+  .icon-content {
+    display: flex;
+    width: 13%;
+    gap: 2rem;
+  }
+}
+
+/*mediaQueries*/
+@media (width > 567px) {
+  .container {
+    max-width: 54rem;
+    padding: 0 1.6rem;
+    /** Maneja la distancia entre contenido y el borde del contenedor e incrementa en 8px en cada media query */
+  }
+
+  /**carrusel*/
+
+  .container-carousel-down {
+    max-width: 90%;
+  }
+
+  .card {
+    flex: 0 0 100%;
+    width: 100%;
+    height: 46rem;
+  }
+}
+
+
+@media (width > 768px) {
+  .container {
+    max-width: 72rem;
+    padding: 0 2.4rem;
+  }
+
+  .logo {
+    max-width: 200px;
+  }
+  
+  .logo-image span {
+    font-size: 2.8rem !important; /* Retorna a tamaño normal en desktop */
+  }
+
+  /* Header Desktop Updates para TABLET (768-1023px) */
+  /* El hamburger SIGÜ¡ visible en tablet, NO lo ocultamos aqui */
+
+  /* Buscador visible e integrado en desktop */
+  .search-box {
+    display: flex;
+    position: static;
+    box-shadow: 0 4px 10px rgba(93, 64, 55, 0.05);
+    background: transparent;
+    border: none;
+    padding: 0;
+    max-width: 600px;
+  }
+  
+  .search-box input {
+    border-radius: 40px 0 0 40px;
+    border: 1px solid var(--Pink-Pearl);
+  }
+  
+  .search-box button {
+    border-radius: 0 40px 40px 0;
+  }
+
+  .auth-buttons {
+    display: flex;
+  }
+
+  /* El desktop navbar se muestra SOLO en 1024px+ (ver bloque debajo) */
+  /* Para tablet (768-1023px) el menú sigue siendo el hamburguesa */
+
+  /* Hero Section Grid para Escritorio */
+  .hero-grid {
+    grid-template-columns: 1fr 1fr;
+    text-align: left;
+  }
+  
+  .hero-content {
+    text-align: left;
+  }
+
+  /* boton de menu desplegable */
+
+  .center-navigation{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .category-dropdown .text{
+    display: block;
+  }
+
+  .card-munecos {
+    flex-direction: row;
+    margin: 3rem 0;
+    flex-wrap: wrap;
+}
+
+  /* carousel muñecas*/
+  .elemento {
+    flex: 1 0 50%;
+  }
+
+  /* carousel comentarios*/
+  .container-carousel-down {
+    width: 90%;
+  }
+
+  /* register */
+
+  .content-register {
+    justify-content: center;
+
+    .content-form {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0rem;
+
+      & .formulario {
+        /* Mantenemos grid para que los botones y search compartan altura exacta */
+        height: 5rem;
+      }
+    }
+  }
+
+
+
+  /**Footer*/
+
+  .footer .container {
+    background-color: var(--Pink-Pearl);
+    padding: 2rem;
+  }
+
+  .container .footer-container {
+    display: flex;
+    gap: 1.4em;
+    width: 100%;
+    margin-bottom: 1rem;
+
+    & h2 {
+      margin-bottom: 1rem;
+      line-height: 1.6;
+    }
+
+    & ul,
+    & p {
+      margin: 0;
+      padding: 0;
+      text-decoration: none;
+      line-height: 1.8;
+    }
+  }
+
+  .widget {
+    flex: 1 0 30%;
+    border: none;
+
+    & a {
+      flex-direction: unset;
+    }
+  }
+
+
+
+  .widget-left .fa-solid {
+    margin-right: 0.7rem;
+    color: #db47a0;
+  }
+}
+
+@media (width > 1024px) {
+  .container {
+    max-width: 99.2rem;
+    padding: 0 3.2rem;
+  }
+
+  .elemento {
+    flex: 1 0 30%;
+  }
+}
+
+@media (width > 1200px) {
+  .container {
+    max-width: 114rem;
+    padding: 0 4rem;
+  }
+
+  .elemento {
+    flex: 1 0 20%;
+  }
+}
+
+@media (width > 1400px) {
+  .container {
+    max-width: 132rem;
+    padding: 0 4.8rem;
+  }
+}
+
+@media (width > 1600px) {
+  .container {
+    max-width: 144rem;
+    padding: 0 5.6rem;
+  }
+}
+
+@media (width > 1920px) {
+  .container {
+    max-width: 160rem;
+    padding: 0 6.4rem;
+  }
+}
+
+/* =========================================
+   CARROUSEL SECTION (HERO INTERACTIVO)
+   ========================================= */
+.section-carousel {
+  position: relative;
+  width: 100%;
+  height: 80vh;          /* Altura responsiva para la sección */
+  min-height: 500px;
+  max-height: 800px;
+  background-color: var(--Fondo-body);
+  overflow: hidden;
+}
+
+.main-swiper {
+  width: 100%;
+  height: 100%;
+}
+
+/* Imagen base estirada */
+.image-doll {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 0;       /* Evitar bordes redondeados en hero section si los tuvieran */
+  transition: transform 6s ease-out; /* Zoom lento al hover */
+  z-index: 1;
+}
+
+/* Oscurecimiento parcial para destacar texto superior */
+.swiper-slide::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Degradado mucho más tenue según la solicitud del usuario */
+  background: linear-gradient(to right, rgba(255, 249, 245, 0.3) 0%, rgba(255, 249, 245, 0.05) 40%, transparent 100%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Aplicando el hover y zoom. Js pausa el autoplay */
+.swiper-slide:hover .image-doll {
+  transform: scale(1.05); /* Lujoso hover zoom */
+}
+
+/* Contenido sobrepuesto (ya existente, pero lo posicionamos encima del swiper y centrado verticalmente) */
+.hero-overlay {
+  position: absolute;
+  top: 50%;
+  left: 10%;
+  transform: translateY(-50%);
+  z-index: 3;             /* Encima del ::after mask */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  max-width: 500px;
+  color: var(--Marron-calido);
+  background: rgba(255, 249, 245, 0.7);
+  padding: 3rem;
+  border-radius: 12px;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 10px 30px rgba(93, 64, 55, 0.1);
+  border: 1px solid rgba(232, 165, 152, 0.3);
+}
+
+.badget {
+  background-color: var(--Action-btn);
+  color: var(--Fondo-body);
+  padding: 0.5rem 1.5rem;
+  border-radius: 20px;
+  font-family: var(--fuente-terciaria);
+  font-weight: 700;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+
+/* Botones de control del Swiper principal */
+.main-swiper .swiper-pagination-bullet {
+  background-color: var(--Marron-calido);
+  opacity: 0.5;
+  width: 12px;
+  height: 12px;
+  transition: all 0.3s;
+}
+.main-swiper .swiper-pagination-bullet-active {
+  background-color: var(--Action-btn);
+  opacity: 1;
+  width: 24px;
+  border-radius: 6px;
+}
+.main-swiper .swiper-button-next,
+.main-swiper .swiper-button-prev {
+  color: var(--Action-btn);
+  background: rgba(255, 249, 245, 0.8);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  box-shadow: 0 4px 10px rgba(93, 64, 55, 0.1);
+  transition: all 0.3s;
+}
+.main-swiper .swiper-button-next:hover,
+.main-swiper .swiper-button-prev:hover {
+  background: var(--Action-btn);
+  color: #fff;
+  transform: scale(1.1);
+}
+.main-swiper .swiper-button-next::after,
+.main-swiper .swiper-button-prev::after {
+  font-size: 2rem;
+}
+
+
+/* =========================================
+   CARROUSEL DE OPINIONES (TESTIMONIOS)
+   ========================================= */
+.opiniones {
+  padding: 6rem 0;
+  background-color: var(--Pink-Pearl); /* Fondo distintivo */
+}
+
+.testimonials-swiper {
+  padding-bottom: 50px !important; /* Espacio para la paginación de los testimonios */
+  padding-top: 10px;
+}
+
+/* La burbuja se elevará e iluminará levemente */
+.review-bubble {
+  background-color: var(--Fondo-body);
+  border-radius: 16px;
+  padding: 2.5rem;
+  box-shadow: 0 4px 15px rgba(93, 64, 55, 0.05);
+  border: 1px solid rgba(232, 165, 152, 0.2);
+  height: 100%;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.swiper-slide:hover .review-bubble {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 25px rgba(212, 129, 113, 0.15);
+  border-color: var(--Acentos-rosados);
+}
+
+.review-stars {
+  color: #FFB300;
+  margin-bottom: 1rem;
+  font-size: 1.4rem;
+}
+
+.review-text {
+  font-family: var(--fuente-testimonios), serif;
+  font-size: 1.5rem;
+  line-height: 1.6;
+  color: var(--Marron-calido);
+  font-style: italic;
+  margin-bottom: 2rem;
+  flex-grow: 1;
+}
+
+.review-author {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  border-top: 1px dashed rgba(232, 165, 152, 0.4);
+  padding-top: 1.2rem;
+}
+
+.review-author img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--Fondo-body);
+  box-shadow: 0 2px 6px rgba(92, 78, 70, 0.1);
+  filter: none; /* Asegura que la foto aparezca clara */
+  transition: transform 0.3s ease;
+}
+
+.swiper-slide:hover .review-author img {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.review-author span {
+  font-family: var(--fuente-principal);
+  font-weight: 700;
+  color: var(--Teja-profundo);
+  font-size: 1.5rem;
+}
+
+/* Control Swiper Testimonios */
+.testimonials-swiper .swiper-pagination-bullet {
+  background-color: var(--Acentos-rosados);
+  opacity: 0.5;
+  transition: all 0.3s;
+}
+.testimonials-swiper .swiper-pagination-bullet-active {
+  background-color: var(--Action-btn);
+  opacity: 1;
+  transform: scale(1.5);
+}
+
+/* =========================================
+   ESTILOS DE BOTONES MEJORADOS
+   ========================================= */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--Action-btn);
+  color: var(--Fondo-body);
+  padding: 1.2rem 3rem;
+  border-radius: 30px;
+  font-family: var(--fuente-terciaria);
+  font-weight: 700;
+  font-size: 1.6rem;
+  border: 2px solid transparent;
+  box-shadow: 0 4px 15px rgba(212, 129, 113, 0.4);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn-primary:hover {
+  background-color: var(--Teja-profundo);
+  color: #fff;
+  height: 100%;
+  /* Degradado mucho más tenue según la solicitud del usuario */
+  background: linear-gradient(to right, rgba(255, 249, 245, 0.3) 0%, rgba(255, 249, 245, 0.05) 40%, transparent 100%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Aplicando el hover y zoom. Js pausa el autoplay */
+.swiper-slide:hover .image-doll {
+  transform: scale(1.05); /* Lujoso hover zoom */
+}
+
+/* Contenido sobrepuesto (ya existente, pero lo posicionamos encima del swiper y centrado verticalmente) */
+.hero-overlay {
+  position: absolute;
+  top: 50%;
+  left: 10%;
+  transform: translateY(-50%);
+  z-index: 3;             /* Encima del ::after mask */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  max-width: 500px;
+  color: var(--Marron-calido);
+  background: rgba(255, 249, 245, 0.7);
+  padding: 3rem;
+  border-radius: 12px;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 10px 30px rgba(93, 64, 55, 0.1);
+  border: 1px solid rgba(232, 165, 152, 0.3);
+}
+
+.badget {
+  background-color: var(--Action-btn);
+  color: var(--Fondo-body);
+  padding: 0.5rem 1.5rem;
+  border-radius: 20px;
+  font-family: var(--fuente-terciaria);
+  font-weight: 700;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+
+/* Botones de control del Swiper principal */
+.main-swiper .swiper-pagination-bullet {
+  background-color: var(--Marron-calido);
+  opacity: 0.5;
+  width: 12px;
+  height: 12px;
+  transition: all 0.3s;
+}
+.main-swiper .swiper-pagination-bullet-active {
+  background-color: var(--Action-btn);
+  opacity: 1;
+  width: 24px;
+  border-radius: 6px;
+}
+.main-swiper .swiper-button-next,
+.main-swiper .swiper-button-prev {
+  color: var(--Action-btn);
+  background: rgba(255, 249, 245, 0.8);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  box-shadow: 0 4px 10px rgba(93, 64, 55, 0.1);
+  transition: all 0.3s;
+}
+.main-swiper .swiper-button-next:hover,
+.main-swiper .swiper-button-prev:hover {
+  background: var(--Action-btn);
+  color: #fff;
+  transform: scale(1.1);
+}
+.main-swiper .swiper-button-next::after,
+.main-swiper .swiper-button-prev::after {
+  font-size: 2rem;
+}
+
+
+/* =========================================
+   CARROUSEL DE OPINIONES (TESTIMONIOS)
+   ========================================= */
+.opiniones {
+  padding: 6rem 0;
+  background-color: var(--Pink-Pearl); /* Fondo distintivo */
+}
+
+.testimonials-swiper {
+  padding-bottom: 50px !important; /* Espacio para la paginación de los testimonios */
+  padding-top: 10px;
+}
+
+/* La burbuja se elevará e iluminará levemente */
+.review-bubble {
+  background-color: var(--Fondo-body);
+  border-radius: 16px;
+  padding: 2.5rem;
+  box-shadow: 0 4px 15px rgba(93, 64, 55, 0.05);
+  border: 1px solid rgba(232, 165, 152, 0.2);
+  height: 100%;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.swiper-slide:hover .review-bubble {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 25px rgba(212, 129, 113, 0.15);
+  border-color: var(--Acentos-rosados);
+}
+
+.review-stars {
+  color: #FFB300;
+  margin-bottom: 1rem;
+  font-size: 1.4rem;
+}
+
+.review-text {
+  font-family: var(--fuente-testimonios), serif;
+  font-size: 1.5rem;
+  line-height: 1.6;
+  color: var(--Marron-calido);
+  font-style: italic;
+  margin-bottom: 2rem;
+  flex-grow: 1;
+}
+
+.review-author {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  border-top: 1px dashed rgba(232, 165, 152, 0.4);
+  padding-top: 1.2rem;
+}
+
+.review-author img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--Fondo-body);
+  box-shadow: 0 2px 6px rgba(92, 78, 70, 0.1);
+  filter: none; /* Asegura que la foto aparezca clara */
+  transition: transform 0.3s ease;
+}
+
+.swiper-slide:hover .review-author img {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.review-author span {
+  font-family: var(--fuente-principal);
+  font-weight: 700;
+  color: var(--Teja-profundo);
+  font-size: 1.5rem;
+}
+
+/* Control Swiper Testimonios */
+.testimonials-swiper .swiper-pagination-bullet {
+  background-color: var(--Acentos-rosados);
+  opacity: 0.5;
+  transition: all 0.3s;
+}
+.testimonials-swiper .swiper-pagination-bullet-active {
+  background-color: var(--Action-btn);
+  opacity: 1;
+  transform: scale(1.5);
+}
+
+/* =========================================
+   ESTILOS DE BOTONES MEJORADOS
+   ========================================= */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--Action-btn);
+  color: var(--Fondo-body);
+  padding: 1.2rem 3rem;
+  border-radius: 30px;
+  font-family: var(--fuente-terciaria);
+  font-weight: 700;
+  font-size: 1.6rem;
+  border: 2px solid transparent;
+  box-shadow: 0 4px 15px rgba(212, 129, 113, 0.4);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn-primary:hover {
+  background-color: var(--Teja-profundo);
+  color: #fff;
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(139, 58, 54, 0.3);
+}
+
+/* =========================================
+   RESPONSIVIDAD Y MENÚ MÓVIL (CORRECCIONES)
+   ========================================= */
+
+/* ── Escritorio (≥1024px): Ocultamos todo lo móvil, mostramos navbar desktop ── */
+@media (min-width: 1024px) {
+  /* Ocultar botones exclusivos de móvil */
+  #button-mobile,
+  .mobile-menu-btn,
+  .mobile-only-btn,
+  #mobile-search-toggle,
+  .mobile-logout-btn {
+    display: none !important;
+  }
+
+  /* Mostrar nav de escritorio */
+  .main-navbar.desktop-only {
+    display: flex !important;
+  }
+
+  /* Ocultar el drawer off-canvas */
+  #navbar-movile,
+  #close-navbar {
+    display: none !important;
+  }
+
+  /* Mostrar auth-buttons de escritorio */
+  .auth-buttons {
+    display: flex !important;
+  }
+}
+
+/* ── Tablet/Móvil (<1024px): Mostramos hamburguesa, ocultamos nav desktop ── */
+@media (max-width: 1023px) {
+  /* Ocultar navbar de escritorio */
+  .main-navbar.desktop-only {
+    display: none !important;
+  }
+
+  /* Ocultar botones de login de escritorio (están en el drawer) */
+  .auth-buttons {
+    display: none !important;
+  }
+
+  /* Asegurar que el botón hamburguesa sea siempre visible */
+  #button-mobile,
+  .mobile-menu-btn {
+    display: flex !important;
+  }
+
+  /* Todos los items del menú móvil deben ser visibles */
+  .mobile-nav-list li {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  /* Los links del menú móvil */
+  .mobile-nav-list li a {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+}
+
+/* =========================================
+   ESTILOS GLOBALES DE FORMULARIOS ("Lujo Artesanal")
+   ========================================= */
+
+/* Contenedores Principales de Formularios (Login/Register) */
+.form-login, .form-register, .form-general-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 6rem 2rem;
+  background-color: var(--Fondo-body);
+  min-height: 80vh;
+}
+
+/* Contenedores de Formularios del Dashboard (Productos, Categorías, Usuarios) */
+.form.container,
+.products-list, .category-list, .user-list,
+.form-new-product, .form-edit-product,
+.form-new-category, .form-edit-category,
+.form-new-user, .form-edit-user {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Para que formularios largos no queden centrados verticalmente si sobra pantalla */
+  padding: 4rem 2rem;
+}
+
+/* Paneles de Login/Register (Estrechos) */
+.form-new-login, .form-new-register, .form-panel {
+  background: white;
+  width: 100%;
+  max-width: 500px;
+  padding: 4.5rem;
+  border-radius: 24px;
+  box-shadow: 0 15px 45px rgba(93, 64, 55, 0.08); /* Sombra difusa y elegante */
+  border: 1px solid rgba(232, 165, 152, 0.25);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Paneles del Dashboard (Anchos y Espaciosos) */
+form.form-new-product, form.form-edit-product,
+form.form-new-category, form.form-edit-category,
+form.form-new-user, form.form-edit-user,
+.list-panel {
+  background: white;
+  width: 100%;
+  max-width: 900px; /* Mucho más grande para acomodar múltiples campos */
+  padding: 5rem;
+  border-radius: 24px;
+  box-shadow: 0 15px 45px rgba(93, 64, 55, 0.08);
+  border: 1px solid rgba(232, 165, 152, 0.25);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Opciones móviles lógicas basadas en roles en el menú hamburguesa - Arreglando conflictos de visualización */
+.mobile-navbar .mobile-nav-list li {
+  display: block !important;
+  width: 100%;
+}
+
+/* Paneles del Dashboard (Anchos y Espaciosos) */
+form.form-new-product, form.form-edit-product,
+form.form-new-category, form.form-edit-category,
+form.form-new-user, form.form-edit-user,
+.list-panel {
+  background: white;
+  width: 100%;
+  max-width: 900px; /* Mucho más grande para acomodar múltiples campos */
+  padding: 5rem;
+  border-radius: 24px;
+  box-shadow: 0 15px 45px rgba(93, 64, 55, 0.08);
+  border: 1px solid rgba(232, 165, 152, 0.25);
+  position: relative;
+  overflow: visible; /* Soluciona recortes en dispositivos muy pequeños */
+}
+
+/* Reducir padding horizontal brutal en pantallas pequeñas para aprovechar espacio */
+@media (max-width: 767px) {
+  /* Solucionar "amontonado": Forzamos a que vuelva a tener 1 sola columna natural */
+  form.form-new-product, form.form-edit-product,
+  form.form-new-category, form.form-edit-category,
+  form.form-new-user, form.form-edit-user {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 2.5rem 1.5rem; /* Ajuste crítico: liberamos espacio del contenedor */
+    border-radius: 12px;
+  }
+  
+  /* Ajustar tamaño de fuente de campos para mejorar lectura */
+  .form-new-login input, .form-new-register input,
+  .form-new-register select, .form-control,
+  input[type="text"], input[type="email"],
+  input[type="password"], input[type="number"],
+  input[type="tel"], input[type="date"],
+  select, textarea {
+    padding: 1.2rem 1.2rem;
+    font-size: 1.4rem;
+  }
+
+  .form-new-login .field, .form-new-register .field, .form-group, .field {
+    margin-bottom: 2rem; /* Cortamos distancia vertical */
+    width: 100%;
+  }
+
+  /* Dejamos el contenedor base también de 1 sola columna y con menos padding exterior */
+  .form.container,
+  .products-list, .category-list, .user-list,
+  .form-new-product, .form-edit-product,
+  .form-new-category, .form-edit-category,
+  .form-new-user, .form-edit-user {
+    padding: 2rem 1rem;
+    align-items: center;
+  }
+
+  /* Disminuimos los tamaños de los botones para que no amontonen */
+  .btn-submit, .btn-reset, button[type="reset"] {
+    padding: 1.2rem 1.6rem;
+    font-size: 1.4rem;
+  }
+  
+  .form-actions, .form-buttons {
+    gap: 1rem;
+    margin-top: 1.5rem;
+    flex-direction: column; /* Apila botones uno debajo de otro para máximo comfort */
+  }
+
+  /* Los títulos de dashboard form se hacen más chicos */
+  form.form-new-product h1, form.form-edit-product h1,
+  form.form-new-category h1, form.form-edit-category h1,
+  form.form-new-user h1, form.form-edit-user h1 {
+    font-size: 2.4rem;
+    margin-bottom: 2rem;
+  }
+}
+
+/* Títulos de los formularios del dashboard */
+form.form-new-product h1, form.form-edit-product h1,
+form.form-new-category h1, form.form-edit-category h1,
+form.form-new-user h1, form.form-edit-user h1 {
+  font-family: var(--fuente-principal);
+  font-size: 3.2rem;
+  color: var(--Marron-calido);
+  text-align: center;
+  margin-bottom: 4rem;
+  border-bottom: 1px dashed rgba(232, 165, 152, 0.4);
+  padding-bottom: 2rem;
+}
+
+/* Decoración superior sutil (estilo sobre o carta antigua) - Común para todos */
+.form-new-login::before, .form-new-register::before, .form-panel::before,
+form.form-new-product::before, form.form-edit-product::before,
+form.form-new-category::before, form.form-edit-category::before,
+form.form-new-user::before, form.form-edit-user::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 6px;
+  background: linear-gradient(90deg, var(--Acentos-rosados), var(--Action-btn), var(--Detalles-dorados));
+}
+
+/* Disposición en GRID para formularios del dashboard (2 columnas) */
+/* Solamente cuando la pantalla es ancha */
+@media (min-width: 768px) {
+  form.form-new-product, form.form-edit-product,
+  form.form-new-category, form.form-edit-category,
+  form.form-new-user, form.form-edit-user {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 3.5rem; /* Espaciado entre columnas */
+  }
+
+  /* Los títulos y botones ocupan ambas columnas */
+  form.form-new-product h1, form.form-edit-product h1,
+  form.form-new-category h1, form.form-edit-category h1,
+  form.form-new-user h1, form.form-edit-user h1,
+  .form-actions, .form-buttons, .fiel-message {
+    grid-column: 1 / -1;
+  }
+  
+  /* Campos que deberían ser anchos (e.g., Description) */
+  .field:has(textarea), .field:has(.input-product-image) {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Campos de Formulario Genéricos */
+.form-new-login .field, .form-new-register .field, .form-group, .field {
+  margin-bottom: 3.5rem; /* Más margen solicitado */
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* Etiquetas */
+.form-new-login label, .form-new-register label, .form-group label, .field label, label {
+  font-family: var(--fuente-principal);
+  font-weight: 700;
+  color: var(--Marron-calido);
+  margin-bottom: 1rem; /* Un poco más despacio para separarla de la caja */
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Campos de entrada genéricos (Inputs, Selects, Textareas) - Más Cuadrados */
+.form-new-login input, .form-new-register input,
+.form-new-register select,
+.form-control,
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="tel"],
+input[type="date"],
+select,
+textarea {
+  width: 100%;
+  padding: 1.5rem 1.8rem;
+  border: 1px solid rgba(93, 64, 55, 0.25); /* Bordes más definidos (oscuros) */
+  border-radius: 8px; /* Bordes más cuadrados como solicitado */
+  font-family: var(--fuente-terciaria);
+  font-size: 1.5rem;
+  color: var(--Marron-calido);
+  background-color: #fafafa;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  outline: none;
+  box-shadow: inset 0 2px 5px rgba(0,0,0,0.02);
+}
+
+/* Focus States (Interacción) */
+.form-new-login input:focus, .form-new-register input:focus,
+.form-new-register select:focus,
+.form-control:focus,
+input:not([type="radio"]):not([type="checkbox"]):not([type="submit"]):not([type="button"]):not([type="color"]):focus,
+select:focus,
+textarea:focus {
+  border-color: var(--Action-btn);
+  background-color: white;
+  box-shadow: 0 0 0 4px rgba(212, 129, 113, 0.2), inset 0 2px 5px rgba(0,0,0,0.01);
+  transform: translateY(-2px);
+}
+
+/* Inputs especificos (como color) */
+input[type="color"] {
+  padding: 0.5rem;
+  height: 50px;
+  cursor: pointer;
+}
+
+/* Textareas necesitan resize visible y min height */
+textarea {
+  min-height: 120px;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+/* Placeholders estilo vintage */
+.form-new-login input::placeholder, .form-new-register input::placeholder,
+::placeholder {
+  color: #c9bcae;
+  font-weight: 400;
+  opacity: 0.8;
+}
+
+/* Mensajes de Validación de Angular (.errors small) */
+.form-new-login .errors, .form-new-register .errors, .errors, .invalid-feedback {
+  min-height: 20px;
+  margin-top: 0.6rem;
+  animation: slideDownSearch 0.3s ease;
+}
+
+.form-new-login .errors small, .form-new-register .errors small, .errors small, .invalid-feedback {
+  color: #D32F2F; /* Rojo clásico vibrante */
+  font-size: 1.25rem;
+  font-family: var(--fuente-secundaria);
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-weight: 500;
+}
+
+.form-new-login .errors small::before, .form-new-register .errors small::before, .errors small::before {
+  content: '✿'; /* Ícono artesanal/floral en vez del warning genérico */
+  color: #D32F2F;
+}
+
+/* Campos inválidos marcados por Angular (ng-invalid ng-touched) */
+input.ng-invalid.ng-touched:not(form), select.ng-invalid.ng-touched:not(form), textarea.ng-invalid.ng-touched:not(form) {
+  border-color: #E57373 !important;
+  background-color: #FFEBEE !important; /* Rosado rojizo muy suave */
+}
+
+input.ng-invalid.ng-touched:focus, select.ng-invalid.ng-touched:focus, textarea.ng-invalid.ng-touched:focus {
+  box-shadow: 0 0 0 4px rgba(229, 115, 115, 0.2) !important;
+}
+
+/* Checkboxes y Radios - Estilo Nostalgia */
+input[type="checkbox"], input[type="radio"] {
+  width: auto;
+  padding: 0;
+  margin-right: 1rem;
+  accent-color: var(--Action-btn); /* Da estilo de manera nativa en navegadores modernos */
+  cursor: pointer;
+  transform: scale(1.2);
+  box-shadow: none;
+}
+
+.checkbox-label, .radio-label, .check-content label {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center;
+  font-family: var(--fuente-secundaria) !important;
+  font-weight: 500 !important;
+  font-size: 1.4rem !important;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+  color: var(--Marron-calido);
+}
+
+/* =========================================
+   ESTILOS DE BOTONES (SUBMIT Y RESET)
+   ========================================= */
+
+/* Contenedor de Botones agrupados */
+.form-actions, .form-buttons {
+  display: flex;
+  gap: 2rem;
+  margin-top: 3.5rem;
+  flex-wrap: wrap; /* Para asegurar que no se sobrepongan en pantallas pequeñas */
+  width: 100%;
+  justify-content: center;
+}
+
+/* Botón Submit del formulario - Interactivo y Lujoso */
+.btn-submit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.6rem 3rem; /* Más balanceado para que puedan convivir lado a lado con form-actions */
+  background-color: var(--Action-btn);
+  color: var(--Fondo-body);
+  border: none;
+  border-radius: 40px; /* Mas redondeado, tipo píldora */
+  font-family: var(--fuente-terciaria);
+  font-weight: 700;
+  font-size: 1.6rem;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  box-shadow: 0 8px 20px rgba(212, 129, 113, 0.25);
+  position: relative;
+  overflow: hidden;
+  flex-grow: 1; /* Para que ocupe buen espacio si está solo o acompañado */
+}
+
+.btn-submit::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.6s;
+}
+
+.btn-submit:hover:not(:disabled) {
+  background-color: var(--Teja-profundo);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(139, 58, 54, 0.35);
+}
+
+.btn-submit:hover:not(:disabled)::after {
+  left: 100%; /* Efecto brillo al pasar mouse */
+}
+
+.btn-submit:disabled {
+  background-color: #e0d5ce;
+  color: #a49c95;
+  box-shadow: none;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-submit:disabled::after {
+  display: none;
+}
+
+/* Botón Reset de Formulario (Limpiar) */
+.btn-reset, button[type="reset"] {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.6rem 3rem;
+  background-color: transparent;
+  color: var(--Marron-calido); /* Se integra elegante pero no destaca sobre el submit */
+  border: 2px solid var(--Marron-calido);
+  border-radius: 40px;
+  font-family: var(--fuente-terciaria);
+  font-weight: 700;
+  font-size: 1.6rem;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  flex-grow: 1;
+}
+
+.btn-reset:hover, button[type="reset"]:hover {
+  background-color: var(--Marron-calido);
+  color: var(--Fondo-body);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(93, 64, 55, 0.25);
+}
+
+/* =========================================
+   MENÚ MÓVIL OFF-CANVAS (HAMBURGUESA)
+   ========================================= */
+
+/* El overlay/drawer del menú móvil */
+.mobile-navbar {
+  position: fixed;
+  top: 0;
+  left: -320px; /* Oculto a la izquierda por defecto */
+  width: 300px;
+  height: 100%;
+  background: var(--Fondo-body);
+  z-index: 9999;
+  box-shadow: 5px 0 30px rgba(93, 64, 55, 0.15);
+  transition: left 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  overflow-y: auto;
+  border-right: 1px solid rgba(232, 165, 152, 0.3);
+}
+
+/* Estado activo: visible */
+.mobile-navbar.open {
+  left: 0;
+}
+
+/* Overlay oscuro detrás */
+.mobile-navbar-close {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(93, 64, 55, 0.4);
+  backdrop-filter: blur(2px);
+  z-index: 9998;
+  display: none;
+}
+
+.mobile-navbar-close.open {
+  display: block;
+}
+
+/* Ocultar menú móvil en escritorio */
+@media (min-width: 1024px) {
+  .mobile-navbar,
+  .mobile-navbar-close {
+    display: none !important;
+  }
+}
+
+/* Los ítems de la lista móvil deben ser always visible */
+.mobile-nav-list li {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Links dentro del menú móvil */
+.mobile-nav-list a {
+  display: block;
+  padding: 1.2rem 0;
+  font-size: 2rem;
+  color: var(--Marron-calido);
+  font-weight: 500;
+  text-decoration: none;
+  border-bottom: 1px dashed rgba(232, 165, 152, 0.3);
+  transition: color 0.2s, padding-left 0.2s;
+}
+
+.mobile-nav-list a:hover {
+  color: var(--Action-btn);
+  padding-left: 1rem; /* Pequeño deslizamiento al hover */
+}
+
+/* =========================================
+   FORMULARIOS DASHBOARD - RESPONSIVE MÓVIL
+   Arreglo crítico: evitar campos amontonados
+   ========================================= */
+
+@media (max-width: 767px) {
+
+  /* El wrapper externo: menos padding */
+  .form.container,
+  .form-new-product, .form-edit-product,
+  .form-new-category, .form-edit-category,
+  .form-new-user, .form-edit-user {
+    padding: 2rem 0.5rem;
+  }
+
+  /* El FORM en sí vuelve a ser columna simple */
+  form.form-new-product, form.form-edit-product,
+  form.form-new-category, form.form-edit-category,
+  form.form-new-user, form.form-edit-user {
+    display: flex !important; /* Anula el grid de pantalla grande */
+    flex-direction: column !important;
+    padding: 2.5rem 2rem;
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Inputs y campos usan el 100% del ancho */
+  .field {
+    width: 100% !important;
+    margin-bottom: 2rem;
+  }
+
+  /* Los botones se apilan */
+  .form-actions, .form-buttons {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .btn-submit, .btn-reset, button[type="reset"] {
+    width: 100%;
+    padding: 1.4rem 2rem;
+    font-size: 1.5rem;
+  }
+
+  /* Inputs más cómodos en móvil */
+  input:not([type="radio"]):not([type="checkbox"]):not([type="submit"]):not([type="button"]),
+  select,
+  textarea {
+    padding: 1.2rem 1rem;
+    font-size: 1.4rem;
+  }
+
+  /* Títulos de formulario dashboard más pequeños */
+  form.form-new-product h1, form.form-edit-product h1,
+  form.form-new-category h1, form.form-edit-category h1,
+  form.form-new-user h1, form.form-edit-user h1 {
+    font-size: 2.4rem;
+    margin-bottom: 2rem;
+  }
+}
+

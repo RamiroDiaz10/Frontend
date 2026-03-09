@@ -10,7 +10,7 @@
     <!-- campo product name -->
 
         <div class="field">
-            <label for="product-name" class="label">Product Name</label>
+            <label for="product-name" class="label">Product Name*</label>
             <input
                 class="input input-product-name" 
                 type="text"
@@ -37,7 +37,7 @@
         <!-- campo product description -->
 
         <div class="field">
-            <label for="product-description" class="label">Description</label>
+            <label for="product-description" class="label">Description*</label>
             <textarea 
                 class="input input-product-description" 
                 type="text" 
@@ -46,13 +46,13 @@
                 placeholder="Ej: Muñeca tradicional, color verde">
             </textarea> 
             <div class="errors">
-                @if (formData.get('description'); as productName) {
-                    @if(productName.invalid && (productName.touched || productName.dirty)){
-                        @if (productName.errors?.['required']) {
+                @if (formData.get('description'); as productDescription) {
+                    @if(productDescription.invalid && (productDescription.touched || productDescription.dirty)){
+                        @if (productDescription.errors?.['required']) {
                             <small>Campo obligatorio</small>
                         }
-                        @if (productName.errors?.['maxlength']) {
-                        <small> Mínimo {{  productName.errors?.['maxlength'].requiredLength }} caracteres</small>
+                        @if (productDescription.errors?.['maxlength']) {
+                        <small> Mínimo {{  productDescription.errors?.['maxlength'].requiredLength }} caracteres</small>
 
                         }
                     }
@@ -63,7 +63,7 @@
         <!-- campo product image -->
 
         <div class="field">
-            <label for="product-image" class="label">Image</label>
+            <label for="product-image" class="label">Image*</label>
             <input
                 type="text"
                 class="input input-product-image"
@@ -91,12 +91,13 @@
         
         
         <div class="field">
-            <label for="product-size" class="label" >Size</label>
+            <label for="product-size" class="label" >Size* (cm)</label>
             <input 
             class="input input-product-size"
             type="number" 
             formControlName="size" 
             id="product-size" 
+            placeholder="ej: 20 cm"
             />
             <div class="errors">
                 @if (formData.get('size'); as productSize) {
@@ -120,7 +121,7 @@
         
         
         <div class="field">
-            <label for="product-material" class="label" >Material</label>
+            <label for="product-material" class="label" >Material*</label>
             <input 
             class="input input-product-material"
             type="text" 
@@ -148,7 +149,7 @@
         
         
         <div class="field">
-            <label for="product-color" class="label" >Color</label>
+            <label for="product-color" class="label" >Color*</label>
             <input 
             class="input input-product-color"
             type="color" 
@@ -173,7 +174,7 @@
         
         
         <div class="field">
-            <label for="product-price" class="label" >Price</label>
+            <label for="product-price" class="label" >$ Price*</label>
             <input 
             class="input input-product-price"
             type="number" 
@@ -202,7 +203,7 @@
         
         
         <div class="field">
-            <label for="product-stock" class="label" >Stock</label>
+            <label for="product-stock" class="label" >Stock*</label>
             <input 
             class="input input-product-stock"
             type="number" 
@@ -229,17 +230,12 @@
         
         
         <div class="field">
-            <label for="product-category" class="label" >Category</label>
+            <label for="product-category" class="label" >Category*</label>
             <select class="input input-product-category" formControlName="category"  id="product-category" >
                 <option value="">Select a category</option>
-                <option value="munecas">munecas </option>
-                <option value="munecas-trapo">munecas trapo</option>
-                <option value="munecas-verdes">munecas verdes</option>
-                
-
-                <!-- @for (category of categories); track $index {
-                    <option [value]="category.id">{{ category.name }}</option>
-                } -->
+                @for(category of (categories | async); track $index){
+                    <option [value]="category._id">{{ category.name }}</option>
+                }
             </select>
             <div class="errors">
                 @if (formData.get('category'); as productCategory) {
@@ -260,7 +256,7 @@
 
         <div class="field">
 
-            <label for="product-status" class="label">Status</label>
+            <label for="product-status" class="label">Status*</label>
             <div class="status-option">
                 <input 
                 type="radio"

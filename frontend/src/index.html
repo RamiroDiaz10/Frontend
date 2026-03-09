@@ -6,8 +6,168 @@
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <!-- ================= INYECTADO DESDE PROYECTO MAQUETA ================= -->
+  <!-- Google Fonts: Playfair Display & Montserrat & Dancing Script -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+    rel="stylesheet"
+  />
+  <!-- FontAwesome -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+    integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+  <!-- Swiper CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <!-- ==================================================================== -->
+
 </head>
 <body>
   <app-root></app-root>
+
+  <!-- ================= INYECTADO DESDE PROYECTO MAQUETA ================= -->
+  <!-- Swiper JS -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  
+  <script>
+    // Inicialización de Carruseles con Swiper.js globalmente por Mutación
+    // Dado que Angular reemplaza el DOM dinámicamente, usaremos un script de inicialización on-load/on-mutation.
+    
+    function initSwipers() {
+      // Carrusel Principal (Hero)
+      if (document.querySelector('.main-swiper') && !document.querySelector('.main-swiper').swiper) {
+        new Swiper('.main-swiper', {
+          loop: true,
+          speed: 1000,
+          effect: "fade", // Efecto tipo Crossfade elegante
+          autoplay: {
+            delay: 4500,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true,
+          },
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+        });
+      }
+
+      // Carrusel Testimonios (Bubbles)
+      if (document.querySelector('.testimonials-swiper') && !document.querySelector('.testimonials-swiper').swiper) {
+        new Swiper('.testimonials-swiper', {
+          loop: true,
+          slidesPerView: 1,
+          spaceBetween: 30,
+          speed: 800,
+          autoplay: {
+            delay: 4500,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true,
+          },
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+          },
+          breakpoints: {
+            768: { slidesPerView: 2 },
+            1024: { slidesPerView: 3 }
+          }
+        });
+      }
+    }
+
+    // Inicializa si ya está el DOM listo
+    document.addEventListener("DOMContentLoaded", initSwipers);
+    
+    // Y re-escucha cambios (como navegación por router Angular)
+    var swiperObserver = new MutationObserver(function() {
+      initSwipers();
+    });
+    swiperObserver.observe(document.body, { childList: true, subtree: true });
+  </script>
+
+  <!-- Menú Hamburguesa + Buscador Móvil: lógica de toggle -->
+  <script>
+    // Usamos _mobileInit para evitar agregar listeners duplicados en cada mutación del DOM de Angular
+
+    function initMobileInteractions() {
+      var menuBtn      = document.getElementById('button-mobile');
+      var closeOverlay = document.getElementById('close-navbar');
+      var closeBtn     = document.getElementById('close-mobile-btn');
+      var mobileNav    = document.getElementById('navbar-movile');
+      var searchToggle = document.getElementById('mobile-search-toggle');
+      var searchBox    = document.getElementById('main-search-box');
+
+      // ── Menú hamburguesa OFF-CANVAS ──────────────────────────────────────
+      // El CSS original usa clase 'mostrar' en .mobile-navbar para abrirlo
+      // y clase 'ocultar' en .mobile-navbar-close para mostrar el backdrop
+      if (menuBtn && mobileNav && !menuBtn._mobileInit) {
+        menuBtn._mobileInit = true;
+
+        function openMenu() {
+          mobileNav.classList.add('mostrar');
+          if (closeOverlay) closeOverlay.classList.add('ocultar');
+          document.body.style.overflow = 'hidden';
+        }
+
+        function closeMenu() {
+          mobileNav.classList.remove('mostrar');
+          if (closeOverlay) closeOverlay.classList.remove('ocultar');
+          document.body.style.overflow = '';
+        }
+
+        menuBtn.addEventListener('click', openMenu);
+        if (closeOverlay) closeOverlay.addEventListener('click', closeMenu);
+        if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+
+        // Cierra el menú al hacer clic en cualquier enlace del drawer
+        mobileNav.querySelectorAll('a').forEach(function(link) {
+          link.addEventListener('click', closeMenu);
+        });
+      }
+
+      // ── Buscador Móvil (lupa) ─────────────────────────────────────────────
+      if (searchToggle && searchBox && !searchToggle._searchInit) {
+        searchToggle._searchInit = true;
+
+        searchToggle.addEventListener('click', function() {
+          var isVisible = searchBox.style.display === 'flex';
+          if (isVisible) {
+            searchBox.style.display = 'none';
+          } else {
+            searchBox.style.display = 'flex';
+            searchBox.style.position = 'absolute';
+            searchBox.style.top = '100%';
+            searchBox.style.left = '0';
+            searchBox.style.right = '0';
+            searchBox.style.zIndex = '9000';
+            searchBox.style.padding = '1rem 2rem';
+            searchBox.style.backgroundColor = 'var(--Fondo-body)';
+            searchBox.style.boxShadow = '0 8px 20px rgba(93,64,55,0.1)';
+            var input = searchBox.querySelector('input');
+            if (input) setTimeout(function() { input.focus(); }, 100);
+          }
+        });
+      }
+    }
+
+    // Inicializar en carga
+    document.addEventListener('DOMContentLoaded', initMobileInteractions);
+
+    // Re-inicializar tras cambios de DOM (navegación de Angular)
+    var mobileObs = new MutationObserver(function() {
+      initMobileInteractions();
+    });
+    mobileObs.observe(document.body, { childList: true, subtree: true });
+  </script>
+  <!-- ==================================================================== -->
 </body>
 </html>
