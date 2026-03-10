@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of } from 'rxjs';
 
-import { DataProduct } from '../../models/products.models';
+import { DataProduct, ResponseProducts } from '../../models/products.models';
 import { ResponseApi } from '../../models/response.model';
 
 @Injectable({
@@ -17,7 +17,7 @@ export class HttpProducts {
   createProduct(productData: DataProduct):Observable<string> {
     return this.http.post<ResponseApi<DataProduct>>('http://localhost:3000/api/v1/products', productData)
     .pipe(
-      map((response: ResponseApi<DataProduct>) => {
+      map((response) => {
         console.info(response);
         return response.msg || 'Product created successfully';
       }),
@@ -32,9 +32,9 @@ export class HttpProducts {
   }
 
   getProducts(): Observable<DataProduct[]> {
-    return this.http.get<{ products: DataProduct[] }>('http://localhost:3000/api/v1/products')
+    return this.http.get<ResponseProducts>('http://localhost:3000/api/v1/products')
       .pipe(
-        map((response: { products: DataProduct[] }) => {
+        map((response) => {
           console.log(response);
           return response.products || [];
         }),
@@ -48,7 +48,7 @@ export class HttpProducts {
   deleteProduct(_id: string): Observable<string> {
     return this.http.delete<ResponseApi<DataProduct>>(`http://localhost:3000/api/v1/products/${_id}`)
       .pipe(
-        map((response: ResponseApi<DataProduct>) => {
+        map((response) => {
           console.log(response);
           return response.msg || 'Product deleted successfully';
         }),

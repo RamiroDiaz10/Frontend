@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { catchError, map, of, Observable, tap } from 'rxjs';
 
-import { DataCategory } from '../../models/category-model';
+import { DataCategory, ResponseCategories } from '../../models/category-model';
 import { ResponseApi } from '../../models/response.model';
 
 @Injectable({
@@ -18,7 +18,7 @@ export class HttpCategories {
   createCategory(categoryData: DataCategory):Observable<string> {
     return this.http.post<ResponseApi<DataCategory>>('http://localhost:3000/api/v1/category', categoryData)
     .pipe(
-      map((response: ResponseApi<DataCategory>) => {
+      map((response) => {
         console.log(response);
         return response.msg || 'Category created successfully';
       }),
@@ -32,9 +32,9 @@ export class HttpCategories {
   }
 
   getCategories(): Observable<DataCategory[]> {
-      return this.http.get<{ categories: DataCategory[] }>('http://localhost:3000/api/v1/category')
+      return this.http.get<ResponseCategories>('http://localhost:3000/api/v1/category')
       .pipe(
-        map((response: { categories: DataCategory[] }) => {
+        map((response) => {
           console.log(response);
           return response.categories || [];
         }),
@@ -46,10 +46,14 @@ export class HttpCategories {
         
   }
 
+  getCategoryById(_id: string) {
+
+  }
+
   deleteCategory(_id: string): Observable<string> {
     return this.http.delete<ResponseApi<DataCategory>>(`http://localhost:3000/api/v1/category/${_id}`)
       .pipe(
-        map((response: ResponseApi<DataCategory>) => {
+        map((response) => {
           console.log(response);
           return response.msg || 'Category deleted successfully';
         }),

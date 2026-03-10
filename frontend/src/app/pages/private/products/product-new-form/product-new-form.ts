@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, switchMap } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 
 import { HttpProducts } from '../../../../core/service/http-products';
@@ -16,7 +16,9 @@ import { DataProduct } from '../../../../models/products.models';
   changeDetection: ChangeDetectionStrategy.OnPush,    // Estrategia de detección de cambios: verifica cuando los valores de las propiedades del clase del componente, vinculadas a datos cambian.
 })
 export class ProductNewForm {
-  categories!: Observable<any[]>; 
+
+  public categories$: Observable<any[]> = new Observable<any[]>();
+  private refreshTrigger$: BehaviorSubject<void> = new BehaviorSubject<void>(undefined);
   message: string = '';
   formData!: FormGroup;
   private subscription!: Subscription;
@@ -41,8 +43,9 @@ export class ProductNewForm {
     });
   } 
   ngOnInit(): void {
-    console.info('Initializing ProductNewForm component');
-    this.categories = this.HttpCategories.getCategories();
+    this.categories$ = this.refreshTrigger$.asObservable().pipe(
+      switchMap(() => this.HttpCategories.getCategories())
+    );
     
   }
 

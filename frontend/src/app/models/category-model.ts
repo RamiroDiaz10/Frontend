@@ -5,4 +5,9 @@ export interface DataCategory {
     image?: string,
     stock: number,
     isActive?: boolean;
+    msg?: string;
+}
+
+export interface ResponseCategories {
+    categories: DataCategory[],
 }

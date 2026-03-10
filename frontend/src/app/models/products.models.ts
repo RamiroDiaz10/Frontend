@@ -10,4 +10,8 @@ export interface DataProduct {
     stock: number,
     category?: string,
     isActive?: boolean;
+    msg?: string;
+}
+export interface ResponseProducts {
+    products: DataProduct[],
 }

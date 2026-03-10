@@ -233,7 +233,7 @@
             <label for="product-category" class="label" >Category*</label>
             <select class="input input-product-category" formControlName="category"  id="product-category" >
                 <option value="">Select a category</option>
-                @for(category of (categories | async); track $index){
+                @for(category of (categories$ | async); track $index){
                     <option [value]="category._id">{{ category.name }}</option>
                 }
             </select>

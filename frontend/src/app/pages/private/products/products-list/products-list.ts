@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { AsyncPipe, CurrencyPipe, JsonPipe } from '@angular/common';
+import { AsyncPipe, CurrencyPipe } from '@angular/common';
 import { BehaviorSubject, Observable, Subscription, switchMap } from 'rxjs';
 
 import { HttpProducts } from '../../../../core/service/http-products';
 
 @Component({
   selector: 'app-products-list',
-  imports: [AsyncPipe, JsonPipe, CurrencyPipe, RouterLink],
+  imports: [AsyncPipe, CurrencyPipe, RouterLink],
   templateUrl: './products-list.html',
   styleUrl: './products-list.css',
 })
