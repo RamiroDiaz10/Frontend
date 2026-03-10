@@ -28,7 +28,7 @@ export class ProductsList {
   }
 
   onEdit(_id: string): void {
-    this.router.navigateByUrl(`/dashboard/product/edit`);
+    this.router.navigateByUrl(`/dashboard/product/edit/${_id}`);
   }
 
   deleteProduct(_id: string): void {

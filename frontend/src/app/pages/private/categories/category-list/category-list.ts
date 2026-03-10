@@ -1,20 +1,20 @@
 import { Component } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { BehaviorSubject, Observable, switchMap, Subscription } from 'rxjs';
+import { Router, RouterLink } from '@angular/router';
 
 import { HttpCategories } from '../../../../core/service/http-categories';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-category-list',
-  imports: [AsyncPipe],
+  imports: [AsyncPipe, RouterLink],
   templateUrl: './category-list.html',
   styleUrl: './category-list.css',
 })
 export class CategoryList {
-  // Atributo para almacenar la lista de productos
+  // Atributo para almacenar la lista de categorias
   public categories: Observable<any[]> = new Observable<any[]>();
-  // Atributo para controlar la actualización de la lista de productos
+  // Atributo para controlar la actualización de la lista de categorias
   private refreshCategoriesTrigger$: BehaviorSubject<void> = new BehaviorSubject<void>(undefined);
   
   private subscription!: Subscription;
@@ -24,13 +24,13 @@ export class CategoryList {
     private router: Router
   ) {}  
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.categories = this.refreshCategoriesTrigger$.asObservable().pipe(
       switchMap(() => this.httpCategories.getCategories())
     );
   }
 
-  deleteCategory(_id: string) {
+  deleteCategory(_id: string): void {
     this.subscription = this.httpCategories.deleteCategory(_id).subscribe({
       next: (response) => {
         console.log(response);
@@ -42,8 +42,8 @@ export class CategoryList {
     });
   }
 
-  onEdit(_id: string) {
-    this.router.navigateByUrl(`/dashboard/category/edit`);
+  onEdit(_id: string): void {
+    this.router.navigateByUrl(`/dashboard/category/edit/${_id}`);
   }
 
   ngOnDestroy(): void {

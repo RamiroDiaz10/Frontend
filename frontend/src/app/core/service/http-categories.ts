@@ -46,8 +46,8 @@ export class HttpCategories {
         
   }
 
-  getCategoryById(_id: string) {
-
+  getCategoryById(_id: string): Observable<ResponseApi<DataCategory>> {
+    return this.http.get<ResponseApi<DataCategory>>(`http://localhost:3000/api/v1/category/${_id}`)
   }
 
   deleteCategory(_id: string): Observable<string> {
@@ -64,8 +64,8 @@ export class HttpCategories {
       );
   }
 
-  updateCategory(_id: string, categoryData: DataCategory){
-    return this.http.patch<ResponseApi<DataCategory>>(`http://localhost:3000/api/v1/category/${_id}`, categoryData);
+  updateCategory(_id: string, categoryData: DataCategory): Observable<ResponseCategories> {
+    return this.http.patch<ResponseCategories>(`http://localhost:3000/api/v1/category/${_id}`, categoryData);
     
   }
 
