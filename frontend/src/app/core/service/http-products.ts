@@ -19,7 +19,7 @@ export class HttpProducts {
     .pipe(
       map((response) => {
         console.info(response);
-        return response.msg || 'Product created successfully';
+        return response.data || 'Product created successfully';
       }),
       catchError((error) => {
         if (error.error?.msg) {

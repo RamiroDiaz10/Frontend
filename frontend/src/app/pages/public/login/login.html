@@ -5,11 +5,12 @@
     (ngSubmit)="onSubmit()"
     class="form-new-login"
     >
+    <h1>Sing In</h1>
 
     <!-- campo email-login -->
 
         <div class="field">
-            <label for="login-email">Email</label>
+            <label for="login-email">Email*</label>
             <input type="email" formControlName="email" id="login-email" placeholder="Ej: correo12@gmail.com"/>
             <div class="errors">
 
@@ -30,7 +31,7 @@
         <!-- campo password-login -->
 
         <div class="field">
-            <label for="login-password">Password</label>
+            <label for="login-password">Password*</label>
             <input type="password" formControlName="password" id="login-password" autocomplete="off" />
             <div class="errors">
                 @if(formData.get('password'); as passwordLogin ){
@@ -56,6 +57,11 @@
 
         <div class="field">
             <button type="submit" class="btn-submit" [disabled]="formData.invalid">Login</button>
+
+            </div>
+    
+            <div class="field">
+                <span>Don't have an account? <a routerLink="/register">Sing Up</a></span>
         </div>
 
 

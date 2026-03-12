@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from'@angular/forms';
-import { Auth } from '../../../core/service/auth';
 import { Subscription } from 'rxjs';
+import { Router, RouterLink } from '@angular/router';
+
 import { DataAuthUser } from '../../../models/user-model';
-import { Router } from '@angular/router';
-import { error } from 'console';
+import { Auth } from '../../../core/service/auth';
 
 @Component({
   selector: 'app-register',
-  imports: [ReactiveFormsModule ],
+  imports: [ReactiveFormsModule, RouterLink ],
   templateUrl: './register.html',
   styleUrl: './register.css', 
 })

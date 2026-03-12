@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 
 import { HttpCategories } from '../../../../core/service/http-categories';
 import { DataCategory } from '../../../../models/category-model';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-category-new-form',
@@ -52,11 +53,27 @@ export class CategoryNewForm {
       this.httpCategories.createCategory(inputData).subscribe({
         next: data => {
           console.log(data);
-          this.message = data;
-          setTimeout(() => {
-            this.message = '';
-            this.router.navigateByUrl('/dashboard/categories');
-          }, 2000);
+           if(!data){
+            Swal.fire({
+              title: "Category created successfully",
+              icon: "success",
+              draggable: true
+            });
+
+              setTimeout(() => {
+              this.router.navigateByUrl('dashboard/categories');
+              }, 2000);
+
+          }else {
+            Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Error creating category",
+            footer: 'The category may already exist or there is a server error. Please try again.'
+            
+          });
+          
+          }
         },
         error: error => {
           console.error('Error creating category', error);

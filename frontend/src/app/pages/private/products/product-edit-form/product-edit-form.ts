@@ -6,6 +6,7 @@ import { AsyncPipe } from '@angular/common';
 
 import { HttpProducts } from '../../../../core/service/http-products';
 import { HttpCategories } from '../../../../core/service/http-categories';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-product-edit-form',
@@ -92,32 +93,44 @@ export class ProductEditForm {
       if (this.formData.valid) {
         console.info(this.formData.value);
       }
+    Swal.fire({
+      title: "Do you want to save the changes?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Save",
+      denyButtonText: `Don't save`
+    }).then((result) => {
+      if (result.isConfirmed) {
+    Swal.fire("Saved!", "", "success");
+        this.httpProducts.updateProduct(this.selectId, this.formData.value).subscribe({
+            next: (response) => {
+              console.log(response);
 
-      this.httpProducts.updateProduct(this.selectId, this.formData.value).subscribe({
-        next: (response) => {
-          console.log(response);
-
-        },
-        error: (error) => {
-          console.error('Error updating product:', error);
-        },  
-        complete: () => {
-          console.info('Product update request completed');
-          this.formData.reset({
-            name: '',
-            description: '',
-            image: '',
-            size: 1,
-            material: '',
-            color: '#000000',
-            price: 0,
-            stock: 0,
-            category: '',
-            isActive: false
+            },
+            error: (error) => {
+              console.error('Error updating product:', error);
+            },  
+            complete: () => {
+              console.info('Product update request completed');
+              this.onReset();
+              //   name: '',
+              //   description: '',
+              //   image: '',
+              //   size: 1,
+              //   material: '',
+              //   color: '#000000',
+              //   price: 0,
+              //   stock: 0,
+              //   category: '',
+              //   isActive: false
+              // });
+              this.router.navigateByUrl('/dashboard/products');
+            }
           });
-          this.router.navigateByUrl('/dashboard/products');
-        }
-      });
+      } else if (result.isDenied) {
+    Swal.fire("Changes are not saved", "", "info");
+      }
+    });
     }  
 
   ngOnDestroy(): void {

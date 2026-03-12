@@ -4,6 +4,7 @@ import { ActivatedRoute, Params, Router, RouterLink, RouterLinkActive } from "@a
 import { Subscription } from 'rxjs';
 
 import { HttpCategories } from '../../../../core/service/http-categories';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-category-edit-form',
@@ -68,7 +69,17 @@ export class CategoryEditForm {
     if(this.formData.valid){
       console.log(this.formData.value);
     }
-    this.httpCategories.updateCategory(this.selectId, this.formData.value).subscribe({
+
+    Swal.fire({
+      title: "Do you want to save the changes?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Save",
+      denyButtonText: `Don't save`
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire("Saved!", "", "success");
+        this.httpCategories.updateCategory(this.selectId, this.formData.value).subscribe({
       next: (response) => {
         console.log(response);
       },
@@ -87,6 +98,11 @@ export class CategoryEditForm {
         this.router.navigateByUrl('/dashboard/categories');
       }
     });
+      } else if (result.isDenied) {
+        Swal.fire("Changes are not saved", "", "info");
+      }
+    });
+
   }
 
 

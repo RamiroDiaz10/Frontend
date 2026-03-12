@@ -20,7 +20,7 @@ export class HttpCategories {
     .pipe(
       map((response) => {
         console.log(response);
-        return response.msg || 'Category created successfully';
+        return response || 'Category created successfully';
       }),
       catchError((error) => {
         if (error.error?.msg) {

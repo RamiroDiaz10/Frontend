@@ -7,6 +7,8 @@ import { AsyncPipe } from '@angular/common';
 import { HttpProducts } from '../../../../core/service/http-products';
 import { HttpCategories } from '../../../../core/service/http-categories';
 import { DataProduct } from '../../../../models/products.models';
+import Swal from 'sweetalert2';
+import { error } from 'console';
 
 @Component({
   selector: 'app-product-new-form',
@@ -69,11 +71,29 @@ export class ProductNewForm {
       this.httpProducts.createProduct(inputData).subscribe({
         next: (data) => {
           console.info(data);
-          this.message = data;
-          setTimeout(() => {
-            this.message = '';
+          if(!data){
+            Swal.fire({
+              title: "Product created successfully",
+              icon: "success",
+              draggable: true
+            });
+
+             setTimeout(() => {
             this.router.navigateByUrl('dashboard/products');
           }, 2000);
+
+          }else {
+            Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Error creating product",
+            footer: 'The product may already exist or there is a server error. Please try again.'
+            
+          });
+          
+          }
+
+         
         },
         error: (error) => {
           this.message = 'Error creating product', error;
