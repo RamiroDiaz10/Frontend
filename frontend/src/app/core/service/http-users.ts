@@ -35,6 +35,14 @@ export class HttpUsers {
       );
   }
 
+  // Crear un usuario nuevo (suele requerir token de admin)
+  createUser(userData: DataAuthUser): Observable<string> {
+    return this.http.post<ResponseApi<DataAuthUser>>(this.apiUrl, userData)
+      .pipe(
+        map((response) => response.msg || 'User created successfully'),
+        catchError((error) => of(error.error?.msg || 'Error al crear usuario'))
+      );
+  }
   // Actualizar un usuario
   updateUser(id: string, userData: Partial<DataAuthUser>): Observable<string> {
     return this.http.patch<ResponseApi<DataAuthUser>>(`${this.apiUrl}/${id}`, userData)

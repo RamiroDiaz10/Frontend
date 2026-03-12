@@ -1,0 +1,14 @@
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  width: 100%;
+}
+
+h1 {
+  font-family: var(--fuente-principal);
+  font-size: 4rem;
+  color: var(--Marron-calido);
+  text-align: center;
+}

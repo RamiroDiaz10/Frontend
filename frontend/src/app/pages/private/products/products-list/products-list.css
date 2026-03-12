@@ -1,133 +1,178 @@
-:root {
-  --primary-color: #6c5ce7;
-  --secondary-color: #a29bfe;
-  --danger-color: #ff7675;
-  --success-color: #55efc4;
-  --text-dark: #2d3436;
-  --bg-light: #f9f9fb;
-}
+/* =========================================
+   PRODUCTS LIST — Flexbox 100% Responsivo
+   ========================================= */
+:host { display: block; width: 100%; }
 
 .container {
-  padding: 20px;
-  background-color: var(--bg-light);
-  border-radius: 12px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
 }
 
 .header-section {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.header-section h2 {
+  font-family: var(--fuente-principal);
+  font-size: 3rem;
+  color: var(--Marron-calido);
+  margin: 0;
+}
+
+.btn-add {
+  display: inline-flex;
+  align-items: center;
+  padding: 1.2rem 2.5rem;
+  background-color: var(--Action-btn);
+  color: var(--Fondo-body);
+  border: none;
+  border-radius: 40px;
+  font-family: var(--fuente-terciaria);
+  font-weight: 700;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 4px 15px rgba(212, 129, 113, 0.3);
+  text-decoration: none;
+}
+
+.btn-add:hover {
+  background-color: var(--Teja-profundo);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(139, 58, 54, 0.35);
+}
+
+/* Tabla con scroll horizontal en móvil */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(93, 64, 55, 0.06);
 }
 
 .custom-table {
   width: 100%;
+  min-width: 800px;
   border-collapse: collapse;
-  background: white;
-  border-radius: 8px;
+  background-color: white;
+  border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
 }
 
-.custom-table th, .custom-table td {
-  padding: 15px;
-  text-align: left;
-  border-bottom: 1px solid #eee;
+.custom-table thead {
+  background-color: var(--fondo-section);
 }
 
 .custom-table th {
-  background-color: var(--secondary-color);
-  color: var(--primary-color);
-  font-weight: 600;
+  font-family: var(--fuente-principal);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--Marron-calido);
+  padding: 1.5rem 1.2rem;
+  text-align: left;
+  white-space: nowrap;
 }
 
 .custom-table td {
-  vertical-align: middle; 
-  padding: 12px 15px;
+  font-family: var(--fuente-secundaria);
+  font-size: 1.4rem;
+  color: var(--Marron-calido);
+  padding: 1.2rem;
+  border-bottom: 1px solid rgba(232, 165, 152, 0.15);
+  vertical-align: middle;
 }
+
+.custom-table tbody tr:hover {
+  background-color: rgba(232, 165, 152, 0.05);
+}
+
+.custom-table img {
+  border-radius: 8px;
+  object-fit: cover;
+  filter: none;
+}
+
 .color-indicator {
   display: flex;
   align-items: center;
-  gap: 8px; /* Espacio entre el círculo y el texto */
+  gap: 0.8rem;
 }
 
 .color-dot {
-  width: 15px;
-  height: 15px;
-  border-radius: 50%; /* Esto lo hace círculo */
-  border: 1px solid #ddd; /* Importante para que colores claros resalten */
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid rgba(93, 64, 55, 0.2);
   display: inline-block;
-  flex-shrink: 0; /* Evita que el círculo se aplaste en pantallas pequeñas */
 }
 
 .color-label {
-  font-size: 0.9rem;
-  text-transform: capitalize; /* Pone la primera letra en mayúscula */
+  font-size: 1.3rem;
 }
 
-/* Estilo de los Botones de Acción */
 .actions {
   display: flex;
-  gap: 10px;
-  justify-content: center; 
-  align-items: center;
-  vertical-align: middle; /* Asegura que todo el contenido esté centrado verticalmente */
-  padding: 12px 15px;
+  gap: 0.8rem;
+  flex-wrap: nowrap;
 }
 
-button {
-  cursor: pointer;
+.btn-edit, .btn-delete {
+  padding: 0.8rem 1.5rem;
   border: none;
-  border-radius: 6px;
-  padding: 8px 12px;
-  font-size: 14px;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.btn-add {
-  background-color: var(--primary-color);
-  color: rgb(18, 12, 12);
-  font-weight: bold;
-  
+  border-radius: 20px;
+  font-family: var(--fuente-terciaria);
+  font-weight: 600;
+  font-size: 1.3rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  white-space: nowrap;
 }
 
 .btn-edit {
-  background-color: #dfe6e9;
-  color: var(--text-dark);
-  justify-content: center; 
-  align-items: center;
-  
+  background-color: var(--Detalles-dorados);
+  color: var(--Marron-calido);
 }
 
 .btn-edit:hover {
-  background-color: var(--success-color);
-  color: white;
-  justify-content: center; 
-  align-items: center;
-  
+  background-color: var(--Oro-viejo);
+  transform: translateY(-2px);
 }
 
 .btn-delete {
-  background-color: #ffeaa7;
-  color: #d63031;
-  justify-content: center; 
-  align-items: center;
+  background-color: #FFCDD2;
+  color: #C62828;
 }
 
 .btn-delete:hover {
-  background-color: var(--danger-color);
-  color: white;
-  justify-content: center; 
-  align-items: center;
+  background-color: #EF9A9A;
+  transform: translateY(-2px);
 }
 
-/* Responsividad básica */
-@media (max-width: 768px) {
-  .custom-table thead { display: none; }
-  .custom-table tr { display: block; margin-bottom: 15px; border: 1px solid #ddd; }
-  .custom-table td { display: block; text-align: right; position: relative; padding-left: 50%; }
+/* ── RESPONSIVE ── */
+@media (max-width: 767px) {
+  .container {
+    padding: 2rem 1rem;
+  }
+
+  .header-section {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+
+  .header-section h2 {
+    font-size: 2.4rem;
+  }
+
+  .btn-add {
+    width: 100%;
+    justify-content: center;
+  }
 }

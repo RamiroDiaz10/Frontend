@@ -1,0 +1,50 @@
+/* =========================================
+   CATEGORY NEW FORM — Flexbox 100% Responsivo
+   ========================================= */
+:host { display: block; width: 100%; }
+
+.form.container {
+  display: flex; justify-content: center; align-items: flex-start; padding: 4rem 2rem;
+}
+
+.form-new-category {
+  background: white; width: 100%; max-width: 900px; padding: 5rem; border-radius: 24px;
+  box-shadow: 0 15px 45px rgba(93, 64, 55, 0.08); border: 1px solid rgba(232, 165, 152, 0.25);
+  position: relative; overflow: visible; display: flex; flex-wrap: wrap; gap: 0 3.5rem;
+}
+.form-new-category::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 6px; background: linear-gradient(90deg, var(--Acentos-rosados), var(--Action-btn), var(--Detalles-dorados)); }
+.form-new-category h1 { font-family: var(--fuente-principal); font-size: 3.2rem; color: var(--Marron-calido); text-align: center; margin-bottom: 4rem; border-bottom: 1px dashed rgba(232, 165, 152, 0.4); padding-bottom: 2rem; width: 100%; }
+
+.field { flex: 1 1 calc(50% - 1.75rem); margin-bottom: 3rem; display: flex; flex-direction: column; }
+.field:has(textarea) { flex: 1 1 100%; }
+label { font-family: var(--fuente-principal); font-weight: 700; color: var(--Marron-calido); margin-bottom: 1rem; font-size: 1.5rem; }
+input, select, textarea { width: 100%; padding: 1.5rem 1.8rem; border: 1px solid rgba(93, 64, 55, 0.25); border-radius: 8px; font-family: var(--fuente-terciaria); font-size: 1.5rem; color: var(--Marron-calido); background-color: #fafafa; transition: all 0.4s; outline: none; box-sizing: border-box; }
+input:focus, select:focus, textarea:focus { border-color: var(--Action-btn); background-color: white; box-shadow: 0 0 0 4px rgba(212, 129, 113, 0.2); transform: translateY(-2px); }
+input::placeholder, textarea::placeholder { color: #c9bcae; opacity: 0.8; }
+textarea { min-height: 120px; resize: vertical; }
+input[type="radio"] { width: auto; padding: 0; margin-right: 1rem; accent-color: var(--Action-btn); cursor: pointer; transform: scale(1.2); box-shadow: none; }
+.status-option { display: flex; align-items: center; gap: 2rem; }
+.status-option label { display: flex; flex-direction: row; align-items: center; font-family: var(--fuente-secundaria); font-weight: 500; font-size: 1.4rem; cursor: pointer; margin-bottom: 0; }
+.errors { min-height: 20px; margin-top: 0.6rem; }
+.errors small { color: #D32F2F; font-size: 1.25rem; font-family: var(--fuente-secundaria); display: flex; align-items: flex-start; gap: 0.5rem; font-weight: 500; }
+.errors small::before { content: '✿'; color: #D32F2F; }
+input.ng-invalid.ng-touched, select.ng-invalid.ng-touched, textarea.ng-invalid.ng-touched { border-color: #E57373 !important; background-color: #FFEBEE !important; }
+.fiel-message { width: 100%; }
+.fiel-message span { font-family: var(--fuente-secundaria); color: var(--Action-btn); font-weight: 600; font-size: 1.4rem; }
+
+.form-buttons { display: flex; gap: 2rem; margin-top: 1rem; flex-wrap: wrap; width: 100%; justify-content: center; }
+.btn-submit { display: flex; justify-content: center; align-items: center; padding: 1.6rem 3rem; background-color: var(--Action-btn); color: var(--Fondo-body); border: none; border-radius: 40px; font-family: var(--fuente-terciaria); font-weight: 700; font-size: 1.6rem; cursor: pointer; transition: all 0.4s; box-shadow: 0 8px 20px rgba(212, 129, 113, 0.25); flex-grow: 1; }
+.btn-submit:hover:not(:disabled) { background-color: var(--Teja-profundo); transform: translateY(-4px); }
+.btn-submit:disabled { background-color: #e0d5ce; color: #a49c95; box-shadow: none; cursor: not-allowed; }
+.btn-reset { display: flex; justify-content: center; align-items: center; padding: 1.6rem 3rem; background-color: transparent; color: var(--Marron-calido); border: 2px solid var(--Marron-calido); border-radius: 40px; font-family: var(--fuente-terciaria); font-weight: 700; font-size: 1.6rem; cursor: pointer; transition: all 0.4s; flex-grow: 1; }
+.btn-reset:hover { background-color: var(--Marron-calido); color: var(--Fondo-body); transform: translateY(-4px); }
+
+@media (max-width: 767px) {
+  .form.container { padding: 2rem 1rem; }
+  .form-new-category { flex-direction: column; padding: 2.5rem 1.5rem; border-radius: 12px; }
+  .form-new-category h1 { font-size: 2.4rem; margin-bottom: 2rem; }
+  .field { flex: 1 1 100%; margin-bottom: 2rem; }
+  input, select, textarea { padding: 1.2rem; font-size: 1.4rem; }
+  .form-buttons { flex-direction: column; gap: 1rem; }
+  .btn-submit, .btn-reset { width: 100%; padding: 1.4rem 2rem; }
+}

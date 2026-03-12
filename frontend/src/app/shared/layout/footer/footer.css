@@ -1,0 +1,153 @@
+/* =========================================
+   FOOTER — Flexbox 100% Responsivo
+   ========================================= */
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.footer {
+  background-color: var(--Pink-Pearl);
+}
+
+.footer .container {
+  padding: 6rem 2rem 4rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4rem;
+  margin-bottom: 3rem;
+  border-bottom: 1px solid rgba(92, 78, 70, 0.1);
+  padding-bottom: 4rem;
+}
+
+.widget {
+  flex: 1 1 220px;
+  min-width: 200px;
+}
+
+.widget h2 {
+  font-family: var(--fuente-principal);
+  font-size: 2.2rem;
+  margin-bottom: 2.5rem;
+  color: var(--Marron-calido);
+}
+
+.widget p {
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+  color: var(--Marron-calido);
+  font-family: var(--fuente-secundaria);
+}
+
+.footer-logo {
+  font-family: var(--fuente-principal);
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: var(--Marron-calido);
+  display: block;
+  margin-bottom: 1.5rem;
+}
+
+.submenu {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.widget a {
+  color: var(--Marron-calido);
+  font-family: var(--fuente-secundaria);
+  display: flex;
+  align-items: center;
+  font-size: 1.6rem;
+  transition: color 0.3s;
+  text-decoration: none;
+}
+
+.widget a:hover {
+  color: var(--Acentos-rosados);
+}
+
+/* Iconos Redes Sociales */
+.social-icons {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.social-icons a {
+  background-color: rgba(92, 78, 70, 0.05);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.social-icons a:hover {
+  background-color: var(--Acentos-rosados);
+  color: var(--Fondo-body);
+}
+
+/* Métodos de Pago */
+.payment-methods {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.payment-methods i {
+  font-size: 3.5rem;
+  color: var(--Marron-calido);
+  opacity: 0.8;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(92, 78, 70, 0.1);
+}
+
+.footer-bottom p {
+  font-family: var(--fuente-secundaria);
+  color: var(--Marron-calido);
+  opacity: 0.8;
+  font-size: 1.4rem;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 767px) {
+  .footer .container {
+    padding: 4rem 1.5rem 2rem;
+  }
+
+  .footer-container {
+    flex-direction: column;
+    gap: 3rem;
+    text-align: center;
+  }
+
+  .widget {
+    flex: 1 1 100%;
+  }
+
+  .social-icons {
+    justify-content: center;
+  }
+
+  .payment-methods {
+    justify-content: center;
+  }
+
+  .submenu {
+    align-items: center;
+  }
+}

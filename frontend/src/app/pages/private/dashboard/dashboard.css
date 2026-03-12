@@ -1,0 +1,12 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+h1 {
+  font-family: var(--fuente-principal);
+  font-size: 3rem;
+  color: var(--Marron-calido);
+  text-align: center;
+  padding: 4rem 2rem;
+}
