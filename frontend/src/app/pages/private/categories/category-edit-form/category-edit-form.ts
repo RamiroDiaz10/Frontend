@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router, RouterLink, RouterLinkActive } from "@angular/router";
 import { Subscription } from 'rxjs';
+import Swal from 'sweetalert2';
 
 import { HttpCategories } from '../../../../core/service/http-categories';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-category-edit-form',
@@ -25,7 +25,7 @@ export class CategoryEditForm {
     this.formData = new FormGroup ({
       name: new FormControl('',[Validators.required, Validators.minLength(3)]),
       description: new FormControl('',[Validators.required, Validators.maxLength(100)]),
-      image: new FormControl('',[Validators.required, Validators.maxLength(20)]),
+      image: new FormControl('',[Validators.required, Validators.maxLength(250)]),
       stock: new FormControl('1',[Validators.required, Validators.min(1)]),
       isActive: new FormControl(false)
 

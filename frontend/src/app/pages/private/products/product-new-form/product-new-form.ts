@@ -3,12 +3,11 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subscription, switchMap } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
+import Swal from 'sweetalert2';
 
 import { HttpProducts } from '../../../../core/service/http-products';
 import { HttpCategories } from '../../../../core/service/http-categories';
 import { DataProduct } from '../../../../models/products.models';
-import Swal from 'sweetalert2';
-import { error } from 'console';
 
 @Component({
   selector: 'app-product-new-form',
@@ -34,7 +33,7 @@ export class ProductNewForm {
     this.formData = new FormGroup({
       name: new FormControl('', [Validators.required, Validators.minLength(3)]),
       description: new FormControl('', [Validators.required, Validators.maxLength(100)]),
-      image: new FormControl('', [Validators.required, Validators.maxLength(50)]),
+      image: new FormControl('', [Validators.required, Validators.maxLength(250)]),
       size: new FormControl('', [Validators.required, Validators.min(1)]),
       material: new FormControl('', [Validators.required, Validators.maxLength(40)]),
       color: new FormControl('#000000', [Validators.required]),
@@ -71,7 +70,7 @@ export class ProductNewForm {
       this.httpProducts.createProduct(inputData).subscribe({
         next: (data) => {
           console.info(data);
-          if(!data){
+
             Swal.fire({
               title: "Product created successfully",
               icon: "success",
@@ -81,22 +80,20 @@ export class ProductNewForm {
              setTimeout(() => {
             this.router.navigateByUrl('dashboard/products');
           }, 2000);
-
-          }else {
-            Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Error creating product",
-            footer: 'The product may already exist or there is a server error. Please try again.'
-            
-          });
-          
-          }
-
          
         },
         error: (error) => {
-          this.message = 'Error creating product', error;
+          // Caso de Error: Aquí es donde mostramos la alerta de falla
+          console.error('Error capturado en el componente:', error);
+        
+        // Extraemos el mensaje del backend o usamos uno por defecto
+          const errorMsg = error.error?.msg || 'The product may already exist or there is a server error.';
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "Something went wrong!",
+              footer: errorMsg
+            });
         },
         complete: () => {
           console.info('Process finished'); 

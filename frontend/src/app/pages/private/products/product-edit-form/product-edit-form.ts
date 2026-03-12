@@ -34,7 +34,7 @@ export class ProductEditForm {
     this.formData = new FormGroup({
       name: new FormControl('', [Validators.required, Validators.minLength(3)]),
       description: new FormControl('', [Validators.required, Validators.maxLength(100)]),
-      image: new FormControl('', [Validators.required, Validators.maxLength(50)]),
+      image: new FormControl('', [Validators.required, Validators.maxLength(250)]),
       size: new FormControl(1, [Validators.required, Validators.min(1)]),
       material: new FormControl('', [Validators.required, Validators.maxLength(40)]),
       color: new FormControl('#000000', [Validators.required]),

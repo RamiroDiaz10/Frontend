@@ -74,23 +74,23 @@
   <nav class="main-navbar desktop-only" style="justify-content: center; border-top: 1px solid var(--Pink-Pearl);">
     <div class="container" style="display: flex; justify-content: center;">
       <ul class="navbar-links" style="gap: 2rem;">
-        <li><a routerLink="/home" routerLinkActive="active-link" style="color: var(--Marron-calido);">Inicio</a></li>
+        <li><a routerLink="/home" routerLinkActive="active-link" style="color: var(--Marron-calido);">Home</a></li>
         
         <!-- Opciones lógicas del Dashboard basadas en roles -->
         @if (auth.hasRole(['admin', 'colaborator', 'registered'])) {
             <li><a routerLink="/dashboard/products" routerLinkActive="active-link" style="color: var(--Marron-calido);">Productos</a></li>
-            <li><a routerLink="/dashboard/product/new" routerLinkActive="active-link" style="color: var(--Marron-calido);">+ Producto</a></li>
-            <li><a routerLink="/dashboard/product/edit" routerLinkActive="active-link" style="color: var(--Marron-calido);">Editar Prod.</a></li>
+            <!-- <li><a routerLink="/dashboard/product/new" routerLinkActive="active-link" style="color: var(--Marron-calido);">+ Producto</a></li> -->
+            <!-- <li><a routerLink="/dashboard/product/edit" routerLinkActive="active-link" style="color: var(--Marron-calido);">Editar Prod.</a></li> -->
         }
         @if (auth.hasRole(['admin', 'colaborator'])) {
             <li><a routerLink="/dashboard/categories" routerLinkActive="active-link" style="color: var(--Marron-calido);">Categorías</a></li>
-            <li><a routerLink="/dashboard/category/new" routerLinkActive="active-link" style="color: var(--Marron-calido);">+ Categoría</a></li>
-            <li><a routerLink="/dashboard/category/edit" routerLinkActive="active-link" style="color: var(--Marron-calido);">Editar Cat.</a></li>
+            <!-- <li><a routerLink="/dashboard/category/new" routerLinkActive="active-link" style="color: var(--Marron-calido);">+ Categoría</a></li> -->
+            <!-- <li><a routerLink="/dashboard/category/edit" routerLinkActive="active-link" style="color: var(--Marron-calido);">Editar Cat.</a></li> -->
         }
         @if (auth.hasRole(['admin'])) {
             <li><a routerLink="/dashboard/users" routerLinkActive="active-link" style="color: var(--Marron-calido);">Usuarios</a></li>
-            <li><a routerLink="/dashboard/user/new" routerLinkActive="active-link" style="color: var(--Marron-calido);">+ Usuario</a></li>
-            <li><a routerLink="/dashboard/user/edit" routerLinkActive="active-link" style="color: var(--Marron-calido);">Editar Usu.</a></li>
+            <!-- <li><a routerLink="/dashboard/user/new" routerLinkActive="active-link" style="color: var(--Marron-calido);">+ Usuario</a></li> -->
+            <!-- <li><a routerLink="/dashboard/user/edit" routerLinkActive="active-link" style="color: var(--Marron-calido);">Editar Usu.</a></li> -->
         }
       </ul>
     </div>

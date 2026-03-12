@@ -85,21 +85,28 @@
       </div>
       <div><a href="class-munecos-emocines">Muñecos De Emociones</a></div>
     </div>
+    </div>
+    </section>
 
+    <!-- seccion cards munecas -->
+    <section class="container-cards">
+    <div class="container"> 
     <div class="card-munecos">
+      @for( product of (products | async); track $index){
         <article class="card-muneco">
           <div class="card-image-box">
-            <img src="/assets/images/Designer-Pava.png" alt="Muñeca de la línea Pava" />
+            <img [src]="product.image" [alt]="product.name" />
             <button class="add-to-cart-slide"><i class="fa-solid fa-bag-shopping"></i> Añadir al carrito</button>
           </div>
           <div class="card-muneco-info">
-            <p class="stock-text">En stock</p>
-            <h3 class="product-title">Muñeca Pava Soft</h3>
-            <p><span class="current-price">Rs. 550.00</span><span class="previous-price">Rs. 650.00</span></p>
-            <p class="desc-text">Una adorable y suave muñeca de colección.</p>
+            <p class="stock-text">En stock {{ product.stock }}</p>
+            <h3 class="product-title">{{ product.name }}</h3>
+            <p><span class="current-price">Rs. {{ product.price | currency }}</span><span class="previous-price">Rs. {{ product.previousPrice | currency }}</span></p>
+            <p class="desc-text">{{ product.description }}</p>
           </div>
         </article>
-        <article class="card-muneco">
+      }
+        <!-- <article class="card-muneco">
           <div class="card-image-box">
             <img src="/assets/images/Designer-Pava.png" alt="Muñeca de la línea Pava" />
             <button class="add-to-cart-slide"><i class="fa-solid fa-bag-shopping"></i> Añadir al carrito</button>
@@ -162,7 +169,7 @@
             <p><span class="current-price">Rs. 550.00</span><span class="previous-price">Rs. 650.00</span></p>
             <p class="desc-text">Una adorable y suave muñeca de colección.</p>
           </div>
-        </article>
+        </article> -->
     </div>
     </div>
     

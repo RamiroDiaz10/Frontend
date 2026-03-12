@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { catchError, map, of, Observable, tap } from 'rxjs';
+import { catchError, map, of, Observable, tap, throwError } from 'rxjs';
 
 import { DataCategory, ResponseCategories } from '../../models/category-model';
 import { ResponseApi } from '../../models/response.model';
@@ -18,15 +18,12 @@ export class HttpCategories {
   createCategory(categoryData: DataCategory):Observable<string> {
     return this.http.post<ResponseApi<DataCategory>>('http://localhost:3000/api/v1/category', categoryData)
     .pipe(
-      map((response) => {
+      map((response: any) => {
         console.log(response);
-        return response || 'Category created successfully';
+        return response;
       }),
       catchError((error) => {
-        if (error.error?.msg) {
-          return of(error.error.msg);
-        }
-        return of(error.error?.msg ||'Error: servidor fallando');
+       return throwError(() => error)
       })
     );
   }

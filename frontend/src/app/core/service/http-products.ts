@@ -1,14 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, map, Observable, of } from 'rxjs';
+import { catchError, map, Observable, of, throwError } from 'rxjs';
 
 import { DataProduct, ResponseProducts } from '../../models/products.models';
 import { ResponseApi } from '../../models/response.model';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HttpProducts {
+
 
     constructor(
       private http: HttpClient
@@ -17,15 +19,14 @@ export class HttpProducts {
   createProduct(productData: DataProduct):Observable<string> {
     return this.http.post<ResponseApi<DataProduct>>('http://localhost:3000/api/v1/products', productData)
     .pipe(
-      map((response) => {
+      map((response: any) => {
         console.info(response);
-        return response.data || 'Product created successfully';
+        return response;
       }),
       catchError((error) => {
-        if (error.error?.msg) {
-          return of(error.error.msg);
-        }
-        return of(error.error?.msg ||'Error: servidor fallando');
+        // IMPORTANTE: throwError hace que el componente ejecute el bloque 'error:'
+        // Enviamos el error real hacia el componente
+        return throwError(() => error)
       })
     );
 

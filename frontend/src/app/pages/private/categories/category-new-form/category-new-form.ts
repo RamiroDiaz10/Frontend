@@ -25,7 +25,7 @@ export class CategoryNewForm {
     this.formData = new FormGroup ({
       name: new FormControl('',[Validators.required, Validators.minLength(3)]),
       description: new FormControl('',[Validators.required, Validators.maxLength(100)]),
-      image: new FormControl('',[Validators.required, Validators.maxLength(20)]),
+      image: new FormControl('',[Validators.required, Validators.maxLength(250)]),
       stock: new FormControl('1',[Validators.required, Validators.min(1)]),
       isActive: new FormControl(true)
 
@@ -53,30 +53,25 @@ export class CategoryNewForm {
       this.httpCategories.createCategory(inputData).subscribe({
         next: data => {
           console.log(data);
-           if(!data){
-            Swal.fire({
+           Swal.fire({
               title: "Category created successfully",
               icon: "success",
               draggable: true
             });
-
-              setTimeout(() => {
-              this.router.navigateByUrl('dashboard/categories');
-              }, 2000);
-
-          }else {
-            Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Error creating category",
-            footer: 'The category may already exist or there is a server error. Please try again.'
-            
-          });
-          
-          }
+          setTimeout(() => {
+            this.router.navigateByUrl('dashboard/categories');
+          }, 2000);
         },
         error: error => {
           console.error('Error creating category', error);
+
+          const errorMsg = error.error?.msg || 'The product may already exist or there is a server error.';
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "Something went wrong!",
+              footer: errorMsg
+            });
         },
         complete: () => {
           console.info('process finished');
