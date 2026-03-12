@@ -232,14 +232,9 @@
             <label for="edit-product-category" class="label" >Edit Category</label>
             <select class="input input-product-category" formControlName="category"  id="edit-product-category" >
                 <option value="">Select a category</option>
-                <option value="munecas">munecas </option>
-                <option value="munecas-trapo">munecas trapo</option>
-                <option value="munecas-verdes">munecas verdes</option>
-                
-
-                <!-- @for (category of categories); track $index {
-                    <option [value]="category.id">{{ category.name }}</option>
-                } -->
+                @for (category of (categories$ | async); track $index) {
+                    <option [value]="category._id">{{ category.name }}</option>
+                }
             </select>
             <div class="errors">
                 @if (formData.get('category'); as editedProductCategory) {
@@ -294,8 +289,8 @@
 
 
         <div class="form form-buttons">
-            <button type="submit" class="btn-submit" [disabled]="formData.invalid">Save</button>
-            <button  type="button"  class="btn-reset" (click)="onReset()">Reset form</button>
+            <button type="submit" class="btn-submit" [disabled]="formData.invalid">Update</button>
+            <button  type="button"  class="btn-reset" (click)="onReset()" routerLink="/dashboard/products">Cancel</button>
         </div>
 
 

@@ -19,7 +19,7 @@ export class HttpProducts {
     .pipe(
       map((response) => {
         console.info(response);
-        return response.msg || 'Product created successfully';
+        return response.data || 'Product created successfully';
       }),
       catchError((error) => {
         if (error.error?.msg) {
@@ -45,6 +45,10 @@ export class HttpProducts {
       );
   }
 
+  getProductById(_id: string): Observable<ResponseApi<DataProduct>> {
+    return this.http.get<ResponseApi<DataProduct>>(`http://localhost:3000/api/v1/products/${_id}`);
+  }
+
   deleteProduct(_id: string): Observable<string> {
     return this.http.delete<ResponseApi<DataProduct>>(`http://localhost:3000/api/v1/products/${_id}`)
       .pipe(
@@ -59,7 +63,7 @@ export class HttpProducts {
       );  
   }
 
-  updateProduct(_id: string, productData: DataProduct[]): Observable<ResponseApi<DataProduct[]>> {
-    return this.http.patch<ResponseApi<DataProduct[]>>(`http://localhost:3000/api/v1/products/${_id}`, productData);
+  updateProduct(_id: string, productData: DataProduct[]): Observable<ResponseProducts> {
+    return this.http.patch<ResponseProducts>(`http://localhost:3000/api/v1/products/${_id}`, productData);
   }
 }

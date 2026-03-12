@@ -57,7 +57,7 @@ export const routes: Routes = [
 
     },
      { 
-    path: 'dashboard/product/edit',
+    path: 'dashboard/product/edit/:_id',
     component:ProductEditForm,
     canActivate: [authGuard, roleGuard],
     data: { expectRoles: [ 'admin', 'colaborator', 'registered' ] }
@@ -76,7 +76,7 @@ export const routes: Routes = [
     data: { expectRoles: [ 'admin', 'colaborator' ] }
     },
      { 
-    path: 'dashboard/category/edit',
+    path: 'dashboard/category/edit/:_id',
     component:CategoryEditForm,
     canActivate: [authGuard, roleGuard],
     data: { expectRoles: [ 'admin', 'colaborator' ] }
@@ -89,7 +89,7 @@ export const routes: Routes = [
 
     },
     { 
-    path: 'dashboard/user/edit',
+    path: 'dashboard/user/edit/:_id',
     component:UserEditForm,
     canActivate: [authGuard, roleGuard],
     data: { expectRoles: [ 'admin' ] }

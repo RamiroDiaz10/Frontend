@@ -8,7 +8,10 @@ export interface DataProduct {
     color?: string, 
     price: number,
     stock: number,
-    category?: string,
+    category?: {
+    _id: string;
+    name: string;
+    },
     isActive?: boolean;
     msg?: string;
 }

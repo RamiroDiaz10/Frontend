@@ -5,11 +5,19 @@
     (ngSubmit)="handleSubmit()"
     class="form-new-register"
     >
+    <div class="tittle">
+        <h1>Sing Up</h1>
+    </div>
+
+    <div class="link">
+    <span>Already have an account?<a routerLink="/login">Sing In</a></span>
+
+    </div>
 
     <!-- campo registered name -->
 
         <div class="field">
-            <label for="register-name">Name</label>
+            <label for="register-name">Name*</label>
             <input type="text" formControlName="name" id="register-name" placeholder="Ej: David"/>
             <div class="errors">
                 @if(formData.get('name'); as nameRegistered ){
@@ -29,7 +37,7 @@
         <!-- campo registered username -->
 
         <div class="field">
-            <label for="register-username">Username</label>
+            <label for="register-username">Username*</label>
             <input type="text" formControlName="username" id="register-username" placeholder="Ej: David"/>
             <div class="errors">
                 @if(formData.get('username'); as usernameRegistered ){
@@ -49,7 +57,7 @@
         <!-- campo registered email -->
 
         <div class="field">
-            <label for="register-email">Email</label>
+            <label for="register-email">Email*</label>
             <input type="email" formControlName="email" id="register-email" placeholder="Ej: correo12@gmail.com"/>
             <div class="errors">
 
@@ -71,7 +79,7 @@
 
 
         <div class="field">
-            <label for="register-password">Password</label>
+            <label for="register-password">Password*</label>
             <input type="password" formControlName="password" id="register-password" autocomplete="off"/>
             <div class="errors">
                 @if(formData.get('password'); as passwordRegistered ){
@@ -93,7 +101,7 @@
 
 
          <div class="field">
-            <label for="register-role">Role</label>
+            <label for="register-role">Role*</label>
             <select formControlName="role" id="register-role">
                 <option value="">Select Role </option>
                 <option value="admin">Admin </option>

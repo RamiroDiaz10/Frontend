@@ -1,26 +1,35 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ActivatedRoute, Params, Router, RouterLink } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, switchMap } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
 
 import { HttpProducts } from '../../../../core/service/http-products';
 import { HttpCategories } from '../../../../core/service/http-categories';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-product-edit-form',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink, AsyncPipe],
   templateUrl: './product-edit-form.html',
   styleUrl: './product-edit-form.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,    // Estrategia de detección de cambios: verifica cuando los valores de las propiedades del clase del componente, vinculadas a datos cambian.
 })
 export class ProductEditForm {
+
+  public categories$: Observable<any[]> = new Observable<any[]>();
+  private refreshTrigger$: BehaviorSubject<void> = new BehaviorSubject<void>(undefined);
+
   message: string = ''; 
   formData!: FormGroup;
   private subscription!: Subscription;
+  private selectId!: string;
   
   constructor(
     private httpProducts: HttpProducts,
     private HttpCategories: HttpCategories,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) { 
     this.formData = new FormGroup({
       name: new FormControl('', [Validators.required, Validators.minLength(3)]),
@@ -38,25 +47,91 @@ export class ProductEditForm {
 
    ngOnInit(): void {
     console.info('Initializing ProductEditForm component');
+    this.categories$ = this.refreshTrigger$.asObservable().pipe(
+      switchMap(() => this.HttpCategories.getCategories())
+    );
+
+    this.route.params.subscribe((params: Params) => {
+      if(params['_id']){
+
+        this.selectId = params['_id'];
+        
+        this.httpProducts.getProductById(params['_id']).subscribe({
+          next:(response: any)=> {
+            console.log(response)
+
+            const { name, description, image, size, material, color, price, stock, category, isActive } = response.data;
+          
+            this.formData.setValue({
+              name: name || '',
+              description: description || '', 
+              image: image || '',
+              size: size || 1,
+              material: material || '',
+              color: color || '#000000',
+              price: price || 0,
+              stock: stock || 0,
+              category: category?._id || category || '',
+              isActive: isActive || false
+            });
+          
+          },
+          error:(error) => {
+            console.error('Error fetching product:', error);
+          },
+          complete:() => {
+            console.info('Product fetch completed');
+            
+          }
+
+        });
+      }
+    });
   }
 
     onSubmit(): void {
       if (this.formData.valid) {
-        console.info('Form is valid, submitting data:', this.formData.value);
+        console.info(this.formData.value);
       }
-    }
-      //   this.httpProducts.updateProduct(this.formData.value).subscribe({
-      //     next: (response) => {
-      //       console.info('Product updated successfully', response);
-      //       this.router.navigate(['/products']);
-      //     },
-      //     error: (error) => {
-      //       console.error('Error updating product', error);
-      //       this.message = 'Error updating product';
-      //     }
-      //   });
-      // }
-  // }
+    Swal.fire({
+      title: "Do you want to save the changes?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Save",
+      denyButtonText: `Don't save`
+    }).then((result) => {
+      if (result.isConfirmed) {
+    Swal.fire("Saved!", "", "success");
+        this.httpProducts.updateProduct(this.selectId, this.formData.value).subscribe({
+            next: (response) => {
+              console.log(response);
+
+            },
+            error: (error) => {
+              console.error('Error updating product:', error);
+            },  
+            complete: () => {
+              console.info('Product update request completed');
+              this.onReset();
+              //   name: '',
+              //   description: '',
+              //   image: '',
+              //   size: 1,
+              //   material: '',
+              //   color: '#000000',
+              //   price: 0,
+              //   stock: 0,
+              //   category: '',
+              //   isActive: false
+              // });
+              this.router.navigateByUrl('/dashboard/products');
+            }
+          });
+      } else if (result.isDenied) {
+    Swal.fire("Changes are not saved", "", "info");
+      }
+    });
+    }  
 
   ngOnDestroy(): void {
     

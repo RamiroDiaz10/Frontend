@@ -39,7 +39,7 @@
               </td>
               <td>{{product.price | currency:'COP':'symbol-narrow':'1.0-0'}}</td>
               <td>{{product.stock}}</td>
-              <td>{{product.category?.name}}</td>
+              <td>{{product.category?.name || 'sin categoría'}}</td>
               <td>{{product.isActive ? 'Sí' : 'No'}}</td>
               <td class="actions">
                 <button class="btn-edit" title="Edit" (click)="onEdit(product._id)">
