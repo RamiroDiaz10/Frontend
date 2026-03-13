@@ -2,3 +2,417 @@
   display: block;
   width: 100%;
 }
+
+/* =========================================
+   CHECKOUT COMPONENT STYLES (Aislados)
+   ========================================= */
+
+/* Contenedor principal: Layout fluido con Flexbox */
+.checkout-wrapper {
+  display: flex;
+  flex-direction: column-reverse; /* Mobile: Resumen abajo, form arriba. O adjust as needed. Let's do column for form top, summary bottom */
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: var(--Fondo-body); /* Usando color global */
+  font-family: var(--fuente-secundaria);
+  color: var(--Marron-calido);
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Desktop: Layout en dos columnas */
+@media (min-width: 992px) {
+  .checkout-wrapper {
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 0;
+  }
+}
+
+/* =========================================
+   COLUMNA IZQUIERDA: FORMULARIO
+   ========================================= */
+.checkout-form-section {
+  flex: 1;
+  padding: 2rem 0;
+  width: 100%;
+}
+
+@media (min-width: 992px) {
+  .checkout-form-section {
+    padding: 4rem 4rem 4rem 0;
+    max-width: 55%;
+    border-right: 1px solid rgba(93, 64, 55, 0.15); /* Línea divisoria sutil */
+  }
+}
+
+/* Utilidades estructurales */
+.checkout-block {
+  margin-bottom: 2.5rem;
+}
+
+.checkout-block-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 1rem;
+}
+
+/* Títulos internos del componente */
+.checkout-title {
+  font-family: var(--fuente-secundaria); /* Sans-serif for clean look in form */
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--Marron-calido);
+  margin-bottom: 1rem;
+}
+
+.checkout-block-header .checkout-title {
+  margin-bottom: 0;
+}
+
+.checkout-subtitle {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: -0.5rem;
+  margin-bottom: 1rem;
+}
+
+.checkout-link {
+  font-size: 0.9rem;
+  color: var(--Marron-calido);
+  text-decoration: underline;
+  transition: color 0.3s ease;
+}
+
+.checkout-link:hover {
+  color: var(--Action-btn);
+}
+
+/* Formularios y Inputs */
+.form-group {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.form-row {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap; 
+}
+
+.form-row .half {
+  flex: 1 1 calc(50% - 0.5rem);
+  margin-bottom: 1rem;
+}
+
+.form-row.three-cols .col {
+  flex: 1 1 calc(33.333% - 0.66rem);
+  margin-bottom: 1rem;
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  font-family: var(--fuente-secundaria);
+  font-size: 0.95rem;
+  color: var(--Marron-calido);
+  background-color: transparent;
+  border: 1px solid #c9c9c9;
+  border-radius: 4px;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group.has-icon .form-control {
+  padding-right: 2.5rem;
+}
+
+.form-control::placeholder {
+  color: #888;
+}
+
+.form-control:focus {
+  border-color: var(--Action-btn);
+  box-shadow: 0 0 0 2px rgba(212, 129, 113, 0.2); 
+}
+
+.form-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%235D4037' viewBox='0 0 16 16'%3E%3Cpath d='M8 11.5l-5-5h10l-5 5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  cursor: pointer;
+}
+
+/* Iconos integrados en inputs */
+.input-icon-wrapper {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #737373;
+  pointer-events: none;
+  display: flex;
+}
+
+.input-icon {
+  width: 18px;
+  height: 18px;
+  stroke: #888;
+}
+
+/* Checkboxes */
+.form-checkbox {
+  display: flex;
+  align-items: center;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.form-checkbox.mb-0 { margin-bottom: 0; }
+.form-checkbox.pt-2 { padding-top: 0.5rem; }
+
+.checkbox-input {
+  width: 1.15rem;
+  height: 1.15rem;
+  margin-right: 0.6rem;
+  accent-color: #000; /* As per image, standard black/dark checkbox */
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.checkbox-label {
+  font-size: 0.9rem;
+  color: var(--Marron-calido);
+  cursor: pointer;
+}
+
+/* Utilidad Box de información */
+.info-box {
+  background-color: var(--fondo-section); 
+  border-radius: 6px;
+  padding: 1.25rem;
+  font-size: 0.95rem;
+  color: var(--Marron-calido);
+  text-align: center;
+}
+
+/* Tarjeta visual de pago */
+.payment-card {
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  background-color: #fafafa;
+  overflow: hidden;
+}
+
+.payment-header {
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #d9d9d9;
+  background-color: #fff;
+  border-left: 2px solid var(--Marron-calido); /* Active indicator */
+}
+
+.payment-title {
+  font-weight: 500;
+  color: var(--Marron-calido);
+}
+
+.payment-methods {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.payment-body {
+  padding: 1rem;
+  background-color: #f9f9f9;
+}
+
+
+/* Botón de Acción */
+.pay-now-btn {
+  display: block;
+  width: 100%;
+  padding: 1.2rem;
+  background-color: #E66C00; /* Naranja vibrante de la imagen */
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+  margin-top: 2rem;
+}
+
+.pay-now-btn:hover {
+  background-color: #cc5f00;
+}
+
+.pay-now-btn:active {
+  transform: scale(0.98);
+}
+
+
+/* =========================================
+   COLUMNA DERECHA: RESUMEN DE COMPRA
+   ========================================= */
+.checkout-summary-section {
+  flex: 1;
+  padding: 2rem 0;
+  width: 100%;
+  background-color: transparent; /* match with general body */
+}
+
+@media (min-width: 992px) {
+  .checkout-summary-section {
+    padding: 4rem 0 4rem 4rem;
+    max-width: 45%;
+    position: sticky;
+    top: 0;
+    align-self: flex-start;
+  }
+}
+
+.summary-wrapper {
+  max-width: 100%;
+}
+
+/* Lista de Productos */
+.product-list {
+  margin-bottom: 2rem;
+}
+
+.product-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.product-image-container {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  margin-right: 1.5rem;
+}
+
+.product-image-placeholder {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  border: 1px solid #eee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: #fff;
+}
+
+.product-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}
+
+.product-quantity {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: rgba(0,0,0,0.8);
+  color: white;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.product-details {
+  flex: 1;
+}
+
+.product-name {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 0.2rem;
+  color: var(--Marron-calido);
+}
+
+.product-variant {
+  font-size: 0.85rem;
+  color: #737373;
+}
+
+.product-price {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--Marron-calido);
+}
+
+/* Resumen de Costos */
+.summary-costs {
+  border-top: 1px solid rgba(93, 64, 55, 0.15);
+  padding-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.cost-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.8rem;
+  font-size: 0.95rem;
+}
+
+.cost-label {
+  color: #333;
+}
+
+.cost-value {
+  font-weight: 500;
+  color: var(--Marron-calido);
+}
+
+.cost-value-light {
+  color: #737373;
+  font-size: 0.85rem;
+}
+
+/* Total Final */
+.summary-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid rgba(93, 64, 55, 0.15);
+  padding-top: 1.5rem;
+}
+
+.total-label {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--Marron-calido);
+}
+
+.total-value-container {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.currency-code {
+  font-size: 0.75rem;
+  color: #737373;
+}
+
+.total-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--Marron-calido);
+}
