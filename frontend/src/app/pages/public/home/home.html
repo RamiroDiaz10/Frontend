@@ -96,7 +96,7 @@
         <article class="card-muneco">
           <div class="card-image-box">
             <img [src]="product.image" [alt]="product.name" />
-            <button class="add-to-cart-slide"><i class="fa-solid fa-bag-shopping"></i> Añadir al carrito</button>
+            <button class="add-to-cart-slide" (click)="addToCart(product)"><i class="fa-solid fa-bag-shopping"></i> Añadir al carrito</button>
           </div>
           <div class="card-muneco-info">
             <p class="stock-text">En stock {{ product.stock }}</p>

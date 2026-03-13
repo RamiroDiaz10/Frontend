@@ -3,6 +3,8 @@ import { AsyncPipe, CurrencyPipe } from '@angular/common';
 import { Observable, BehaviorSubject, Subscription, switchMap } from 'rxjs';
 
 import { HttpProducts } from '../../../core/service/http-products';
+import { DataProduct, ResponseProducts } from '../../../models/products.models';
+import { HttpCar } from '../../../core/service/http-car';
 
 @Component({
   selector: 'app-home',
@@ -18,7 +20,8 @@ export class Home {
   private subscription!: Subscription;
 
   constructor(
-    private httpProducts: HttpProducts
+    private httpProducts: HttpProducts,
+    private httpCar: HttpCar
   ) {}
 
 
@@ -29,8 +32,10 @@ export class Home {
     console.log(this.products, 'products');
   }
 
-  onSubmit() {
-    this.refreshProductsTrigger$.next();
+  addToCart(product: DataProduct): void {
+      // Aquí puedes agregar la lógica para añadir el producto al carrito
+      this.httpCar.addToCart(product);
+
   }
 
   ngOnDestroy(): void {
