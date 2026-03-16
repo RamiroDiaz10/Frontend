@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AsyncPipe, CurrencyPipe } from '@angular/common';
-import { Observable, BehaviorSubject, Subscription, switchMap } from 'rxjs';
+import { Observable, BehaviorSubject, Subscription, switchMap, map } from 'rxjs';
 
 import { HttpProducts } from '../../../core/service/http-products';
 import { DataProduct, ResponseProducts } from '../../../models/products.models';
@@ -14,7 +14,7 @@ import { HttpCar } from '../../../core/service/http-car';
 })
 export class Home {
 
-  public products: Observable<any[]> = new Observable<any[]>();
+  public products: Observable<DataProduct[]> = new Observable<DataProduct[]>();
 
   private refreshProductsTrigger$: BehaviorSubject<void> = new BehaviorSubject<void>(undefined);
   private subscription!: Subscription;
@@ -27,14 +27,14 @@ export class Home {
 
   ngOnInit(): void {
     this.products = this.refreshProductsTrigger$.asObservable().pipe(
-      switchMap(() => this.httpProducts.getProducts())
+      switchMap(() => this.httpProducts.getProducts()),
+      map(response => response.products)
     );
-    console.log(this.products, 'products');
   }
 
   addToCart(product: DataProduct): void {
       // Aquí puedes agregar la lógica para añadir el producto al carrito
-      this.httpCar.addToCart(product);
+      this.httpCar.updateToCart(product, +1);
 
   }
 

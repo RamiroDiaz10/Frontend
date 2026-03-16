@@ -9,16 +9,17 @@ import { ResponseApi } from '../../models/response.model';
   providedIn: 'root',
 })
 export class HttpCategories {
+  private urlApi = 'http://localhost:3000/api/v1/category'
 
   constructor(
   private http: HttpClient
 
   ) {}
    
-  createCategory(categoryData: DataCategory):Observable<string> {
-    return this.http.post<ResponseApi<DataCategory>>('http://localhost:3000/api/v1/category', categoryData)
+  createCategory(categoryData: DataCategory):Observable<ResponseCategories> {
+    return this.http.post<ResponseCategories>(this.urlApi, categoryData)
     .pipe(
-      map((response: any) => {
+      map((response: ResponseCategories) => {
         console.log(response);
         return response;
       }),
@@ -28,41 +29,43 @@ export class HttpCategories {
     );
   }
 
-  getCategories(): Observable<DataCategory[]> {
-      return this.http.get<ResponseCategories>('http://localhost:3000/api/v1/category')
+  getCategories(): Observable<ResponseCategories> {
+      return this.http.get<ResponseCategories>(this.urlApi)
       .pipe(
-        map((response) => {
+        map((response: ResponseCategories) => {
           console.log(response);
-          return response.categories || [];
+          return response;
         }),
         catchError((error) => {
           console.error('Error fetching categories:', error);
-          return of([]);
+         return throwError(() => error);
+
         })
       );
         
   }
 
-  getCategoryById(_id: string): Observable<ResponseApi<DataCategory>> {
-    return this.http.get<ResponseApi<DataCategory>>(`http://localhost:3000/api/v1/category/${_id}`)
+  getCategoryById(_id: string): Observable<ResponseCategories> {
+    return this.http.get<ResponseCategories>(`${this.urlApi}/${_id}`)
   }
 
-  deleteCategory(_id: string): Observable<string> {
-    return this.http.delete<ResponseApi<DataCategory>>(`http://localhost:3000/api/v1/category/${_id}`)
+  deleteCategory(_id: string): Observable<ResponseCategories> {
+    return this.http.delete<ResponseCategories>(`${this.urlApi}/${_id}`)
       .pipe(
-        map((response) => {
+        map((response: ResponseCategories) => {
           console.log(response);
-          return response.msg || 'Category deleted successfully';
+          return response;
         }),
         catchError((error) => {
           console.error('Error deleting category:', error);
-          return of(error.error?.msg || 'Error: servidor fallando');
+        return throwError(() => error);
+
         })
       );
   }
 
   updateCategory(_id: string, categoryData: DataCategory): Observable<ResponseCategories> {
-    return this.http.patch<ResponseCategories>(`http://localhost:3000/api/v1/category/${_id}`, categoryData);
+    return this.http.patch<ResponseCategories>(`${this.urlApi}/${_id}`, categoryData);
     
   }
 

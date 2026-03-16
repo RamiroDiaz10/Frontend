@@ -26,9 +26,10 @@ export class Register {
       name: new FormControl('' ,[Validators.required, Validators.minLength(3)]),      //Validators.pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/) permite ene espacio tildes letras 
       username: new FormControl('' ,[Validators.required, Validators.minLength(3)]),   //Validators.pattern(/^[a-zA-Z0-9_]+$/)permite alfanumericos inplmentar luego
       email: new FormControl('', [Validators.required, Validators.email]),
+      phone: new FormControl('',[Validators.pattern(/^\+?(57)?3\d{9}$/)]),
       password: new FormControl('',[Validators.required, Validators.minLength(8)]),   // Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.#_-])[A-Za-z\d@$!%*?&.#_-]+$/) debe tener almenos 1 mayus etc.
-      role: new FormControl('registered',[Validators.required]),
-      });
+      confirmPassword: new FormControl ('', [Validators.required]),
+    });
     }
 
   ngOnInit(): void{

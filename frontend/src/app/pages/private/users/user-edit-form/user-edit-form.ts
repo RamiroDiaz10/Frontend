@@ -43,12 +43,12 @@ export class UserEditForm implements OnInit {
       next: (user) => {
         if (user) {
           // Llenamos el formulario con los datos recuperados
-          this.userForm.patchValue({
-            name: user.name,
-            username: user.username,
-            email: user.email,
-            role: user.role
-          });
+          // this.userForm.patchValue({
+          //   name: user.user ?? '',
+          //   username: user.user,
+          //   email: user.user,
+          //   role: user.user
+          // });
         }
         this.loading = false;
       },
@@ -72,7 +72,7 @@ export class UserEditForm implements OnInit {
     // Enviar la actualización parcial
     this.httpUsers.updateUser(this.userId, this.userForm.value).subscribe({
       next: (msg) => {
-        this.successMsg = msg;
+        // this.successMsg = msg;
         this.loading = false;
         // Redirigir a la lista de usuarios tras 1.5 segundos
         setTimeout(() => this.router.navigate(['/dashboard/users-list']), 1500);

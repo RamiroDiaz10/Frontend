@@ -1,12 +1,13 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Params, Router, RouterLink } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { BehaviorSubject, Observable, Subscription, switchMap } from 'rxjs';
+import { BehaviorSubject, map, Observable, Subscription, switchMap } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
+import Swal from 'sweetalert2';
 
 import { HttpProducts } from '../../../../core/service/http-products';
 import { HttpCategories } from '../../../../core/service/http-categories';
-import Swal from 'sweetalert2';
+import { DataCategory } from '../../../../models/category-model';
 
 @Component({
   selector: 'app-product-edit-form',
@@ -17,7 +18,7 @@ import Swal from 'sweetalert2';
 })
 export class ProductEditForm {
 
-  public categories$: Observable<any[]> = new Observable<any[]>();
+  public categories$: Observable<DataCategory[]> = new Observable<DataCategory[]>();
   private refreshTrigger$: BehaviorSubject<void> = new BehaviorSubject<void>(undefined);
 
   message: string = ''; 
@@ -48,8 +49,10 @@ export class ProductEditForm {
    ngOnInit(): void {
     console.info('Initializing ProductEditForm component');
     this.categories$ = this.refreshTrigger$.asObservable().pipe(
-      switchMap(() => this.HttpCategories.getCategories())
+      switchMap(() => this.HttpCategories.getCategories()),
+      map(response => response.categories  ),
     );
+  
 
     this.route.params.subscribe((params: Params) => {
       if(params['_id']){
@@ -89,7 +92,7 @@ export class ProductEditForm {
     });
   }
 
-    onSubmit(): void {
+  onSubmit(): void {
       if (this.formData.valid) {
         console.info(this.formData.value);
       }

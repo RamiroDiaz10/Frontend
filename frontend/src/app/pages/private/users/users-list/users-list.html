@@ -1,42 +1,47 @@
-<div class="list-container">
-  <div class="list-header">
-    <h2>Lista de Usuarios</h2>
-    <a routerLink="/dashboard/users-new" class="btn btn-primary">Crear Nuevo Usuario</a>
+
+
+<div class="container">
+  <div class="header-section">
+    <h2>Users Management</h2>
+    <button class="btn-add" routerLink="/dashboard/user/new"> + New User</button>
   </div>
 
-  <div *ngIf="errorMsg" class="alert alert-danger">{{ errorMsg }}</div>
-
-  <div *ngIf="loading" class="loading-state">
-    <p>Cargando usuarios...</p>
-  </div>
-
-  <div *ngIf="!loading && users.length === 0" class="empty-state">
-    <p>No hay usuarios registrados.</p>
-  </div>
-
-  <div class="table-responsive-wrapper">
-    <table *ngIf="!loading && users.length > 0" class="table">
+  <div class="table-responsive">
+    <table class="custom-table">
       <thead>
         <tr>
-          <th>Nombre</th>
+          <th>Name User</th>
           <th>Username</th>
-          <th>Correo</th>
-          <th>Rol</th>
-          <th>Acciones</th>
+          <th>Phone</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>IsActive</th>
+          <th>CreateDate</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let user of users">
-          <td>{{ user.name }}</td>
-          <td>{{ user.username }}</td>
-          <td>{{ user.email }}</td>
-          <td>{{ user.role }}</td>
-          <td class="table-actions">
-            <a [routerLink]="['/dashboard/users-edit', user._id]" class="btn-sm btn-info">Editar</a>
-            <button (click)="deleteUser(user._id)" class="btn-sm btn-danger">Eliminar</button>
-          </td>
-        </tr>
-      </tbody>
+        @for (user of (users$ | async); track $index) {
+            <tr>
+              <td>{{user.name}}</td>
+              <td>{{user.username}}</td>
+              <td>{{user.phone}}</td>
+              <td>{{user.email}}</td>
+              <td>{{user.role}}</td>
+              <td>{{user.isActive ? 'Sí' : 'No'}}</td>
+              <td>{{user.createDate}}</td>
+              <td class="actions">
+                <button class="btn-edit" title="Edit" (click)="onEdit(user._id!)">
+                  <i class="icon-edit"></i> Update
+                </button>
+                <button class="btn-delete" title="Delete" (click)="deleteUser(user._id!)">
+                  <i class="icon-trash"></i> Delete
+                </button>
+              </td>
+            </tr>
+
+        }
+        </tbody>
     </table>
   </div>
 </div>

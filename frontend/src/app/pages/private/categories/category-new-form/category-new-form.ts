@@ -65,7 +65,7 @@ export class CategoryNewForm {
         error: error => {
           console.error('Error creating category', error);
 
-          const errorMsg = error.error?.msg || 'The product may already exist or there is a server error.';
+          const errorMsg = error.error || 'The product may already exist or there is a server error.';
             Swal.fire({
               icon: "error",
               title: "Oops...",

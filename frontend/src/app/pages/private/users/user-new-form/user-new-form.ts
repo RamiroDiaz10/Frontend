@@ -1,9 +1,12 @@
 import { Component, inject, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { Subscription } from 'rxjs';
+import Swal from 'sweetalert2';
+
 import { HttpUsers } from '../../../../core/service/http-users';
+import { DataUser } from '../../../../models/data-user.model';
 
 @Component({
   selector: 'app-user-new-form',
@@ -12,49 +15,96 @@ import { HttpUsers } from '../../../../core/service/http-users';
   templateUrl: './user-new-form.html',
   styleUrl: './user-new-form.css',
 })
-export class UserNewForm implements OnDestroy {
-  private fb = inject(FormBuilder);
-  private httpUsers = inject(HttpUsers);
-  private router = inject(Router);
+export class UserNewForm {
 
-  userForm: FormGroup = this.fb.group({
-    name: ['', Validators.required],
-    username: ['', Validators.required],
-    email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.minLength(6)]],
-    role: ['USER_ROLE'] // Valor por defecto
-  });
+  formData!: FormGroup;
+  private subscription!: Subscription;
 
-  loading: boolean = false;
-  successMsg: string = '';
-  errorMsg: string = '';
-  private subscription: Subscription = new Subscription();
+  constructor(
+    private httpUsers: HttpUsers,
+    private router: Router 
+  ){
+    
+    this.formData = new FormGroup ({
+      name: new FormControl ('',[Validators.required, Validators.minLength(3)]),
+      username: new FormControl ('', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]),
+      phone: new FormControl('',[Validators.pattern(/^\+?(57)?3\d{9}$/)]),
+      email: new FormControl('', [Validators.required, Validators.email]),                            // Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.#_-])[A-Za-z\d@$!%*?&.#_-]+$/) debe tener almenos 1 mayus etc
+      password: new FormControl('',[Validators.required, Validators.minLength(8)]), 
+      confirmPassword: new FormControl ('', [Validators.required]),
+      role: new FormControl ('registered', [Validators.required]),
+      isActive: new FormControl(false)
+
+    });
+
+  }
 
   onSubmit(): void {
-    if (this.userForm.invalid) {
-      this.userForm.markAllAsTouched();
-      return;
-    }
-
-    this.loading = true;
-    this.successMsg = '';
-    this.errorMsg = '';
-
-    const sub = this.httpUsers.createUser(this.userForm.value).subscribe({
-      next: (msg) => {
-        this.successMsg = msg;
-        this.loading = false;
-        setTimeout(() => this.router.navigate(['/dashboard/users-list']), 1500); 
-      },
-      error: (err) => {
-        this.errorMsg = err;
-        this.loading = false;
+    if (this.formData.valid) {
+      
+      const inputData: DataUser = {
+        name: this.formData.value.name ?? '',
+        username: this.formData.value.username ?? '',
+        phone: this.formData.value.phone ?? '',
+        email: this.formData.value.email ?? '',
+        password: this.formData.value.password ?? '',
+        role: this.formData.value.role ?? '',
+        isActive: this.formData.value.isActive ?? '', 
       }
-    });
-    this.subscription.add(sub);
+
+      this.httpUsers.createUser(inputData).subscribe({
+        next: (data) => {
+          console.info(data);
+
+          Swal.fire({
+              title: "User created successfully",
+              icon: "success",
+              draggable: true
+            });
+
+            setTimeout(() => {
+            this.router.navigateByUrl('/dashboard/users');
+          }, 2000);
+        
+        },
+        error: error => {
+          console.error('Error creating category', error);
+
+          const errorMsg = error.error || 'The user may already exist or there is a server error.';
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "Something went wrong!",
+              footer: errorMsg
+            });
+        },
+        complete: () => {
+          console.info('process finished');
+          this.formData.reset();
+        }
+        
+      })
+    
+
+    } else{
+      console.warn('Form is invalid');
+      this.formData.markAllAsTouched();
+    }
   }
 
   ngOnDestroy(): void {
+    console.log('componente destruido')
+    if(this.subscription){}
     this.subscription.unsubscribe();
+  }
+
+  onReset(): void {
+    this.formData.setValue({
+      name: '',
+      description: '',
+      image: '',
+      stock: 1,
+      isActive: true
+    });
   }
 }

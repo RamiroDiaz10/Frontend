@@ -7,4 +7,7 @@ export interface DataAuthUser  {
     role?: string;
 
 }
+export interface ResponseUser {
+    user: DataAuthUser[],
+}
 

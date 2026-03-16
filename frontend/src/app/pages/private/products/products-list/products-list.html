@@ -34,7 +34,7 @@
               <td>
               <div class="color-indicator">
                 <span class="color-dot" [style.background-color]="product.color"></span>
-                <span class="color-label">{{ product.colorName || product.color }}</span>
+                <span class="color-label">{{ product.color }}</span>
               </div>
               </td>
               <td>{{product.price | currency:'COP':'symbol-narrow':'1.0-0'}}</td>
@@ -42,10 +42,10 @@
               <td>{{product.category?.name || 'sin categoría'}}</td>
               <td>{{product.isActive ? 'Sí' : 'No'}}</td>
               <td class="actions">
-                <button class="btn-edit" title="Edit" (click)="onEdit(product._id)">
+                <button class="btn-edit" title="Edit" (click)="onEdit(product._id!)">
                   <i class="icon-edit"></i> Edit
                 </button>
-                <button class="btn-delete" title="Delete" (click)="deleteProduct(product._id)">
+                <button class="btn-delete" title="Delete" (click)="deleteProduct(product._id!)">
                   <i class="icon-trash"></i> Delete
                 </button>
               </td>

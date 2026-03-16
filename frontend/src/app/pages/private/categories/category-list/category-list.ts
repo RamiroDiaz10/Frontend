@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
-import { BehaviorSubject, Observable, switchMap, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, switchMap, Subscription, map } from 'rxjs';
 import Swal from 'sweetalert2';
 
 import { HttpCategories } from '../../../../core/service/http-categories';
+import { DataCategory } from '../../../../models/category-model';
 
 @Component({
   selector: 'app-category-list',
@@ -14,7 +15,7 @@ import { HttpCategories } from '../../../../core/service/http-categories';
 })
 export class CategoryList {
   // Atributo para almacenar la lista de categorias
-  public categories: Observable<any[]> = new Observable<any[]>();
+  public categories: Observable<DataCategory[]> = new Observable<DataCategory[]>();
   // Atributo para controlar la actualización de la lista de categorias
   private refreshCategoriesTrigger$: BehaviorSubject<void> = new BehaviorSubject<void>(undefined);
   
@@ -27,7 +28,8 @@ export class CategoryList {
 
   ngOnInit(): void {
     this.categories = this.refreshCategoriesTrigger$.asObservable().pipe(
-      switchMap(() => this.httpCategories.getCategories())
+      switchMap(() => this.httpCategories.getCategories()),
+      map(response => response.categories)
     );
   }
 
@@ -56,7 +58,7 @@ export class CategoryList {
 
     Swal.fire({
       title: "Deleted!",
-      text: "Your file has been deleted.",
+      text: "Your category has been deleted.",
       icon: "success"
     });
       }

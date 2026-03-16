@@ -1,63 +1,79 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { catchError, map, Observable, of } from 'rxjs';
-import { DataAuthUser } from '../../models/user-model';
-import { ResponseApi } from '../../models/response.model';
+import { catchError, map, Observable, of, throwError } from 'rxjs';
+
+import { DataUser, ResponseUsers } from '../../models/data-user.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HttpUsers {
-  private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:3000/api/v1/users'; // Cambia a '/user' si tu backend usa singular
+  private apiUrl = 'http://localhost:3000/api/v1/users'; 
 
-  // Obtener todos los usuarios
-  getUsers(): Observable<DataAuthUser[]> {
-    return this.http.get<{ users: DataAuthUser[] }>(this.apiUrl)
+  constructor(
+    private http: HttpClient,
+    
+  ){}
+  
+  createUser(userData: DataUser): Observable<ResponseUsers> {
+    return this.http.post<ResponseUsers>(this.apiUrl, userData)
       .pipe(
-        map((response) => response.users || []),
+        map((response: ResponseUsers) => response),
         catchError((error) => {
-          console.error('Error fetching users:', error);
-          return of([]);
+          return throwError(() => error)
         })
       );
+  }
+
+  // Obtener todos los usuarios
+  getUsers(): Observable<ResponseUsers> {
+    return this.http.get<ResponseUsers>(this.apiUrl)
+      .pipe(
+        map((response: ResponseUsers) => {
+          console.log(response);
+          return response;
+        }),
+        catchError((error) => {
+          console.error('Error fetching users:', error);
+          return throwError(() => error);
+
+        })
+      );
+    
   }
 
   // Obtener un usuario por ID
-  getUserById(id: string): Observable<DataAuthUser | null> {
-    return this.http.get<ResponseApi<DataAuthUser>>(`${this.apiUrl}/${id}`)
+  getUserById(id: string): Observable<ResponseUsers> {
+    return this.http.get<ResponseUsers>(`${this.apiUrl}/${id}`)
       .pipe(
-        map((response) => response.data || response.user || null), // Usar .data o .user según tu backend
+        map((response: ResponseUsers) => response), // Usar .data o .user según tu backend
         catchError((error) => {
           console.error('Error fetching user:', error);
-          return of(null);
+          return throwError(() => error);
+
         })
       );
   }
 
-  // Crear un usuario nuevo (suele requerir token de admin)
-  createUser(userData: DataAuthUser): Observable<string> {
-    return this.http.post<ResponseApi<DataAuthUser>>(this.apiUrl, userData)
-      .pipe(
-        map((response) => response.msg || 'User created successfully'),
-        catchError((error) => of(error.error?.msg || 'Error al crear usuario'))
-      );
-  }
   // Actualizar un usuario
-  updateUser(id: string, userData: Partial<DataAuthUser>): Observable<string> {
-    return this.http.patch<ResponseApi<DataAuthUser>>(`${this.apiUrl}/${id}`, userData)
+  updateUser(id: string, userData: DataUser): Observable<ResponseUsers> {
+    return this.http.patch<ResponseUsers>(`${this.apiUrl}/${id}`, userData)
       .pipe(
-        map((response) => response.msg || 'User updated successfully'),
-        catchError((error) => of(error.error?.msg || 'Error al actualizar usuario'))
+        map((response: ResponseUsers) => response),
+        catchError((error) => {
+          return throwError(() => error);
+        })
       );
   }
 
   // Eliminar un usuario
-  deleteUser(id: string): Observable<string> {
-    return this.http.delete<ResponseApi<DataAuthUser>>(`${this.apiUrl}/${id}`)
+  deleteUser(id: string): Observable<ResponseUsers> {
+    return this.http.delete<ResponseUsers>(`${this.apiUrl}/${id}`)
       .pipe(
-        map((response) => response.msg || 'User deleted successfully'),
-        catchError((error) => of(error.error?.msg || 'Error al eliminar usuario'))
+        map((response) => response),
+        catchError((error) => {
+          return throwError(() => error);
+        })
       );
   }
 }

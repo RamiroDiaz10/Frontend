@@ -1,13 +1,14 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, Subscription, switchMap } from 'rxjs';
+import { BehaviorSubject, map, Observable, Subscription, switchMap } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import Swal from 'sweetalert2';
 
 import { HttpProducts } from '../../../../core/service/http-products';
 import { HttpCategories } from '../../../../core/service/http-categories';
 import { DataProduct } from '../../../../models/products.models';
+import { DataCategory } from '../../../../models/category-model';
 
 @Component({
   selector: 'app-product-new-form',
@@ -18,7 +19,7 @@ import { DataProduct } from '../../../../models/products.models';
 })
 export class ProductNewForm {
 
-  public categories$: Observable<any[]> = new Observable<any[]>();
+  public categories$: Observable<DataCategory[]> = new Observable<DataCategory[]>();
   private refreshTrigger$: BehaviorSubject<void> = new BehaviorSubject<void>(undefined);
   message: string = '';
   formData!: FormGroup;
@@ -45,7 +46,8 @@ export class ProductNewForm {
   } 
   ngOnInit(): void {
     this.categories$ = this.refreshTrigger$.asObservable().pipe(
-      switchMap(() => this.HttpCategories.getCategories())
+      switchMap(() => this.HttpCategories.getCategories()),
+      map(response => response.categories)
     );
     
   }

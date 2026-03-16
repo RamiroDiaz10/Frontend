@@ -136,55 +136,52 @@
       
       <!-- Lista de Productos -->
       <div class="product-list">
-        <!-- Item 1 -->
-        <div class="product-item">
-          <div class="product-image-container">
-            <div class="product-image-placeholder" style="background-color: var(--Pink-Pearl);">
-              <!-- <img src="assets/images/demon.png" alt="Fairy Tooth Demon" class="product-image" onerror="this.style.display='none'"> -->
+        <!-- Item  -->
+        @for( item of (carItem | async); track $index ){
+          
+          <div class="product-item">
+            <div class="product-image-container">
+              <div class="product-image-placeholder" style="background-color: var(--Pink-Pearl);">
+                <img [src]="item.product.image" [alt]="item.product.name" class="product-image" onerror="this.style.display='none'">
+              </div>
+              <span class="product-quantity">{{item.quantity}}</span>
+              <button class="quantity-botoon" (click)="onDelete(item.product, -item.quantity)">X</button>
             </div>
-            <span class="product-quantity">1</span>
+            <div class="product-details">
+              <h3 class="product-name">{{item.product.name}}</h3>
+              <p class="product-variant">{{item.product.price | currency:'COP':'symbol-narrow':'1.0-0' }}</p>
+            </div>
+            <div class="product-price">{{item.product.price * item.quantity  |  currency:'COP':'symbol-narrow':'1.0-0'  }}</div>
           </div>
-          <div class="product-details">
-            <h3 class="product-name">Fairy Tooth Demon</h3>
-            <p class="product-variant">Ziggurat</p>
-          </div>
-          <div class="product-price">$4.00</div>
-        </div>
+          <div class="quantity-control">
+                <button class="quantity-box quantity-button" (click)="onSubtract(item.product, -1)">-</button>
+                <button class="quantity-box quantity-button" (click)="onAdd(item.product, +1)">+</button>
+            </div>
 
-        <!-- Item 2 -->
-        <div class="product-item">
-          <div class="product-image-container">
-            <div class="product-image-placeholder" style="background-color: var(--Verde-vintage);">
-              <!-- <img src="assets/images/chimp.png" alt="Cuddly Chimp" class="product-image" onerror="this.style.display='none'"> -->
-            </div>
-            <span class="product-quantity">1</span>
-          </div>
-          <div class="product-details">
-            <h3 class="product-name">Cuddly Chimp</h3>
-            <p class="product-variant">Sepia Skin</p>
-          </div>
-          <div class="product-price">$3.00</div>
-        </div>
+        }
       </div>
 
-      <!-- Resumen de Costos -->
-      <div class="summary-costs">
-        <div class="cost-row">
-          <span class="cost-label">Subtotal • 2 items</span>
-          <span class="cost-value">$7.00</span>
-        </div>
-        <div class="cost-row">
-          <span class="cost-label">Shipping</span>
-          <span class="cost-value-light">Enter shipping address</span>
-        </div>
-      </div>
+      <!-- Resumen de Costos -->        
+         <div class="summary-costs">
+           <div class="cost-row">
+       @if( (totalItems$ | async)! > 0 ){
+             <span class="cost-label">Subtotal • {{totalItems$ | async}} Items</span>
+       }
+             <span class="cost-value">{{ (subTotalCart$ | async) | currency:'COP':'symbol-narrow':'1.0-0' }}</span>
+           </div>
+           <div class="cost-row">
+             <span class="cost-label">Discount</span>
+             <span class="cost-value-light">-10%</span>
+           </div>
+         </div>
+       
 
       <!-- Total Final -->
       <div class="summary-total">
         <span class="total-label">Total</span>
         <div class="total-value-container">
-          <span class="currency-code">USD</span>
-          <span class="total-value">$7.00</span>
+          <span class="currency-code">COP</span>
+          <span class="total-value">{{ (totalCart$ | async) | currency }}</span>
         </div>
       </div>
 

@@ -101,7 +101,7 @@
           <div class="card-muneco-info">
             <p class="stock-text">En stock {{ product.stock }}</p>
             <h3 class="product-title">{{ product.name }}</h3>
-            <p><span class="current-price">Rs. {{ product.price | currency }}</span><span class="previous-price">Rs. {{ product.previousPrice | currency }}</span></p>
+            <p><span class="current-price">Rs. {{ product.price | currency:'COP':'symbol-narrow':'1.0-0'  }}</span><span class="previous-price">Rs. {{ product.size| currency }}</span></p>
             <p class="desc-text">{{ product.description }}</p>
           </div>
         </article>

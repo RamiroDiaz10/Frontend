@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AsyncPipe, CurrencyPipe } from '@angular/common';
-import { BehaviorSubject, Observable, Subscription, switchMap } from 'rxjs';
+import { BehaviorSubject, map, Observable, Subscription, switchMap } from 'rxjs';
 import Swal from 'sweetalert2';
 
 import { HttpProducts } from '../../../../core/service/http-products';
+import { ResponseProducts, DataProduct } from '../../../../models/products.models';
 
 @Component({
   selector: 'app-products-list',
@@ -13,7 +14,7 @@ import { HttpProducts } from '../../../../core/service/http-products';
   styleUrl: './products-list.css',
 })
 export class ProductsList {
-  public products: Observable<any[]> = new Observable<any[]>();
+  public products: Observable<DataProduct[]> = new Observable<DataProduct[]>();
   private refreshProductsTrigger$: BehaviorSubject<void> = new BehaviorSubject<void>(undefined);
   private subscription!: Subscription;
 
@@ -24,7 +25,8 @@ export class ProductsList {
 
   ngOnInit(): void {
     this.products = this.refreshProductsTrigger$.asObservable().pipe(
-      switchMap(() => this.httpProducts.getProducts())
+      switchMap(() => this.httpProducts.getProducts()),
+      map(response => response.products || [])
     );
   }
 

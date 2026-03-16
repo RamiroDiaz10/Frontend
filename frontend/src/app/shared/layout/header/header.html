@@ -38,10 +38,10 @@
           <span style="font-family: var(--fuente-principal); font-weight: 700; color: var(--Marron-calido); margin-right: 15px;">
             Hola, {{userData.name}} <small style="font-weight: 400; font-size: 1.2rem;">({{userData.role}})</small>
           </span>
-          <button class="btn-outline logout-desktop" (click)="onLogout()" style="cursor: pointer;">Cerrar sesión</button>
+          <button class="btn-outline logout-desktop" (click)="onLogout()" style="cursor: pointer;">Log Out</button>
         } @else {
-          <a routerLink="/login" class="btn-outline">Iniciar Sesión</a>
-          <a routerLink="/register" class="btn-glass">Registro</a>
+          <a routerLink="/login" class="btn-outline">Sign In</a>
+          <a routerLink="/register" class="btn-glass">Sign Up </a>
         }
       </div>
 
@@ -55,7 +55,10 @@
       <a routerLink="/checkout" style="text-decoration: none;">
         <div class="info-box" style="border-color: var(--Acentos-rosados); background: var(--fondopagina); cursor: pointer;">
           <i class="fa-solid fa-bag-shopping" style="color: var(--Verde-vintage);"></i>
-          <span>Carrito</span>
+          @if( (totalItems$ | async)! > 0){
+            <span class="product-quantity-car">{{totalItems$ | async}}</span>
+          }
+          <span>Cart</span>
         </div>
       </a>
 
@@ -78,17 +81,17 @@
         
         <!-- Opciones lógicas del Dashboard basadas en roles -->
         @if (auth.hasRole(['admin', 'colaborator', 'registered'])) {
-            <li><a routerLink="/dashboard/products" routerLinkActive="active-link" style="color: var(--Marron-calido);">Productos</a></li>
+            <li><a routerLink="/dashboard/products" routerLinkActive="active-link" style="color: var(--Marron-calido);">Products</a></li>
             <!-- <li><a routerLink="/dashboard/product/new" routerLinkActive="active-link" style="color: var(--Marron-calido);">+ Producto</a></li> -->
             <!-- <li><a routerLink="/dashboard/product/edit" routerLinkActive="active-link" style="color: var(--Marron-calido);">Editar Prod.</a></li> -->
         }
         @if (auth.hasRole(['admin', 'colaborator'])) {
-            <li><a routerLink="/dashboard/categories" routerLinkActive="active-link" style="color: var(--Marron-calido);">Categorías</a></li>
+            <li><a routerLink="/dashboard/categories" routerLinkActive="active-link" style="color: var(--Marron-calido);">Categories</a></li>
             <!-- <li><a routerLink="/dashboard/category/new" routerLinkActive="active-link" style="color: var(--Marron-calido);">+ Categoría</a></li> -->
             <!-- <li><a routerLink="/dashboard/category/edit" routerLinkActive="active-link" style="color: var(--Marron-calido);">Editar Cat.</a></li> -->
         }
         @if (auth.hasRole(['admin'])) {
-            <li><a routerLink="/dashboard/users" routerLinkActive="active-link" style="color: var(--Marron-calido);">Usuarios</a></li>
+            <li><a routerLink="/dashboard/users" routerLinkActive="active-link" style="color: var(--Marron-calido);">Users</a></li>
             <!-- <li><a routerLink="/dashboard/user/new" routerLinkActive="active-link" style="color: var(--Marron-calido);">+ Usuario</a></li> -->
             <!-- <li><a routerLink="/dashboard/user/edit" routerLinkActive="active-link" style="color: var(--Marron-calido);">Editar Usu.</a></li> -->
         }
@@ -120,7 +123,7 @@
         <li>
           <a routerLink="/home" (click)="closeMenu()"
              style="display: block; padding: 1.4rem 0; font-size: 1.9rem; color: var(--Marron-calido); font-weight: 600; border-bottom: 1px solid rgba(232,165,152,0.3); text-decoration: none;">
-            🏠 Inicio
+            🏠 Home
           </a>
         </li>
 
@@ -129,13 +132,13 @@
           <li>
             <a routerLink="/dashboard/products" (click)="closeMenu()"
                style="display: block; padding: 1.4rem 0; font-size: 1.8rem; color: var(--Marron-calido); font-weight: 500; border-bottom: 1px solid rgba(232,165,152,0.3); text-decoration: none;">
-              📦 Productos
+              📦 Products
             </a>
           </li>
           <li>
             <a routerLink="/dashboard/product/new" (click)="closeMenu()"
                style="display: block; padding: 1.4rem 0; font-size: 1.8rem; color: var(--Marron-calido); font-weight: 500; border-bottom: 1px solid rgba(232,165,152,0.3); text-decoration: none;">
-              ➕ Nuevo Producto
+              ➕ New Product
             </a>
           </li>
         }
@@ -143,13 +146,13 @@
           <li>
             <a routerLink="/dashboard/categories" (click)="closeMenu()"
                style="display: block; padding: 1.4rem 0; font-size: 1.8rem; color: var(--Marron-calido); font-weight: 500; border-bottom: 1px solid rgba(232,165,152,0.3); text-decoration: none;">
-              🏷️ Categorías
+              🏷️ Categories
             </a>
           </li>
           <li>
             <a routerLink="/dashboard/category/new" (click)="closeMenu()"
                style="display: block; padding: 1.4rem 0; font-size: 1.8rem; color: var(--Marron-calido); font-weight: 500; border-bottom: 1px solid rgba(232,165,152,0.3); text-decoration: none;">
-              ➕ Nueva Categoría
+              ➕ New Category
             </a>
           </li>
         }
@@ -157,13 +160,13 @@
           <li>
             <a routerLink="/dashboard/users" (click)="closeMenu()"
                style="display: block; padding: 1.4rem 0; font-size: 1.8rem; color: var(--Marron-calido); font-weight: 500; border-bottom: 1px solid rgba(232,165,152,0.3); text-decoration: none;">
-              👥 Usuarios
+              👥 Users
             </a>
           </li>
           <li>
             <a routerLink="/dashboard/user/new" (click)="closeMenu()"
                style="display: block; padding: 1.4rem 0; font-size: 1.8rem; color: var(--Marron-calido); font-weight: 500; border-bottom: 1px solid rgba(232,165,152,0.3); text-decoration: none;">
-              ➕ Nuevo Usuario
+              ➕ New User
             </a>
           </li>
         }
@@ -177,16 +180,16 @@
             Hola, {{userData.name}} 👋
           </p>
           <button class="btn-outline" (click)="onLogout()" style="width: 100%; cursor: pointer;">
-            Cerrar sesión
+            Log Out
           </button>
         } @else {
           <a routerLink="/login" (click)="closeMenu()" class="btn-outline"
              style="text-align: center; border-color: var(--Action-btn); color: var(--Action-btn); text-decoration: none;">
-            Iniciar Sesión
+            Sign In
           </a>
           <a routerLink="/register" (click)="closeMenu()" class="btn-glass"
              style="text-align: center; background: var(--Acentos-rosados); color: #fff; border: none; text-decoration: none;">
-            Registro
+            Sign Up
           </a>
         }
       </div>

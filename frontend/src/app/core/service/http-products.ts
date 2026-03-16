@@ -10,61 +10,61 @@ import Swal from 'sweetalert2';
   providedIn: 'root',
 })
 export class HttpProducts {
-
+  private apiUrl = 'http://localhost:3000/api/v1/products';
 
     constructor(
-      private http: HttpClient
+      private http: HttpClient,
     ) {}
    
-  createProduct(productData: DataProduct):Observable<string> {
-    return this.http.post<ResponseApi<DataProduct>>('http://localhost:3000/api/v1/products', productData)
+  createProduct(productData: DataProduct):Observable<ResponseProducts> {
+    return this.http.post<ResponseProducts>(this.apiUrl, productData)
     .pipe(
-      map((response: any) => {
+      map((response: ResponseProducts) => {
         console.info(response);
         return response;
       }),
       catchError((error) => {
         // IMPORTANTE: throwError hace que el componente ejecute el bloque 'error:'
         // Enviamos el error real hacia el componente
-        return throwError(() => error)
+        return throwError(() => error);
       })
     );
 
   }
 
-  getProducts(): Observable<DataProduct[]> {
-    return this.http.get<ResponseProducts>('http://localhost:3000/api/v1/products')
+  getProducts(): Observable<ResponseProducts> {
+    return this.http.get<ResponseProducts>(this.apiUrl)
       .pipe(
-        map((response) => {
+        map((response: ResponseProducts) => {
           console.log(response);
-          return response.products || [];
+          return response;
         }),
         catchError((error) => {
           console.error('Error fetching products:', error);
-          return of([]);
+          return throwError(() => error );
         })
       );
   }
 
-  getProductById(_id: string): Observable<ResponseApi<DataProduct>> {
-    return this.http.get<ResponseApi<DataProduct>>(`http://localhost:3000/api/v1/products/${_id}`);
+  getProductById(_id: string): Observable<ResponseApi<ResponseProducts>> {
+    return this.http.get<ResponseApi<ResponseProducts>>(`${this.apiUrl}/${_id}`);
   }
 
-  deleteProduct(_id: string): Observable<string> {
-    return this.http.delete<ResponseApi<DataProduct>>(`http://localhost:3000/api/v1/products/${_id}`)
+  deleteProduct(_id: string): Observable<ResponseProducts> {
+    return this.http.delete<ResponseProducts>(`${this.apiUrl}/${_id}`)
       .pipe(
-        map((response) => {
+        map((response: ResponseProducts) => {
           console.log(response);
-          return response.msg || 'Product deleted successfully';
+          return response;
         }),
         catchError((error) => {
           console.error('Error deleting product:', error);
-          return of(error.error?.msg || 'Error: servidor fallando');
+          return throwError(() => error );
         })
       );  
   }
 
   updateProduct(_id: string, productData: DataProduct[]): Observable<ResponseProducts> {
-    return this.http.patch<ResponseProducts>(`http://localhost:3000/api/v1/products/${_id}`, productData);
+    return this.http.patch<ResponseProducts>(`${this.apiUrl}/${_id}`, productData);
   }
 }

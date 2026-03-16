@@ -6,11 +6,11 @@
     class="form-new-register"
     >
     <div class="tittle">
-        <h1>Sing Up</h1>
+        <h1>Sign Up</h1>
     </div>
 
     <div class="link">
-    <span>Already have an account?<a routerLink="/login">Sing In</a></span>
+    <span>Already have an account?<a routerLink="/login">Sign In</a></span>
 
     </div>
 
@@ -75,6 +75,25 @@
 
         </div>
 
+        <!-- campo registered Phone -->
+
+
+         <div class="field">
+            <label for="register-phone">Phone</label>
+            <input type="number" formControlName="phone" id="register-phone" placeholder="ej: 355 555 5555">
+            <div class="errors">
+                @if(formData.get('phone'); as phoneRegistered ){
+                    @if( phoneRegistered.invalid ){
+                        @if(phoneRegistered.errors?.['pattern']){
+                            <small>Formato permitido: +57 formato Colombia</small>
+                        }
+                    }
+                }
+
+            </div>
+
+        </div>
+
         <!-- campo registered password -->
 
 
@@ -97,24 +116,20 @@
 
         </div>
 
-        <!-- campo registered role -->
+        <!-- campo register  confirmpassword -->
 
 
-         <div class="field">
-            <label for="register-role">Role*</label>
-            <select formControlName="role" id="register-role">
-                <option value="">Select Role </option>
-                <option value="admin">Admin </option>
-                <option value="colaborator">Colaborator</option>
-                <option value="registered">Registered</option>
-
-            </select>
-
+        <div class="field">
+            <label for="user-confirmpassword">Confirm Password*</label>
+            <input type="password" formControlName="confirmPassword" id="user-confirmpassword" autocomplete="off"/>
             <div class="errors">
-                @if(formData.get('role'); as roleRegistered ){
-                    @if( roleRegistered.invalid && (roleRegistered.touched || roleRegistered.dirty) ){
-                        @if(roleRegistered.errors?.['required']){
+                @if(formData.get('confirmPassword'); as confirmpasswordUser ){
+                    @if( confirmpasswordUser.invalid && (confirmpasswordUser.touched || confirmpasswordUser.dirty) ){
+                        @if(confirmpasswordUser.errors?.['required']){
                             <small>Campo obligatorio</small>
+                        }
+                        @if(confirmpasswordUser.errors?.['mismatch']){
+                            <small> La contraseña no coincide </small>
                         }
                     }
                 }
@@ -122,6 +137,7 @@
             </div>
 
         </div>
+
 
         <!-- campo message -->
 

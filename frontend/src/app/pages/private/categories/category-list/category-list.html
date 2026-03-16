@@ -2,8 +2,8 @@
 
 <div class="container">
   <div class="header-section">
-    <h2>Gestión de Categorías</h2>
-    <button class="btn-add" routerLink="/dashboard/category/new"> + Nueva Categoría</button>
+    <h2>Categories Management</h2>
+    <button class="btn-add" routerLink="/dashboard/category/new"> + New Category</button>
   </div>
 
   <div class="table-responsive">
@@ -15,7 +15,7 @@
           <th>Image</th>
           <th>Stock</th>
           <th>IsActive</th>
-          <th>Acciones</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -29,10 +29,10 @@
               <td>{{category.stock}}</td>
               <td>{{category.isActive ? 'Sí' : 'No'}}</td>
               <td class="actions">
-                <button class="btn-edit" title="Edit" (click)="onEdit(category._id)">
-                  <i class="icon-edit"></i> Edit
+                <button class="btn-edit" title="Edit" (click)="onEdit(category._id!)">
+                  <i class="icon-edit"></i> Update
                 </button>
-                <button class="btn-delete" title="Delete" (click)="deleteCategory(category._id)">
+                <button class="btn-delete" title="Delete" (click)="deleteCategory(category._id!)">
                   <i class="icon-trash"></i> Delete
                 </button>
               </td>
