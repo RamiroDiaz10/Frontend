@@ -24,6 +24,7 @@
   background-color: var(--fondo-section);
   padding: 8rem 2rem;
   overflow: hidden;
+  z-index: 0;
 }
 
 .hero-grid {
@@ -266,16 +267,17 @@
   font-weight: bold;
 }
 
-.group-munecas a {
+.group-munecas button {
   color: var(--Marron-calido);
   font-family: var(--fuente-principal);
   padding: 0.8rem 1.5rem;
   border-radius: 8px;
+  border: transparent;
   transition: all 0.3s ease;
   text-decoration: none;
 }
 
-.group-munecas a:hover {
+.group-munecas button:hover {
   background-color: var(--Action-btn);
   color: var(--Fondo-body);
 }
@@ -734,7 +736,7 @@
     align-items: stretch;
   }
 
-  .group-munecas a {
+  .group-munecas button {
     text-align: center;
     background-color: var(--fondo-section);
     padding: 1rem;

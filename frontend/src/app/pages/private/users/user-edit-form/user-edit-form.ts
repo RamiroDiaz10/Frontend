@@ -1,8 +1,12 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ActivatedRoute, Params, Router, RouterModule } from '@angular/router';
 import { HttpUsers } from '../../../../core/service/http-users';
+import { Subscription } from 'rxjs';
+import { DataUser } from '../../../../models/data-user.model';
+import Swal from 'sweetalert2';
+import { ResponseUser } from '../../../../models/user-model';
 
 @Component({
   selector: 'app-user-edit-form',
@@ -11,76 +15,122 @@ import { HttpUsers } from '../../../../core/service/http-users';
   templateUrl: './user-edit-form.html',
   styleUrl: './user-edit-form.css',
 })
-export class UserEditForm implements OnInit {
-  private fb = inject(FormBuilder);
-  private httpUsers = inject(HttpUsers);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
+export class UserEditForm {
+ 
+  formData!: FormGroup;
+  selectId!: string;
+  private subscription!: Subscription;
 
-  userForm: FormGroup = this.fb.group({
-    name: ['', Validators.required],
-    username: ['', Validators.required],
-    email: ['', [Validators.required, Validators.email]],
-    role: ['USER_ROLE'] // Valor por defecto
-  });
+  constructor(
+    private httpUsers: HttpUsers,
+    private router: Router ,
+    private route: ActivatedRoute
+  ){
+    
+    this.formData = new FormGroup ({
+      name: new FormControl ('',[Validators.required, Validators.minLength(3)]),
+      username: new FormControl ('', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]),
+      phone: new FormControl('',[Validators.pattern(/^\+?(57)?3\d{9}$/)]),
+      email: new FormControl('', [Validators.required, Validators.email]),                            // Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.#_-])[A-Za-z\d@$!%*?&.#_-]+$/) debe tener almenos 1 mayus etc
+      role: new FormControl ('', [Validators.required]),
+      isActive: new FormControl(false)
 
-  userId: string | null = null;
-  loading: boolean = false;
-  successMsg: string = '';
-  errorMsg: string = '';
+    });
+
+  }
 
   ngOnInit(): void {
-    // Obtenemos el ID de la URL (ruta debe ser /users/edit/:id)
-    this.userId = this.route.snapshot.paramMap.get('id');
-    if (this.userId) {
-      this.loadUser(this.userId);
-    }
-  }
+    this.route.params.subscribe((params: Params) => {
+      if(params['_id']){
 
-  loadUser(id: string): void {
-    this.loading = true;
-    this.httpUsers.getUserById(id).subscribe({
-      next: (user) => {
-        if (user) {
-          // Llenamos el formulario con los datos recuperados
-          // this.userForm.patchValue({
-          //   name: user.user ?? '',
-          //   username: user.user,
-          //   email: user.user,
-          //   role: user.user
-          // });
-        }
-        this.loading = false;
-      },
-      error: () => {
-        this.errorMsg = 'Error al cargar los datos del usuario';
-        this.loading = false;
+        this.selectId = params['_id'];
+
+        this.httpUsers.getUserById(params['_id']).subscribe({
+          next: (response: any) => {
+            console.log(response);
+
+            const { name, username, phone,  email, password, confirmPassword, role, isActive } = response.userFound;
+
+            this.formData.setValue({
+              name: name || '',
+              username: username || '',
+              phone: phone || '',
+              email: email || '',                           
+              role: role || '',
+              isActive: isActive || false
+            });
+
+          },error: (error) => {
+            console.error('Error fetching editUser:', error);
+          },  
+          complete: () => {           
+            console.info('Petición completada');
+          }
+        });
       }
     });
+    
   }
 
-  onSubmit(): void {
-    if (this.userForm.invalid || !this.userId) {
-      this.userForm.markAllAsTouched();
-      return;
+  onSubmit(): void{
+      if(this.formData.valid){
+        console.log(this.formData.value);
+      }
+  
+      Swal.fire({
+        title: "Do you want to save the changes?",
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: "Save",
+        denyButtonText: `Don't save`
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire("Saved!", "", "success");
+          this.httpUsers.updateUser(this.selectId, this.formData.value).subscribe({
+        next: (response) => {
+          console.log(response);
+        },
+        error: (error) => {
+          console.error('Error updating user:', error);
+        },
+        complete: () => {
+          console.info('Petición de actualización completada');
+          this.formData.reset({
+            name: '',
+            username:  '',
+            phone:  '',
+            email:  '',                           
+            password: '',
+            confirmPassword:  '',
+            role: '',
+            isActive: false
+          });
+          this.router.navigateByUrl('/dashboard/users');
+        }
+      });
+        } else if (result.isDenied) {
+          Swal.fire("Changes are not saved", "", "info");
+        }
+      });
+  
     }
 
-    this.loading = true;
-    this.successMsg = '';
-    this.errorMsg = '';
+  ngOnDestroy(): void {
+    console.log('componente destruido')
+    if(this.subscription){
+      this.subscription.unsubscribe();
+    }
+  }
 
-    // Enviar la actualización parcial
-    this.httpUsers.updateUser(this.userId, this.userForm.value).subscribe({
-      next: (msg) => {
-        // this.successMsg = msg;
-        this.loading = false;
-        // Redirigir a la lista de usuarios tras 1.5 segundos
-        setTimeout(() => this.router.navigate(['/dashboard/users-list']), 1500);
-      },
-      error: (err) => {
-        this.errorMsg = err;
-        this.loading = false;
-      }
+  onReset(): void {
+    this.formData.setValue({
+      name: '',
+        username: '',
+        phone: '',
+        email: '',
+        password: '',
+        role: '',
+        isActive: '',
     });
   }
 }

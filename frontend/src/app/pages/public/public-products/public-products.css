@@ -1,0 +1,144 @@
+/* =========================================
+   CARDS DE MUÑECOS (Flexbox)
+   ========================================= */
+.tittle{
+  text-align: center;
+  font-family: var(--fuente-principal);
+  font-size: clamp(2.8rem, 4vw, 3.6rem);
+  color: var(--Marron-calido);
+  margin-bottom: 4rem;
+}
+
+.card-munecos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3rem;
+  padding: 2rem 0;
+  justify-content: center;
+}
+
+.card-muneco {
+  flex: 1 1 280px;
+  max-width: 32rem;
+  background-color: var(--fondopagina);
+  border-radius: 16px;
+  box-shadow: 0 8px 15px rgba(93, 64, 55, 0.05);
+  border: 1px solid var(--Pink-Pearl);
+  padding: 1.5rem;
+  transition: transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out, border-color 0.4s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.card-muneco:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(232, 165, 152, 0.35);
+  border-color: var(--Acentos-rosados);
+}
+
+.card-image-box {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.card-image-box img {
+  width: 100%;
+  height: auto;
+  transition: transform 0.5s ease;
+  display: block;
+  border-radius: 12px;
+  filter: sepia(0.15) contrast(0.95);
+}
+
+.card-muneco:hover .card-image-box img {
+  transform: scale(1.08);
+  filter: sepia(0) contrast(1);
+}
+
+.btn-favorite {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background-color: rgba(255, 249, 245, 0.9);
+  border: none;
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--Action-btn);
+  font-size: 1.8rem;
+  cursor: pointer;
+  z-index: 10;
+  box-shadow: 0 4px 6px rgba(93, 64, 55, 0.1);
+}
+
+.btn-favorite:hover,
+.card-muneco:hover .btn-favorite {
+  animation: heartbeat 1.5s infinite;
+  color: #D32F2F;
+}
+
+@keyframes heartbeat {
+  0% { transform: scale(1); }
+  14% { transform: scale(1.2); }
+  28% { transform: scale(1); }
+  42% { transform: scale(1.2); }
+  70% { transform: scale(1); }
+}
+
+.add-to-cart-slide {
+  position: absolute;
+  bottom: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--Acentos-rosados);
+  color: var(--Fondo-body);
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 30px;
+  font-family: var(--fuente-terciaria);
+  font-weight: 700;
+  font-size: 1.4rem;
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  cursor: pointer;
+  transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.3s;
+  width: 85%;
+  justify-content: center;
+}
+
+.add-to-cart-slide:hover {
+  background-color: var(--Verde-vintage);
+}
+
+.card-muneco:hover .add-to-cart-slide {
+  bottom: 15px;
+}
+
+.card-muneco p {
+  margin-top: 1rem;
+  font-family: var(--fuente-secundaria);
+  color: var(--Marron-calido);
+}
+
+.card-muneco .current-price {
+  font-weight: bold;
+  font-size: 1.8rem;
+  color: #D47A8A;
+}
+
+.card-muneco .previous-price {
+  text-decoration: line-through;
+  color: #a0a0a0;
+  font-size: 1.4rem;
+  margin-left: 1rem;
+}

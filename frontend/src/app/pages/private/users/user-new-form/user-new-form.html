@@ -78,7 +78,7 @@
                 @if (formData.get('phone'); as userphone) {
                     @if(userphone.invalid ){
                         @if (userphone.errors?.['pattern']) {
-                            <small>Campo obligatorio</small>
+                            <small>Formato invalido(solo formato +57 Colombia)</small>
                         }
               
                     }

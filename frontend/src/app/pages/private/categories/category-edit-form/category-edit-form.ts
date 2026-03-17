@@ -65,7 +65,7 @@ export class CategoryEditForm {
   }
 
   
-  onSubmit(){
+  onSubmit(): void {
     if(this.formData.valid){
       console.log(this.formData.value);
     }

@@ -5,7 +5,7 @@
       <div class="hero-content">
         <h1>Tus amigas de trapo de toda la vida</h1>
         <p>Muñecas artesanales creadas para abrazar, acompañar y coleccionar momentos inolvidables.</p>
-        <a href="#nuestras-favoritas" class="btn-primary">Descubrir Colección</a>
+        <a routerLink="/products" class="btn-primary">Descubrir Colección</a>
       </div>
       <div class="hero-image-wrapper">
         <img src="/assets/images/Designer-campesina.png" alt="Muñeca artesanal de lujo" class="hero-image" />
@@ -75,15 +75,14 @@
     <div class="container">
       <div class="group-munecas">
       <div class="enlace-groups">
-        <a href="class-muneca-feliz">Muñeca Feliz</a>
+        @for( category of (categories | async ); track $index){
+          
+          <button href="class-muneca-feliz">Muñeca Feliz</button><span> / </span>  
+
+        }
+
       </div>
-      <div><a href="class-munecas-enfermeras">Muñeca Enfermera</a></div>
-      <div><a href="class-muneca-pava">Muñeca Pava</a></div>
-      <div><a href="class-muneca-campesina">Muñeca Campesina</a></div>
-      <div>
-        <a href="class-muneca-personalizada">Muñeca Personalizada</a>
-      </div>
-      <div><a href="class-munecos-emocines">Muñecos De Emociones</a></div>
+      
     </div>
     </div>
     </section>
@@ -106,70 +105,7 @@
           </div>
         </article>
       }
-        <!-- <article class="card-muneco">
-          <div class="card-image-box">
-            <img src="/assets/images/Designer-Pava.png" alt="Muñeca de la línea Pava" />
-            <button class="add-to-cart-slide"><i class="fa-solid fa-bag-shopping"></i> Añadir al carrito</button>
-          </div>
-          <div class="card-muneco-info">
-            <p class="stock-text">En stock</p>
-            <h3 class="product-title">Muñeca Pava Soft</h3>
-            <p><span class="current-price">Rs. 550.00</span><span class="previous-price">Rs. 650.00</span></p>
-            <p class="desc-text">Una adorable y suave muñeca de colección.</p>
-          </div>
-        </article>
-        <article class="card-muneco">
-          <div class="card-image-box">
-            <button class="btn-favorite" aria-label="Añadir a favoritos"><i class="fa-regular fa-heart"></i></button>
-            <img src="/assets/images/Designer-Pava.png" alt="Muñeca de la línea Pava" />
-            <button class="add-to-cart-slide"><i class="fa-solid fa-bag-shopping"></i> Añadir al carrito</button>
-          </div>
-          <div class="card-muneco-info">
-            <p class="stock-text">En stock</p>
-            <h3 class="product-title">Muñeca Pava Soft</h3>
-            <p><span class="current-price">Rs. 550.00</span><span class="previous-price">Rs. 650.00</span></p>
-            <p class="desc-text">Una adorable y suave muñeca de colección.</p>
-          </div>
-        </article>
-        <article class="card-muneco">
-          <div class="card-image-box">
-            <button class="btn-favorite" aria-label="Añadir a favoritos"><i class="fa-regular fa-heart"></i></button>
-            <img src="/assets/images/Designer-Pava.png" alt="Muñeca de la línea Pava" />
-            <button class="add-to-cart-slide"><i class="fa-solid fa-bag-shopping"></i> Añadir al carrito</button>
-          </div>
-          <div class="card-muneco-info">
-            <p class="stock-text">En stock</p>
-            <h3 class="product-title">Muñeca Pava Soft</h3>
-            <p><span class="current-price">Rs. 550.00</span><span class="previous-price">Rs. 650.00</span></p>
-            <p class="desc-text">Una adorable y suave muñeca de colección.</p>
-          </div>
-        </article>
-        <article class="card-muneco">
-          <div class="card-image-box">
-            <button class="btn-favorite" aria-label="Añadir a favoritos"><i class="fa-regular fa-heart"></i></button>
-            <img src="/assets/images/Designer-Pava.png" alt="Muñeca de la línea Pava" />
-            <button class="add-to-cart-slide"><i class="fa-solid fa-bag-shopping"></i> Añadir al carrito</button>
-          </div>
-          <div class="card-muneco-info">
-            <p class="stock-text">En stock</p>
-            <h3 class="product-title">Muñeca Pava Soft</h3>
-            <p><span class="current-price">Rs. 550.00</span><span class="previous-price">Rs. 650.00</span></p>
-            <p class="desc-text">Una adorable y suave muñeca de colección.</p>
-          </div>
-        </article>
-        <article class="card-muneco">
-          <div class="card-image-box">
-            <button class="btn-favorite" aria-label="Añadir a favoritos"><i class="fa-regular fa-heart"></i></button>
-            <img src="/assets/images/Designer-Pava.png" alt="Muñeca de la línea Pava" />
-            <button class="add-to-cart-slide"><i class="fa-solid fa-bag-shopping"></i> Añadir al carrito</button>
-          </div>
-          <div class="card-muneco-info">
-            <p class="stock-text">En stock</p>
-            <h3 class="product-title">Muñeca Pava Soft</h3>
-            <p><span class="current-price">Rs. 550.00</span><span class="previous-price">Rs. 650.00</span></p>
-            <p class="desc-text">Una adorable y suave muñeca de colección.</p>
-          </div>
-        </article> -->
+       
     </div>
     </div>
     
@@ -180,37 +116,16 @@
     <div class="container">
       <h2>NUESTRAS FAVORITAS</h2>
       <div class="container-popular">
-        <article class="content-brands">
-          <a href="#">
-            <img src="/assets/images/Designer-campesina.png" alt="Emociones" />
-            <h3>Colección Emociones</h3>
-            <p>Ideales para el desarrollo emocional de los más pequeños.</p>
-          </a>
-        </article>
+        @for( category of (categories | async ); track $index){
+          <article class="content-brands">
+            <a href="#">
+              <img [src]="category.image" [alt]="category.name" />
+              <h3>{{category.name}}</h3>
+              <p>{{category.description}}</p>
+            </a>
+          </article>
+        }
 
-        <article class="content-brands">
-          <a href="#">
-            <img src="/assets/images/Designer-Muneca.png" alt="Profesiones" />
-            <h3>Profesiones</h3>
-            <p>Encuentra muñecas enfermeras, médicas y más.</p>
-          </a>
-        </article>
-
-        <article class="content-brands">
-          <a href="#">
-            <img src="/assets/images/Designer-Pava.png" alt="Regional" />
-            <h3>Estilo Regional</h3>
-            <p>Muñecas pavas y campesinas exaltando nuestra cultura.</p>
-          </a>
-        </article>
-
-        <article class="content-brands">
-          <a href="#">
-            <img src="/assets/images/Designer-campesina.png" alt="Personalizadas" />
-            <h3>Personalizadas</h3>
-            <p>Creamos a tu compañera ideal a medida.</p>
-          </a>
-        </article>
       </div>
     </div>
   </section>

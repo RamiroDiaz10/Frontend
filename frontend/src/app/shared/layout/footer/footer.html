@@ -13,10 +13,11 @@
       <div class="widget">
         <h2>Descubrir</h2>
         <div class="submenu">
-          <a routerLink="/dashboard/categories">Colección Emociones</a>
-          <a routerLink="/dashboard/categories">Muñecas Profesiones</a>
-          <a routerLink="/dashboard/categories">Estilo Regional</a>
-          <a routerLink="/dashboard/categories">Pedidos Personalizados</a>
+          @for( category of (categories | async ); track $index){
+            <a routerLink="">
+              {{category.name}}
+            </a>
+          }
         </div>
       </div>
 

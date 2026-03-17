@@ -3,11 +3,12 @@ export interface DataAuthUser  {
     name?: string,
     username?: string,
     email: string,
+    phone?: number,
     password: string,
     role?: string;
 
 }
 export interface ResponseUser {
-    user: DataAuthUser[],
+    userFound: DataAuthUser[],
 }
 

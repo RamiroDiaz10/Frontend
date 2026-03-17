@@ -1,49 +1,192 @@
-<div class="form-container">
-  <h2>Editar Usuario</h2>
+<div class="form container">
 
-  <div *ngIf="loading && !userId" class="loading-state">Cargando...</div>
+    <form
+    class="for form-edit-user"
+    [formGroup]="formData"
+    (ngSubmit)="onSubmit()"
+    >
+        <h1>Edit User</h1>
 
-  <div *ngIf="successMsg" class="alert alert-success">{{ successMsg }}</div>
-  <div *ngIf="errorMsg" class="alert alert-danger">{{ errorMsg }}</div>
+    <!-- campo user name -->
 
-  <form *ngIf="!loading || userId" [formGroup]="userForm" (ngSubmit)="onSubmit()">
-    <div class="form-group">
-      <label for="name">Nombre</label>
-      <input id="name" type="text" formControlName="name" class="form-control" placeholder="Nombre completo">
-      <div *ngIf="userForm.get('name')?.invalid && userForm.get('name')?.touched" class="error-text">
-        El nombre es obligatorio.
-      </div>
-    </div>
+        <div class="field">
+            <label for="user-name" class="label">Name*</label>
+            <input
+                class="input input-user-name" 
+                type="text"
+                formControlName="name" 
+                id="user-name" 
+            />
 
-    <div class="form-group">
-      <label for="username">Username</label>
-      <input id="username" type="text" formControlName="username" class="form-control" placeholder="Nombre de usuario">
-      <div *ngIf="userForm.get('username')?.invalid && userForm.get('username')?.touched" class="error-text">
-        El username es obligatorio.
-      </div>
-    </div>
+            <div class="errors">
+                @if (formData.get('name'); as userName) {
+                    @if(userName.invalid && (userName.touched || userName.dirty)){
+                        @if (userName.errors?.['required']) {
+                            <small>Campo obligatorio</small>
+                        }
+                        @if (userName.errors?.['minlength']) {
+                        <small> Mínimo {{  userName.errors?.['minlength'].requiredLength }} caracteres</small>
 
-    <div class="form-group">
-      <label for="email">Correo</label>
-      <input id="email" type="email" formControlName="email" class="form-control" placeholder="Correo electrónico">
-      <div *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched" class="error-text">
-        Ingrese un correo electrónico válido.
-      </div>
-    </div>
+                        }
+                    }
+                }
+            </div>
+        </div>
+    
+        <!-- campo user username -->
 
-    <div class="form-group">
-      <label for="role">Rol</label>
-      <select id="role" formControlName="role" class="form-control">
-        <option value="USER_ROLE">Usuario</option>
-        <option value="ADMIN_ROLE">Administrador</option>
-      </select>
-    </div>
+        <div class="field">
+            <label for="user-username" class="label">Username*</label>
+            <input 
+                class="input input-user-username" 
+                type="text" 
+                formControlName="username" 
+                id="user-username" 
+                placeholder="Ej: sebas_12"
+            /> 
+            <div class="errors">
+                @if (formData.get('username'); as userName) {
+                    @if(userName.invalid && (userName.touched || userName.dirty)){
+                        @if (userName.errors?.['required']) {
+                            <small>Campo obligatorio</small>
+                        }
+                        @if (userName.errors?.['maxlength']) {
+                        <small> Mínimo {{  userName.errors?.['maxlength'].requiredLength }} caracteres</small>
 
-    <div class="form-actions">
-      <button type="submit" [disabled]="loading || userForm.invalid" class="btn btn-primary">
-        {{ loading ? 'Actualizando...' : 'Actualizar Usuario' }}
-      </button>
-      <a routerLink="/dashboard/users-list" class="btn btn-secondary">Cancelar</a>
-    </div>
-  </form>
-</div>
+                        }
+                        @if (userName.errors?.['minlength']) {
+                        <small> Mínimo {{  userName.errors?.['minlength'].requiredLength }} caracteres</small>
+
+                        }
+                    }
+                }
+            </div>
+        </div>
+
+        <!-- campo user phone -->
+
+        <div class="field">
+            <label for="user-phone" class="label">Phone</label>
+            <input
+                type="number"
+                class="input input-user-phone"
+                id="user-phone"
+                formControlName="phone"
+                placeholder="Ej: 320 000 0000"
+            />  
+            <div class="errors">
+                @if (formData.get('phone'); as userphone) {
+                    @if(userphone.invalid ){
+                        @if (userphone.errors?.['pattern']) {
+                            <small>Formato invalido(solo formato +57 Colombia)</small>
+                        }
+              
+                    }
+                }
+            </div>
+
+        </div>
+
+        <!-- campo user email -->
+        
+        
+        <div class="field">
+            <label for="user-email" class="label" >Email*</label>
+            <input 
+            class="input input-user-email"
+            type="email" 
+            formControlName="email" 
+            id="user-email" 
+            placeholder="ej: correo10@gmail.com"
+            />
+            <div class="errors">
+                @if(formData.get('email'); as emailUser ){
+                    @if( emailUser.invalid && (emailUser.touched || emailUser.dirty) ){
+                         @if(emailUser.errors?.['required']){
+                                <small>Campo obligatorio</small>
+                            }
+                            @if(emailUser.errors?.['email']){
+                                <small> Email invalido </small>
+                            }
+                    }
+                }
+            </div>
+            
+        </div>
+
+        <!-- campo user role -->
+        
+        
+        <div class="field">
+            <label for="user-role" class="label" >Role*</label>
+            <select
+            formControlName="role" 
+            id="user-role" >
+            <option value="">Select role...</option>
+            <option value="admin">admin</option>
+            <option value="colaborator">colaborator</option>
+            <option value="registered">registered</option>
+
+          </select>
+
+            <div class="errors">
+                @if (formData.get('role'); as userRole) {
+                    @if(userRole.invalid && (userRole.touched || userRole.dirty)){
+                        @if (userRole.errors?.['required']) {
+                            <small>Campo obligatorio</small>
+                        }
+                        
+                    }
+                }
+            </div>
+            
+        </div>
+        
+
+        <!-- campo user isActive -->
+
+        <div class="field">
+
+            <label for="user-status" class="label">Status*</label>
+            <div class="status-option">
+                <input 
+                type="radio"
+                class="input-user-status input-user-status--active"
+                formControlName="isActive"
+                id="user-status-active"
+                [value]="true"
+                >
+                <label for="user-status-active" class="user-state-active">Active</label>
+
+                <input 
+                type="radio"
+                class="input-user-status input-user-status--notactive"
+                formControlName="isActive"
+                id="user-status-notactive"
+                [value]="false"
+                >
+                <label for="user-status-notactive" class="user-status-active">Not Active</label>
+            </div>
+            
+
+        </div>
+        
+        <!-- campo message -->
+
+        <div class="fiel-message">
+            <!-- <span>{{ message }}</span> -->
+        </div>
+
+        <!-- campo registered booton -->
+
+
+        <div class="form form-buttons">
+            <button type="submit" class="btn-submit" [disabled]="formData.invalid">Save</button>
+            <button  type="button"  class="btn-reset" (click)="onReset()">Reset form</button>
+        </div>
+
+
+    <!-- </form>
+</div> -->
+
+ 

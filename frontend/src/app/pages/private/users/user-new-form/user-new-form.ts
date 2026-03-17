@@ -32,7 +32,7 @@ export class UserNewForm {
       email: new FormControl('', [Validators.required, Validators.email]),                            // Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.#_-])[A-Za-z\d@$!%*?&.#_-]+$/) debe tener almenos 1 mayus etc
       password: new FormControl('',[Validators.required, Validators.minLength(8)]), 
       confirmPassword: new FormControl ('', [Validators.required]),
-      role: new FormControl ('registered', [Validators.required]),
+      role: new FormControl ('', [Validators.required]),
       isActive: new FormControl(false)
 
     });
@@ -43,13 +43,13 @@ export class UserNewForm {
     if (this.formData.valid) {
       
       const inputData: DataUser = {
-        name: this.formData.value.name ?? '',
+        name: '',
         username: this.formData.value.username ?? '',
         phone: this.formData.value.phone ?? '',
         email: this.formData.value.email ?? '',
         password: this.formData.value.password ?? '',
         role: this.formData.value.role ?? '',
-        isActive: this.formData.value.isActive ?? '', 
+        isActive: this.formData.value.isActive ?? ''
       }
 
       this.httpUsers.createUser(inputData).subscribe({
@@ -68,7 +68,6 @@ export class UserNewForm {
         
         },
         error: error => {
-          console.error('Error creating category', error);
 
           const errorMsg = error.error || 'The user may already exist or there is a server error.';
             Swal.fire({
@@ -94,17 +93,20 @@ export class UserNewForm {
 
   ngOnDestroy(): void {
     console.log('componente destruido')
-    if(this.subscription){}
-    this.subscription.unsubscribe();
+    if(this.subscription){
+      this.subscription.unsubscribe();
+    }
   }
 
   onReset(): void {
     this.formData.setValue({
       name: '',
-      description: '',
-      image: '',
-      stock: 1,
-      isActive: true
+        username: '',
+        phone: '',
+        email: '',
+        password: '',
+        role: '',
+        isActive: '',
     });
   }
 }

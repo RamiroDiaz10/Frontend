@@ -26,6 +26,10 @@ export class HttpCar {
     return this.cart$.asObservable();
   }
 
+  resetCartItems(): void {
+    this.cart$.next([]);
+  }
+
   updateToCart(product: DataProduct, chance: number): void {
     // 1. Obtenemos el valor actual (Copia por referencia)
     let currentCart = this.cart$.getValue(); 

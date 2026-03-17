@@ -46,7 +46,7 @@ export class HttpUsers {
   getUserById(id: string): Observable<ResponseUsers> {
     return this.http.get<ResponseUsers>(`${this.apiUrl}/${id}`)
       .pipe(
-        map((response: ResponseUsers) => response), // Usar .data o .user según tu backend
+        map((response: ResponseUsers) => response), 
         catchError((error) => {
           console.error('Error fetching user:', error);
           return throwError(() => error);

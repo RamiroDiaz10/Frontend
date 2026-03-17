@@ -29,6 +29,7 @@ export class Register {
       phone: new FormControl('',[Validators.pattern(/^\+?(57)?3\d{9}$/)]),
       password: new FormControl('',[Validators.required, Validators.minLength(8)]),   // Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.#_-])[A-Za-z\d@$!%*?&.#_-]+$/) debe tener almenos 1 mayus etc.
       confirmPassword: new FormControl ('', [Validators.required]),
+      role: new FormControl('registered')
     });
     }
 
@@ -52,6 +53,7 @@ export class Register {
         name: this.formData.value.name ?? '',
         username: this.formData.value.username ?? '',
         email: this.formData.value.email ?? '',
+        phone: this.formData.value.email ?? '',
         password: this.formData.value.password ?? '',
         role: this.formData.value.role ?? '',
       };

@@ -3,9 +3,10 @@ import { Routes } from '@angular/router';
 import { Home } from './pages/public/home/home';
 import { Register } from './pages/public/register/register';
 import { Login } from './pages/public/login/login';
-import { Dashboard } from './pages/private/dashboard/dashboard';
 import { Checkout } from './pages/public/checkout/checkout';
 import { PageNotFound } from './pages/public/page-not-found/page-not-found';
+import { PublicProducts } from './pages/public/public-products/public-products';
+import { Dashboard } from './pages/private/dashboard/dashboard';
 import { CategoryList } from './pages/private/categories/category-list/category-list';
 import { CategoryNewForm } from './pages/private/categories/category-new-form/category-new-form';
 import { CategoryEditForm } from './pages/private/categories/category-edit-form/category-edit-form';
@@ -36,7 +37,11 @@ export const routes: Routes = [
     path: 'checkout',
     component:Checkout
     },
-     { 
+    { 
+    path: 'products',
+    component:PublicProducts
+    },
+    { 
     path: 'dashboard', 
     component:Dashboard,
     canActivate: [authGuard, roleGuard],

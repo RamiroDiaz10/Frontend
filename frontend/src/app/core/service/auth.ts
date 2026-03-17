@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 
 import { ResponseApi } from '../../models/response.model';
 import { DataAuthUser } from '../../models/user-model';
+import { HttpCar } from './http-car';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,8 @@ export class Auth {
 
   constructor(
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private httpCart: HttpCar
   ) {}
 
   // =========================
@@ -43,6 +45,7 @@ export class Auth {
    */
   private removeToken() {
     localStorage.removeItem('X-Token');
+    localStorage.removeItem('carItems');
   }
 
   /**
@@ -75,6 +78,7 @@ export class Auth {
    */
   private removeUser() {
     localStorage.removeItem('user');
+    localStorage.removeItem('carItems');
     this.authUserData = null;
   }
 
@@ -154,7 +158,7 @@ export class Auth {
 
     this.removeUser();
     this.removeToken();
-
+    this.httpCart.resetCartItems();
     // redirigimos al login
     this.router.navigate(['/home']);
 
