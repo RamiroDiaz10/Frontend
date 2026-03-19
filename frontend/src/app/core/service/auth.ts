@@ -6,12 +6,14 @@ import { Router } from '@angular/router';
 import { ResponseApi } from '../../models/response.model';
 import { DataAuthUser } from '../../models/user-model';
 import { HttpCar } from './http-car';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class Auth {
+  private baseUrl: string = environment.apiUrl
 
   // Guardamos en memoria los datos del usuario
   private authUserData: null | DataAuthUser = null;
@@ -88,7 +90,7 @@ export class Auth {
 
   registerNewUser(newUser: DataAuthUser): Observable<string> {
 
-    return this.http.post<ResponseApi<DataAuthUser>>('http://localhost:3000/api/v1/auth/register', newUser)
+    return this.http.post<ResponseApi<DataAuthUser>>(`${this.baseUrl}/auth/register`, newUser)
       .pipe(
 
         // transformamos la respuesta
@@ -115,7 +117,7 @@ export class Auth {
 
   loginUser(credentials: DataAuthUser): Observable<string> {
 
-    return this.http.post<ResponseApi<DataAuthUser>>('http://localhost:3000/api/v1/auth/login', credentials)
+    return this.http.post<ResponseApi<DataAuthUser>>(`${this.baseUrl}/auth/login`, credentials)
 
       .pipe(
 
@@ -180,7 +182,7 @@ export class Auth {
 
     const headers = new HttpHeaders().set('X-Token', token);
 
-    return this.http.get<ResponseApi<DataAuthUser>>('http://localhost:3000/api/v1/auth/renew-token', { headers })
+    return this.http.get<ResponseApi<DataAuthUser>>(`${this.baseUrl}/auth/renew-token`, { headers })
 
       .pipe(
 

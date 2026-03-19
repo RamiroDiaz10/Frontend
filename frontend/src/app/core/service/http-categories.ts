@@ -4,12 +4,13 @@ import { catchError, map, of, Observable, tap, throwError } from 'rxjs';
 
 import { DataCategory, ResponseCategories } from '../../models/category-model';
 import { ResponseApi } from '../../models/response.model';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HttpCategories {
-  private urlApi = 'http://localhost:3000/api/v1/category'
+  private urlApi: string = `${environment.apiUrl}/category`
 
   constructor(
   private http: HttpClient

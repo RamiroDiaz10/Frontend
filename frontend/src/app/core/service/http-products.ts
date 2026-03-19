@@ -5,12 +5,13 @@ import { catchError, map, Observable, of, throwError } from 'rxjs';
 import { DataProduct, ResponseProducts } from '../../models/products.models';
 import { ResponseApi } from '../../models/response.model';
 import Swal from 'sweetalert2';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HttpProducts {
-  private apiUrl = 'http://localhost:3000/api/v1/products';
+  private apiUrl: string = `${environment.apiUrl}/products`;
 
     constructor(
       private http: HttpClient,

@@ -3,12 +3,13 @@ import { inject, Injectable } from '@angular/core';
 import { catchError, map, Observable, of, throwError } from 'rxjs';
 
 import { DataUser, ResponseUsers } from '../../models/data-user.model';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HttpUsers {
-  private apiUrl = 'http://localhost:3000/api/v1/users'; 
+  private apiUrl:string = `${environment.apiUrl}/users`; 
 
   constructor(
     private http: HttpClient,
