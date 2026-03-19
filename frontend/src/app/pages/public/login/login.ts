@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Auth } from '../../../core/service/auth';
+import { Router, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
-import {  Router, RouterLink } from '@angular/router';
+
+import { Auth } from '../../../core/service/auth';
 import { DataAuthUser } from '../../../models/user-model';
+import { AlertsService } from '../../../core/service/alerts-service';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +20,8 @@ export class Login {
   
   constructor(
     private httpAuth: Auth,
-    private router: Router
+    private router: Router,
+    private alerts: AlertsService
 
   ){
     this.formData = new FormGroup ({
@@ -49,20 +52,25 @@ export class Login {
         email: this.formData.value.email ?? '',
         password: this.formData.value.password ?? ''
       } 
+      this.alerts.loading('Loading... 🧸');
 
       this.httpAuth.loginUser(inputData).subscribe({
         next: data => {
-          console.log('Login successful', data);
-          this.message = data;
-          
+          this.alerts.success('!Hey',`${data}`)
           setTimeout(()=> {
-            this.message = '';
             this.router.navigateByUrl('/dashboard');
           }, 2000)  // Navigate to dashboard after login
 
         },
         error: error => {
-          console.error('There was an error during the login!', error);
+            if (error.status === 403) {
+              this.alerts.warning('Cuenta Pendiente', 'Por favor, confirma tu correo primero.')
+                setTimeout(()=> {
+                  this.router.navigateByUrl('/confirm');
+                }, 2000)
+            } else {
+              this.alerts.error('Error', 'Credenciales incorrectas');
+            }
         },
         complete: () => {
           this.formData.reset();

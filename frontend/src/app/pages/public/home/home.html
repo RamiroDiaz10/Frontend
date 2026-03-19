@@ -5,7 +5,7 @@
       <div class="hero-content">
         <h1>Tus amigas de trapo de toda la vida</h1>
         <p>Muñecas artesanales creadas para abrazar, acompañar y coleccionar momentos inolvidables.</p>
-        <a routerLink="/products" class="btn-primary">Descubrir Colección</a>
+        <a routerLink="/categories" class="btn-primary">Descubrir Colección</a>
       </div>
       <div class="hero-image-wrapper">
         <img src="/assets/images/Designer-campesina.png" alt="Muñeca artesanal de lujo" class="hero-image" />
@@ -23,7 +23,7 @@
           <div class="hero-overlay">
             <span class="badget">Hechas a mano con amor</span>
             <h2>Muñecas que cuentan historias</h2>
-            <button class="btn-primary">Explorar Catálogo</button>
+            <button class="btn-primary" routerLink="/categories">Explorar Catálogo</button>
           </div>
         </div>
         <!-- Slide 2 -->
@@ -32,7 +32,7 @@
           <div class="hero-overlay">
             <span class="badget">Un regalo para toda la vida</span>
             <h2>Artesanía que abraza el corazón</h2>
-            <button class="btn-primary">Novedades</button>
+            <button class="btn-primary" routerLink="/products">Novedades</button>
           </div>
         </div>
         <!-- Slide 3 -->
@@ -41,7 +41,7 @@
           <div class="hero-overlay">
             <span class="badget">Colección Nostalgia: Edición Limitada</span>
             <h2>Regala recuerdos de infancia</h2>
-            <button class="btn-primary">Personalizar Mía</button>
+            <button class="btn-primary" routerLink="/products">Personalizar Mía</button>
           </div>
         </div>
         <!-- Slide 4 -->
@@ -50,7 +50,7 @@
           <div class="hero-overlay">
             <span class="badget">Nuestra Esencia</span>
             <h2>El encanto de nuestra cultura</h2>
-            <button class="btn-primary">Ver Estilo Regional</button>
+            <button class="btn-primary" routerLink="/categories">Ver Estilo Regional</button>
           </div>
         </div>
         <!-- Slide 5 -->
@@ -59,7 +59,7 @@
           <div class="hero-overlay">
             <span class="badget">Crea a tu amiga ideal</span>
             <h2>Una compañera hecha para ti</h2>
-            <button class="btn-primary">Personalizar Ahora</button>
+            <button class="btn-primary" routerLink="/categories">Personalizar Ahora</button>
           </div>
         </div>
       </div>
@@ -69,27 +69,58 @@
       <div class="swiper-button-next"></div>
     </div>
   </section>
-
-  <!---Groups--->
+  
+  <!-- section categories tap arriba -->
   <section class="container-groups">
-    <div class="container">
-      <div class="group-munecas">
+  <div class="container">
+    <div class="group-munecas">
       <div class="enlace-groups">
-        @for( category of (categories | async ); track $index){
-          
-          <button href="class-muneca-feliz">Muñeca Feliz</button><span> / </span>  
 
+        @for(category of (categories | async); track category._id; let last = $last) {
+          <button 
+            type="button" 
+            (click)="changeCategory(category._id!)" 
+            [class.active]="selectedCategoryId === category._id">
+            {{ category.name }}
+          </button>
+
+          @if (!last) {
+            <span class="separator"> / </span>
+          }
         }
-
       </div>
-      
     </div>
+  </div>
+</section>
+
+ <section class="container-cards">
+  <div class="container"> 
+    <div class="card-munecos">
+      @for(product of (filteredProducts$ | async); track product._id) {
+        <article class="card-muneco">
+          <div class="card-image-box">
+            <img [src]="product.image" [alt]="product.name" />
+            <button class="add-to-cart-slide" (click)="addToCart(product)">
+              <i class="fa-solid fa-bag-shopping"></i> Añadir al carrito
+            </button>
+          </div>
+          <div class="card-muneco-info">
+            <h3 class="product-title">{{ product.name }}</h3>
+            <p class="current-price">{{ product.price | currency:'COP':'symbol-narrow':'1.0-0' }}</p>
+          </div>
+        </article>
+      }
     </div>
-    </section>
+  </div>
+</section>
+
+
+   
 
     <!-- seccion cards munecas -->
-    <section class="container-cards">
+    <hr><section class="container-cards">
     <div class="container"> 
+      <h1>TODAS NUETRAS KMG</h1>
     <div class="card-munecos">
       @for( product of (products | async); track $index){
         <article class="card-muneco">
@@ -118,7 +149,7 @@
       <div class="container-popular">
         @for( category of (categories | async ); track $index){
           <article class="content-brands">
-            <a href="#">
+            <a routerLink="/products">
               <img [src]="category.image" [alt]="category.name" />
               <h3>{{category.name}}</h3>
               <p>{{category.description}}</p>
@@ -212,7 +243,7 @@
           <form class="formulario" (submit)="$event.preventDefault()">
             <input class="search-leter" type="email" placeholder="Tu correo electrónico" required/>
             <div class="content-botton">
-              <button type="submit" class="botton">¡Suscribirme!</button> 
+              <button type="submit" class="botton" routerLink="/register">¡Suscribirme!</button> 
             </div>
           </form>
         </div>

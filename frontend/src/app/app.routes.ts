@@ -19,6 +19,8 @@ import { UserNewForm } from './pages/private/users/user-new-form/user-new-form';
 
 import { authGuard } from './core/guards/auth-guard';
 import { roleGuard } from './core/guards/role-guard';
+import { ConfirmUser } from './pages/public/confirm-user/confirm-user';
+import { PublicCategories } from './pages/public/public-categories/public-categories';
 
 export const routes: Routes = [
     { 
@@ -26,12 +28,17 @@ export const routes: Routes = [
     component: Home
     },
     { 
-    path: 'login', 
-    component:Login
-    },
-    { 
     path: 'register', 
     component:Register
+    },
+    { 
+    path: 'confirm', 
+    component:ConfirmUser,
+    
+    },
+    { 
+    path: 'login', 
+    component:Login
     },
     { 
     path: 'checkout',
@@ -42,69 +49,73 @@ export const routes: Routes = [
     component:PublicProducts
     },
     { 
+    path: 'categories',
+    component:PublicCategories
+    },
+    { 
     path: 'dashboard', 
     component:Dashboard,
     canActivate: [authGuard, roleGuard],
-    data: { expectRoles: [ 'admin', 'colaborator', 'registered' ] }
+    data: { expectRoles: [ 'superAdmin','admin', 'colaborator' ] }
     },
     { 
     path: 'dashboard/products',
     component:ProductsList,
     canActivate: [authGuard, roleGuard],
-    data: { expectRoles: [ 'admin', 'colaborator', 'registered' ] }
+    data: { expectRoles: [ 'superAdmin','admin', 'colaborator' ] }
 
     },
      { 
     path: 'dashboard/product/new',
     component:ProductNewForm,
     canActivate: [authGuard, roleGuard],
-    data: { expectRoles: [ 'admin', 'colaborator', 'registered' ] }
+    data: { expectRoles: [ 'superAdmin','admin', 'colaborator' ] }
 
     },
      { 
     path: 'dashboard/product/edit/:_id',
     component:ProductEditForm,
     canActivate: [authGuard, roleGuard],
-    data: { expectRoles: [ 'admin', 'colaborator', 'registered' ] }
+    data: { expectRoles: [ 'superAdmin','admin', 'colaborator' ] }
 
     },
     { 
     path: 'dashboard/categories',
     component:CategoryList,
     canActivate: [authGuard, roleGuard],
-    data: { expectRoles: [ 'admin', 'colaborator' ] }
+    data: { expectRoles: [ 'superAdmin','admin', 'colaborator' ] }
     },
     { 
     path: 'dashboard/category/new',
     component:CategoryNewForm,
     canActivate: [authGuard, roleGuard],
-    data: { expectRoles: [ 'admin', 'colaborator' ] }
+    data: { expectRoles: [ 'superAdmin','admin', 'colaborator' ] }
     },
      { 
     path: 'dashboard/category/edit/:_id',
     component:CategoryEditForm,
     canActivate: [authGuard, roleGuard],
-    data: { expectRoles: [ 'admin', 'colaborator' ] }
+    data: { expectRoles: [ 'superAdmin','admin', 'colaborator' ] }
     },
     { 
     path: 'dashboard/users',
     component:UsersList,
     canActivate: [authGuard, roleGuard],
-    data: { expectRoles: [ 'admin' ] }
+    data: { expectRoles: [ 'superAdmin','admin' ] }
 
     },
     { 
     path: 'dashboard/user/edit/:_id',
     component:UserEditForm,
     canActivate: [authGuard, roleGuard],
-    data: { expectRoles: [ 'admin' ] }
+    data: { expectRoles: [ 'superAdmin' ] }
 
     },
     { 
     path: 'dashboard/user/new',
     component:UserNewForm,
     canActivate: [authGuard, roleGuard],
-    data: { expectRoles: [ 'admin' ] }
+    data: { expectRoles: [ 'superAdmin' ] }
 
     },
     { 

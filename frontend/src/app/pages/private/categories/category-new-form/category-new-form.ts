@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { HttpCategories } from '../../../../core/service/http-categories';
 import { DataCategory } from '../../../../models/category-model';
 import Swal from 'sweetalert2';
+import { AlertsService } from '../../../../core/service/alerts-service';
 
 @Component({
   selector: 'app-category-new-form',
@@ -14,13 +15,13 @@ import Swal from 'sweetalert2';
   styleUrl: './category-new-form.css',
 })
 export class CategoryNewForm {
-  message: string = '';
   formData!: FormGroup;
   private subscription!: Subscription;
 
   constructor(
     private httpCategories: HttpCategories,
-    private router: Router
+    private router: Router,
+    private alert: AlertsService
   ){
     this.formData = new FormGroup ({
       name: new FormControl('',[Validators.required, Validators.minLength(3)]),
@@ -32,14 +33,10 @@ export class CategoryNewForm {
     });
   }
 
-  ngOnInit(): void {
-    console.info('Componente inicializado')
-  }
 
   
   onSubmit(): void {
     if(this.formData.valid){
-      console.log(this.formData.value);
 
       const inputData: DataCategory = {
         name: this.formData.value.name ?? '',
@@ -52,34 +49,21 @@ export class CategoryNewForm {
 
       this.httpCategories.createCategory(inputData).subscribe({
         next: data => {
-          console.log(data);
-           Swal.fire({
-              title: "Category created successfully",
-              icon: "success",
-              draggable: true
-            });
+          this.alert.success('!Hey','Category created successfully');
+
           setTimeout(() => {
             this.router.navigateByUrl('dashboard/categories');
           }, 2000);
         },
         error: error => {
-          console.error('Error creating category', error);
 
-          const errorMsg = error.error || 'The product may already exist or there is a server error.';
-            Swal.fire({
-              icon: "error",
-              title: "Oops...",
-              text: "Something went wrong!",
-              footer: errorMsg
-            });
+          this.alert.error('"Oops..."',error.error || 'The category may already exist or there is a server error.');
         },
         complete: () => {
-          console.info('process finished');
           this.formData.reset();
         }
       });
     }else {
-      console.warn('Form is invalid');
       this.formData.markAllAsTouched();
     }
   }

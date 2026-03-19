@@ -40,8 +40,8 @@ export class CategoryList {
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
+      confirmButtonColor:" #E8A598",
+      cancelButtonColor: "#8B3A36",
       confirmButtonText: "Yes, delete it!"
     }).then((result) => {
       if (result.isConfirmed) {
@@ -59,7 +59,8 @@ export class CategoryList {
     Swal.fire({
       title: "Deleted!",
       text: "Your category has been deleted.",
-      icon: "success"
+      icon: "success",
+      confirmButtonColor:" #E8A598",
     });
       }
     });

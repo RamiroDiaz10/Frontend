@@ -21,7 +21,6 @@ export class ProductEditForm {
   public categories$: Observable<DataCategory[]> = new Observable<DataCategory[]>();
   private refreshTrigger$: BehaviorSubject<void> = new BehaviorSubject<void>(undefined);
 
-  message: string = ''; 
   formData!: FormGroup;
   private subscription!: Subscription;
   private selectId!: string;
@@ -47,7 +46,6 @@ export class ProductEditForm {
   }
 
    ngOnInit(): void {
-    console.info('Initializing ProductEditForm component');
     this.categories$ = this.refreshTrigger$.asObservable().pipe(
       switchMap(() => this.HttpCategories.getCategories()),
       map(response => response.categories  ),
@@ -61,7 +59,6 @@ export class ProductEditForm {
         
         this.httpProducts.getProductById(params['_id']).subscribe({
           next:(response: any)=> {
-            console.log(response)
 
             const { name, description, image, size, material, color, price, stock, category, isActive } = response.data;
           
@@ -100,6 +97,8 @@ export class ProductEditForm {
       title: "Do you want to save the changes?",
       showDenyButton: true,
       showCancelButton: true,
+      confirmButtonColor:" #E8A598",
+      cancelButtonColor: "#8B3A36",
       confirmButtonText: "Save",
       denyButtonText: `Don't save`
     }).then((result) => {
@@ -114,19 +113,8 @@ export class ProductEditForm {
               console.error('Error updating product:', error);
             },  
             complete: () => {
-              console.info('Product update request completed');
+              
               this.onReset();
-              //   name: '',
-              //   description: '',
-              //   image: '',
-              //   size: 1,
-              //   material: '',
-              //   color: '#000000',
-              //   price: 0,
-              //   stock: 0,
-              //   category: '',
-              //   isActive: false
-              // });
               this.router.navigateByUrl('/dashboard/products');
             }
           });

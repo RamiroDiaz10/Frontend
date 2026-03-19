@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 
 import { HttpUsers } from '../../../../core/service/http-users';
 import { DataUser } from '../../../../models/data-user.model';
+import { AlertsService } from '../../../../core/service/alerts-service';
 
 @Component({
   selector: 'app-user-new-form',
@@ -22,7 +23,8 @@ export class UserNewForm {
 
   constructor(
     private httpUsers: HttpUsers,
-    private router: Router 
+    private router: Router, 
+    private alert: AlertsService
   ){
     
     this.formData = new FormGroup ({
@@ -54,13 +56,7 @@ export class UserNewForm {
 
       this.httpUsers.createUser(inputData).subscribe({
         next: (data) => {
-          console.info(data);
-
-          Swal.fire({
-              title: "User created successfully",
-              icon: "success",
-              draggable: true
-            });
+          this.alert.success('!Hey','User created successfully');
 
             setTimeout(() => {
             this.router.navigateByUrl('/dashboard/users');
@@ -68,14 +64,7 @@ export class UserNewForm {
         
         },
         error: error => {
-
-          const errorMsg = error.error || 'The user may already exist or there is a server error.';
-            Swal.fire({
-              icon: "error",
-              title: "Oops...",
-              text: "Something went wrong!",
-              footer: errorMsg
-            });
+          this.alert.error('"Oops..."',error.error || 'The user may already exist or there is a server error.');
         },
         complete: () => {
           console.info('process finished');

@@ -33,7 +33,6 @@ export class CategoryEditForm {
   }
 
   ngOnInit(): void {
-    console.info('Componente inicializado')
     this.route.params.subscribe((params: Params) => {
       if(params['_id']){
 
@@ -74,6 +73,8 @@ export class CategoryEditForm {
       title: "Do you want to save the changes?",
       showDenyButton: true,
       showCancelButton: true,
+      confirmButtonColor:" #E8A598",
+      cancelButtonColor: "#8B3A36",
       confirmButtonText: "Save",
       denyButtonText: `Don't save`
     }).then((result) => {

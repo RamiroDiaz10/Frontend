@@ -1,16 +1,17 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { AsyncPipe, CommonModule } from '@angular/common';
-import { Router, RouterModule } from '@angular/router';
-import { BehaviorSubject, map, Observable, Subscription, switchMap } from 'rxjs';
+import { Router, RouterLink, RouterModule } from '@angular/router';
+import { BehaviorSubject, firstValueFrom, map, Observable, Subscription, switchMap } from 'rxjs';
 import Swal from 'sweetalert2';
 
 import { HttpUsers } from '../../../../core/service/http-users';
 import { DataUser } from '../../../../models/data-user.model';
+import { Auth } from '../../../../core/service/auth';
 
 @Component({
   selector: 'app-users-list',
   standalone: true,
-  imports: [AsyncPipe, RouterModule],
+  imports: [AsyncPipe, RouterModule, RouterLink],
   templateUrl: './users-list.html',
   styleUrl: './users-list.css',
 })
@@ -18,6 +19,7 @@ export class UsersList {
     public users$: Observable<DataUser[]> = new Observable<DataUser[]>();
   private refreshUsersTrigger$: BehaviorSubject<void> = new BehaviorSubject<void>(undefined);  
   private subscription!: Subscription;
+  
   
   constructor(
     private httpUsers: HttpUsers,
@@ -29,7 +31,7 @@ export class UsersList {
     this.users$ = this.refreshUsersTrigger$.asObservable().pipe(
       switchMap(() => this.httpUsers.getUsers()),
       map((response) => {
-        console.log(response)
+        console.log(response,'.....')
         return response.users})
       
     );
@@ -42,8 +44,8 @@ export class UsersList {
         text: "You won't be able to revert this!",
         icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
+        confirmButtonColor:" #E8A598",
+        cancelButtonColor: "#8B3A36",
         confirmButtonText: "Yes, delete it!"
       }).then((result) => {
         if (result.isConfirmed) {
@@ -61,7 +63,8 @@ export class UsersList {
       Swal.fire({
         title: "Deleted!",
         text: "Your user has been deleted.",
-        icon: "success"
+        icon: "success",
+        confirmButtonColor:" #E8A598"
       });
         }
       });

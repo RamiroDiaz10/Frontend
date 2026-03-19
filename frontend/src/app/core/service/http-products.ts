@@ -21,7 +21,6 @@ export class HttpProducts {
     return this.http.post<ResponseProducts>(this.apiUrl, productData)
     .pipe(
       map((response: ResponseProducts) => {
-        console.info(response);
         return response;
       }),
       catchError((error) => {
@@ -37,11 +36,9 @@ export class HttpProducts {
     return this.http.get<ResponseProducts>(this.apiUrl)
       .pipe(
         map((response: ResponseProducts) => {
-          console.log(response);
           return response;
         }),
         catchError((error) => {
-          console.error('Error fetching products:', error);
           return throwError(() => error );
         })
       );
@@ -55,11 +52,9 @@ export class HttpProducts {
     return this.http.delete<ResponseProducts>(`${this.apiUrl}/${_id}`)
       .pipe(
         map((response: ResponseProducts) => {
-          console.log(response);
           return response;
         }),
         catchError((error) => {
-          console.error('Error deleting product:', error);
           return throwError(() => error );
         })
       );  

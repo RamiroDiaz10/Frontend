@@ -292,7 +292,13 @@
   padding: 2rem 0;
   justify-content: center;
 }
-
+.container-cards h1 {
+  text-align: center;
+  font-family: var(--fuente-principal);
+  font-size: clamp(2.8rem, 4vw, 3.6rem);
+  color: var(--Marron-calido);
+  margin-bottom: 4rem;
+}
 .card-muneco {
   flex: 1 1 280px;
   max-width: 32rem;

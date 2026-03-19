@@ -21,7 +21,6 @@ export class HttpCategories {
     return this.http.post<ResponseCategories>(this.urlApi, categoryData)
     .pipe(
       map((response: ResponseCategories) => {
-        console.log(response);
         return response;
       }),
       catchError((error) => {
@@ -34,11 +33,9 @@ export class HttpCategories {
       return this.http.get<ResponseCategories>(this.urlApi)
       .pipe(
         map((response: ResponseCategories) => {
-          console.log(response);
           return response;
         }),
         catchError((error) => {
-          console.error('Error fetching categories:', error);
          return throwError(() => error);
 
         })
@@ -54,11 +51,9 @@ export class HttpCategories {
     return this.http.delete<ResponseCategories>(`${this.urlApi}/${_id}`)
       .pipe(
         map((response: ResponseCategories) => {
-          console.log(response);
           return response;
         }),
         catchError((error) => {
-          console.error('Error deleting category:', error);
         return throwError(() => error);
 
         })

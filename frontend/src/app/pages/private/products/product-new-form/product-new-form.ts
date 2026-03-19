@@ -9,6 +9,7 @@ import { HttpProducts } from '../../../../core/service/http-products';
 import { HttpCategories } from '../../../../core/service/http-categories';
 import { DataProduct } from '../../../../models/products.models';
 import { DataCategory } from '../../../../models/category-model';
+import { AlertsService } from '../../../../core/service/alerts-service';
 
 @Component({
   selector: 'app-product-new-form',
@@ -29,7 +30,8 @@ export class ProductNewForm {
   constructor(
     private httpProducts: HttpProducts,
     private HttpCategories: HttpCategories,
-    private router: Router 
+    private router: Router ,
+    private alert: AlertsService
   ) {
     this.formData = new FormGroup({
       name: new FormControl('', [Validators.required, Validators.minLength(3)]),
@@ -71,31 +73,14 @@ export class ProductNewForm {
 
       this.httpProducts.createProduct(inputData).subscribe({
         next: (data) => {
-          console.info(data);
-
-            Swal.fire({
-              title: "Product created successfully",
-              icon: "success",
-              draggable: true
-            });
-
+        this.alert.success('!Hey','Product created successfully');
              setTimeout(() => {
             this.router.navigateByUrl('dashboard/products');
           }, 2000);
          
         },
         error: (error) => {
-          // Caso de Error: Aquí es donde mostramos la alerta de falla
-          console.error('Error capturado en el componente:', error);
-        
-        // Extraemos el mensaje del backend o usamos uno por defecto
-          const errorMsg = error.error?.msg || 'The product may already exist or there is a server error.';
-            Swal.fire({
-              icon: "error",
-              title: "Oops...",
-              text: "Something went wrong!",
-              footer: errorMsg
-            });
+         this.alert.error('"Oops..."', error.error || 'The product may already exist or there is a server error.');
         },
         complete: () => {
           console.info('Process finished'); 

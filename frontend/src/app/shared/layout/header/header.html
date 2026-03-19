@@ -37,7 +37,7 @@
         <div class="auth-buttons">
           @if(userData){
             <span style="font-family: var(--fuente-principal); font-weight: 700; color: var(--Marron-calido); margin-right: 15px;">
-              Hola, {{userData.name}} <small style="font-weight: 400; font-size: 1.2rem;">({{userData.role}})</small>
+              {{userData.name}} <small style="font-weight: 400; font-size: 1.2rem;">({{userData.role}})</small>
             </span>
             <button class="btn-outline logout-desktop" (click)="onLogout()" style="cursor: pointer;">Log Out</button>
           } @else {
@@ -79,24 +79,20 @@
       <div class="container" style="display: flex; justify-content: center;">
         <ul class="navbar-links" style="gap: 2rem;">
           <li><a routerLink="/home" routerLinkActive="active-link" style="color: var(--Marron-calido);">Home</a></li>
-          <li><a routerLink="/products" routerLinkActive="active-link" style="color: var(--Marron-calido);">Products*</a></li>
+          <li><a routerLink="/products" routerLinkActive="active-link" style="color: var(--Marron-calido);">📦Products</a></li>
+          <li><a routerLink="/categories" routerLinkActive="active-link" style="color: var(--Marron-calido);">🏷️Categories</a></li>
+
 
           
           <!-- Opciones lógicas del Dashboard basadas en roles -->
-          @if (auth.hasRole(['admin', 'colaborator', 'registered'])) {
+          @if (auth.hasRole(['superAdmin','admin', 'colaborator'])) {
               <li><a routerLink="/dashboard/products" routerLinkActive="active-link" style="color: var(--Marron-calido);">Products</a></li>
-              <!-- <li><a routerLink="/dashboard/product/new" routerLinkActive="active-link" style="color: var(--Marron-calido);">+ Producto</a></li> -->
-              <!-- <li><a routerLink="/dashboard/product/edit" routerLinkActive="active-link" style="color: var(--Marron-calido);">Editar Prod.</a></li> -->
           }
-          @if (auth.hasRole(['admin', 'colaborator'])) {
+          @if (auth.hasRole(['superAdmin','admin', 'colaborator'])) {
               <li><a routerLink="/dashboard/categories" routerLinkActive="active-link" style="color: var(--Marron-calido);">Categories</a></li>
-              <!-- <li><a routerLink="/dashboard/category/new" routerLinkActive="active-link" style="color: var(--Marron-calido);">+ Categoría</a></li> -->
-              <!-- <li><a routerLink="/dashboard/category/edit" routerLinkActive="active-link" style="color: var(--Marron-calido);">Editar Cat.</a></li> -->
           }
-          @if (auth.hasRole(['admin'])) {
+          @if (auth.hasRole(['superAdmin','admin'])) {
               <li><a routerLink="/dashboard/users" routerLinkActive="active-link" style="color: var(--Marron-calido);">Users</a></li>
-              <!-- <li><a routerLink="/dashboard/user/new" routerLinkActive="active-link" style="color: var(--Marron-calido);">+ Usuario</a></li> -->
-              <!-- <li><a routerLink="/dashboard/user/edit" routerLinkActive="active-link" style="color: var(--Marron-calido);">Editar Usu.</a></li> -->
           }
         </ul>
       </div>
@@ -131,52 +127,42 @@
           </li>
           <li><a routerLink="/products" routerLinkActive="active-link" (click)="closeMenu()"
                style="display: block; padding: 1.4rem 0; font-size: 1.9rem; color: var(--Marron-calido); font-weight: 600; border-bottom: 1px solid rgba(232,165,152,0.3); text-decoration: none;">
-            📦Products*
-          </a>
-        </li>
+               📦Products
+              </a>
+          </li>
+          <li><a routerLink="/categories" routerLinkActive="active-link" (click)="closeMenu()"
+               style="display: block; padding: 1.4rem 0; font-size: 1.9rem; color: var(--Marron-calido); font-weight: 600; border-bottom: 1px solid rgba(232,165,152,0.3); text-decoration: none;">
+               🏷️ Categories
+              </a>
+          </li>
   
           <!-- Links del Dashboard según rol -->
-          @if (auth.hasRole(['admin', 'colaborator', 'registered'])) {
+          @if (auth.hasRole(['superAdmin','admin', 'colaborator'])) {
             <li>
               <a routerLink="/dashboard/products" (click)="closeMenu()"
                  style="display: block; padding: 1.4rem 0; font-size: 1.8rem; color: var(--Marron-calido); font-weight: 500; border-bottom: 1px solid rgba(232,165,152,0.3); text-decoration: none;">
-                📦 Products
+                Products
               </a>
             </li>
-            <li>
-              <a routerLink="/dashboard/product/new" (click)="closeMenu()"
-                 style="display: block; padding: 1.4rem 0; font-size: 1.8rem; color: var(--Marron-calido); font-weight: 500; border-bottom: 1px solid rgba(232,165,152,0.3); text-decoration: none;">
-                ➕ New Product
-              </a>
-            </li>
+            
           }
-          @if (auth.hasRole(['admin', 'colaborator'])) {
+          @if (auth.hasRole(['superAdmin','admin', 'colaborator'])) {
             <li>
               <a routerLink="/dashboard/categories" (click)="closeMenu()"
                  style="display: block; padding: 1.4rem 0; font-size: 1.8rem; color: var(--Marron-calido); font-weight: 500; border-bottom: 1px solid rgba(232,165,152,0.3); text-decoration: none;">
-                🏷️ Categories
+                 Categories
               </a>
             </li>
-            <li>
-              <a routerLink="/dashboard/category/new" (click)="closeMenu()"
-                 style="display: block; padding: 1.4rem 0; font-size: 1.8rem; color: var(--Marron-calido); font-weight: 500; border-bottom: 1px solid rgba(232,165,152,0.3); text-decoration: none;">
-                ➕ New Category
-              </a>
-            </li>
+            
           }
-          @if (auth.hasRole(['admin'])) {
+          @if (auth.hasRole(['superAdmin','admin'])) {
             <li>
               <a routerLink="/dashboard/users" (click)="closeMenu()"
                  style="display: block; padding: 1.4rem 0; font-size: 1.8rem; color: var(--Marron-calido); font-weight: 500; border-bottom: 1px solid rgba(232,165,152,0.3); text-decoration: none;">
                 👥 Users
               </a>
             </li>
-            <li>
-              <a routerLink="/dashboard/user/new" (click)="closeMenu()"
-                 style="display: block; padding: 1.4rem 0; font-size: 1.8rem; color: var(--Marron-calido); font-weight: 500; border-bottom: 1px solid rgba(232,165,152,0.3); text-decoration: none;">
-                ➕ New User
-              </a>
-            </li>
+            
           }
   
         </ul>
@@ -185,7 +171,8 @@
         <div style="margin-top: 3rem; display: flex; flex-direction: column; gap: 1.2rem;">
           @if(userData){
             <p style="font-size: 1.8rem; color: var(--Marron-calido); font-weight: 700; margin: 0 0 1rem 0;">
-              Hola, {{userData.name}} 👋
+              {{userData.name}} 👋
+              <span>{{userData.role}}</span>
             </p>
             <button class="btn-outline" (click)="onLogout()" style="width: 100%; cursor: pointer;">
               Log Out

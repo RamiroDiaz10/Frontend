@@ -31,11 +31,9 @@ export class HttpUsers {
     return this.http.get<ResponseUsers>(this.apiUrl)
       .pipe(
         map((response: ResponseUsers) => {
-          console.log(response);
           return response;
         }),
         catchError((error) => {
-          console.error('Error fetching users:', error);
           return throwError(() => error);
 
         })
@@ -49,7 +47,6 @@ export class HttpUsers {
       .pipe(
         map((response: ResponseUsers) => response), 
         catchError((error) => {
-          console.error('Error fetching user:', error);
           return throwError(() => error);
 
         })

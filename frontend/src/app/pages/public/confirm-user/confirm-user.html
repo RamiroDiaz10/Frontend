@@ -1,0 +1,67 @@
+<div class="page form-login">
+
+    <form 
+    [formGroup]="formData"
+    (ngSubmit)="onSubmit()"
+    class="form-new-login"
+    >
+    <h1>Confirm Email</h1>
+
+    <!-- campo email-confirm -->
+
+        <div class="field">
+            <label for="confirm-email">Email*</label>
+            <input type="email" formControlName="email" id="confirm-email" placeholder="Ej: correo12@gmail.com"/>
+            <div class="errors">
+
+                @if(formData.get('email'); as emailConfirm ){
+                    @if( emailConfirm.invalid && (emailConfirm.touched || emailConfirm.dirty) ){
+                         @if(emailConfirm.errors?.['required']){
+                                <small>Campo obligatorio(Email al que llego el codigo de verificacion)</small>
+                            }
+                            @if(emailConfirm.errors?.['email']){
+                                <small> Email invalido </small>
+                            }
+                    }
+                }
+            </div>
+
+        </div>
+
+        <!-- campo code-confirm -->
+
+        <div class="field">
+            <label for="code-confirm">Code*</label>
+            <input type="text" formControlName="code" id="code-confirm" autocomplete="off" />
+            <div class="errors">
+                @if(formData.get('code'); as code ){
+                    @if( code.invalid && (code.touched || code.dirty) ){
+                        @if(code.errors?.['required']){
+                            <small>Codigo de verificacion requerido(revisa tu correo)</small>
+                        }
+                        @if(code.errors?.['minlength']){
+                            <small>  Mínimo {{ code.errors?.['minlength'].requiredLength }} caracteres </small>
+                        }
+                    }
+                }
+
+            </div>
+
+        </div>
+
+        <!-- campo login-botton -->
+
+        <div class="field">
+            <button type="submit" class="btn-submit" [disabled]="formData.invalid">Confirm Email</button>
+
+            </div>
+    
+            <div class="field">
+                <span>Don't have an account? <a routerLink="/register">Sign Up</a></span>
+        </div>
+
+
+    </form>
+</div>
+
+

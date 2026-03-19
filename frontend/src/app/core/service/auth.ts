@@ -1,12 +1,14 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, map, Observable, of, tap } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, of, tap, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 
 import { ResponseApi } from '../../models/response.model';
-import { DataAuthUser } from '../../models/user-model';
+import { DataAuthUser, ResponseUser } from '../../models/user-model';
 import { HttpCar } from './http-car';
 import { environment } from '../../../environments/environment';
+import { DataUser, ResponseUsers } from '../../models/data-user.model';
+import { ConfirmModel } from '../../models/confirm-model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +18,10 @@ export class Auth {
   private baseUrl: string = environment.apiUrl
 
   // Guardamos en memoria los datos del usuario
-  private authUserData: null | DataAuthUser = null;
+  private currentUser = new BehaviorSubject<null | Partial<DataUser>>(null);
+  public currentUser$ = this.currentUser.asObservable();
+  public authUserData: null | DataAuthUser = null;
+  
 
   constructor(
     private http: HttpClient,
@@ -56,6 +61,7 @@ export class Auth {
   private saveUser(user: DataAuthUser) {
     localStorage.setItem('user', JSON.stringify(user));
     this.authUserData = user;
+    this.currentUser.next(user);
   }
 
   /**
@@ -88,27 +94,36 @@ export class Auth {
   // REGISTER
   // =========================
 
-  registerNewUser(newUser: DataAuthUser): Observable<string> {
+  registerNewUser(newUser: DataAuthUser): Observable<ResponseUser> {
 
-    return this.http.post<ResponseApi<DataAuthUser>>(`${this.baseUrl}/auth/register`, newUser)
+    return this.http.post<ResponseUser>(`${this.baseUrl}/auth/register`, newUser)
       .pipe(
 
         // transformamos la respuesta
-        map((response: ResponseApi<DataAuthUser>) => {
-          return response.msg!;
+        map((response: ResponseUser) => {
+          return response;
         }),
 
         // manejo de errores
-        catchError((err) => {
-
-          if (err.error?.msg) {
-            return of(err.error.msg);
-          }
-
-          return of('Error: servidor fallando');
-        })
+        catchError((error) => {
+           return throwError(() => error)
+          })
 
       );
+  }
+
+  // CONDIRMAR CORREO
+
+  confirmEmail(data: ConfirmModel): Observable<ConfirmModel>{
+    return this.http.post<ConfirmModel>(`${this.baseUrl}/auth/confirm`, data)
+    .pipe(
+          map((response: ConfirmModel) => {
+            return response;
+          }),
+          catchError((error) => {
+           return throwError(() => error)
+          })
+        );
   }
 
   // =========================
@@ -127,6 +142,7 @@ export class Auth {
           // guardamos usuario si existe
           if (data.user) {
             this.saveUser(data.user);
+            this.currentUser.next(data.user);
           }
 
           // guardamos token
@@ -140,15 +156,9 @@ export class Auth {
           return response.msg!;
         }),
 
-        catchError((err) => {
-
-          if (err.error?.msg) {
-            return of(err.error.msg);
-          }
-
-          return of('Error: servidor fallando');
-
-        })
+        catchError((error) => {
+           return throwError(() => error)
+          })
       );
   }
 

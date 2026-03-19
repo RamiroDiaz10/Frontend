@@ -5,6 +5,7 @@ import { Router, RouterLink } from '@angular/router';
 
 import { DataAuthUser } from '../../../models/user-model';
 import { Auth } from '../../../core/service/auth';
+import { AlertsService } from '../../../core/service/alerts-service';
 
 @Component({
   selector: 'app-register',
@@ -17,10 +18,13 @@ export class Register {
   formData!: FormGroup
   
   private subscription!: Subscription;
+  
 
   constructor(
     private auth: Auth,
-    private router: Router
+    private router: Router,
+    private alert: AlertsService
+    
   ){
       this.formData = new FormGroup({
       name: new FormControl('' ,[Validators.required, Validators.minLength(3)]),      //Validators.pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/) permite ene espacio tildes letras 
@@ -53,24 +57,22 @@ export class Register {
         name: this.formData.value.name ?? '',
         username: this.formData.value.username ?? '',
         email: this.formData.value.email ?? '',
-        phone: this.formData.value.email ?? '',
+        phone: this.formData.value.phone ?? '',
         password: this.formData.value.password ?? '',
         role: this.formData.value.role ?? '',
       };
 
-
+      this.alert.loading('Loading... 🧸');
       this.subscription = this.auth.registerNewUser(inputData).subscribe({
         next:(data) => {
-          console.log(data);
-          this.message = data;
+          this.alert.success('¡Ya casi!', 'Revisa tu correo para activar cuenta.')
   
           setTimeout(()=> {
-            this.message = '';
-            this.router.navigateByUrl('/login');
+            this.router.navigateByUrl('/confirm');
           }, 2000)
         },
         error: (error) => {
-          console.error("Registration failed", error);
+          this.alert.error('Correo Inválido', error.error || 'Revisa tu correo');
         },
         complete: () =>{
           this.formData.reset();

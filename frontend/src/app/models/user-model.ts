@@ -5,7 +5,7 @@ export interface DataAuthUser  {
     email: string,
     phone?: number,
     password: string,
-    role?: string;
+    role?: string,
 
 }
 export interface ResponseUser {

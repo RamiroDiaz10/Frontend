@@ -1,0 +1,94 @@
+/* =========================================
+   CATEGORÍAS  — Flexbox
+   ========================================= */
+.section-popular {
+  padding: 6rem 0;
+  background-color: var(--Pink-Pearl);
+}
+
+.section-popular h2 {
+  text-align: center;
+  font-family: var(--fuente-principal);
+  font-size: clamp(2.8rem, 4vw, 3.6rem);
+  color: var(--Marron-calido);
+  margin-bottom: 4rem;
+}
+
+.container-popular {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3rem;
+  padding: 0 2rem;
+  max-width: 1300px;
+  margin: 0 auto;
+  justify-content: center;
+}
+
+.content-brands {
+  flex: 1 1 250px;
+  max-width: 300px;
+  background-color: var(--fondopagina);
+  border: 1px solid rgba(232, 165, 152, 0.25);
+  border-radius: 12px;
+  padding: 2.5rem 2rem;
+  text-align: center;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(93, 64, 55, 0.06);
+}
+
+.content-brands a {
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.content-brands img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--Fondo-body);
+  box-shadow: 0 4px 8px rgba(93, 64, 55, 0.1);
+  transition: transform 0.4s ease;
+  filter: sepia(0.15) contrast(0.95);
+}
+
+.content-brands h3 {
+  font-family: var(--fuente-principal);
+  font-size: 2rem;
+  color: var(--Fondo-body);
+  margin: 0;
+  background-color: var(--Acentos-rosados);
+  padding: 0.6rem 2rem;
+  border-radius: 20px;
+  box-shadow: 0 4px 6px rgba(93, 64, 55, 0.1);
+  transition: all 0.4s ease;
+}
+
+.content-brands p {
+  font-family: var(--fuente-secundaria);
+  font-size: 1.4rem;
+  color: var(--Marron-calido);
+  opacity: 0.8;
+  margin: 0;
+}
+
+.content-brands:hover {
+  transform: translateY(-8px) scale(1.02);
+  border-color: var(--Action-btn);
+  box-shadow: 0 12px 25px rgba(232, 165, 152, 0.25);
+}
+
+.content-brands:hover img {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.content-brands:hover h3 {
+  background-color: var(--Action-btn);
+  transform: scale(1.05);
+}

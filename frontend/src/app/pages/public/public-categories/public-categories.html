@@ -1,1 +1,18 @@
-<p>public-categories works!</p>
+<!--Categorias -->
+  <section class="section-popular" id="nuestras-favoritas">
+    <div class="container">
+      <h2>NUESTRAS FAVORITAS</h2>
+      <div class="container-popular">
+        @for( category of (categories | async ); track $index){
+          <article class="content-brands">
+            <a href="#">
+              <img [src]="category.image" [alt]="category.name" />
+              <h3>{{category.name}}</h3>
+              <p>{{category.description}}</p>
+            </a>
+          </article>
+        }
+
+      </div>
+    </div>
+  </section>
