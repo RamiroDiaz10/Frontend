@@ -39,18 +39,10 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
         // B. Borramos sesión (Token y User del localStorage)
         authService.logout();
 
-        // C. Mostramos la alerta de SweetAlert
-        Swal.fire({
-          icon: 'warning',
-          title: 'Sesión Expirada',
-          text: 'Por seguridad, tu sesión ha finalizado.',
-          confirmButtonColor: '#E8A598',
-          confirmButtonText: 'Entendido',
-          allowOutsideClick: false
-        }).then(() => {
+        
           // D. Redirigimos al login después de cerrar la alerta
           router.navigateByUrl('/login');
-        });
+        
       }
 
       return throwError(() => error);
